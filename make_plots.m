@@ -1,5 +1,5 @@
 % read in 100 running times for each method, for each d.
-dmax = 6;
+dmax = 3;
 
 gdapB_times = zeros(100,dmax);
 mosek_times = zeros(100,dmax);

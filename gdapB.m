@@ -10,7 +10,6 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %     stepsize      = 1.0/(1e3*d);
     gamma = 1e-7;
     for i=1:5e3
-        i;
         costs(i)     = cost(A,n,solution{i});
         D{i}  = CPTP_project(solution{i}-gradient(A,n,solution{i}))-solution{i};
 %         if norm(D{i})<1e-10
@@ -28,6 +27,6 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         end
     end
 
-    choi_ml_vec = solution{end};
+    choi_ml_vec = CPTP_project(solution{end});
 end
 
