@@ -7,13 +7,13 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec )
     p    = {0};
     q    = {0};
     y    = {0};
-    while GAP(end) >= 1e-12 
+    while GAP(end) >= 1e-16 
 %     for k=1:1000
 %         x{k+1}=PSD_project(TP_project(x{k}));              % ALTERNATING
 %         x{k+1}=0.5*PSD_project(x{k})+0.5*TP_project(x{k});   % AVERAGED 
-        y{k}   = TP_project(x{k}+p{k}); % DIJKSTRA
+        y{k}   = PSD_project(x{k}+p{k}); % DIJKSTRA
         p{k+1} = x{k}+p{k}-y{k};
-        x{k+1} = PSD_project(y{k}+q{k});
+        x{k+1} = TP_project(y{k}+q{k});
         q{k+1} = y{k}+q{k}-x{k+1};
 %         GAP    = norm(x{end-1}-x{end});      
         if k>2

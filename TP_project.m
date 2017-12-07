@@ -15,4 +15,3 @@
         S = eye(d*d*d*d)- (1.0/d) * (M'*M);
         projected_choi_vec = S*choi_vec + (1.0/d)*M'*b;
     end
-
