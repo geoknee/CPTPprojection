@@ -1,0 +1,34 @@
+% run 
+parpool(3)
+
+parfor method=['gdapB','DIA','mosek']:
+    for d=2:6
+        dir = sprintf('./benchmarking_results/d%i',d);
+        
+        A = GGM_IO(d);
+        
+        for i - 1:100
+            load([dir,'dataset',i])
+            
+            switch method
+                case'gdapB'
+                    tic;
+                    [choi_ml_vec,solution, costs] = gdapB(A,n);
+                    time = toc;
+                case 'DIA'
+                    tic;
+                    [choi_ml_vec, solution, costs] = DIA(A,n);
+                    time = toc;
+                case 'mosek'  
+                    tic;
+                    [choi_ml_vec] = mosek(A,n);
+                    time = toc;
+                    solution=[]; costs = []; % cannot currently extract these
+            end
+        save([method,'_results'],'time','choi_ml_vec','costs','solution')
+        end
+    end
+end
+
+
+

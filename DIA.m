@@ -13,8 +13,15 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         R   = reshape(gradient(A, n , solution{k}),[],d*d);
         R = (e*R)+(1-e)*eye(d*d); % dilute
         rho_new = R*rho*R;
+        if prod(isfinite(partial_trace(rho_new))) == 0
+            break
+        end
+
         lambda = sqrtm(partial_trace(rho_new));
         Lambda = kron(eye(d),lambda);
+        if rcond(Lambda) < 1e-10
+            break
+        end
         LI = inv(Lambda);
         rho_new = LI*rho_new*LI;
 %         rho_new = d*rho_new/trace(rho_new);
