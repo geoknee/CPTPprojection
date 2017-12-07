@@ -17,7 +17,7 @@ for d=2:6
         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
-        
+        p               = p/sum(p);
         % n             = mnrnd(1e4,p)';
         % n             = n/sum(n); % activate for multinomial noise
         

@@ -16,7 +16,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         if prod(isfinite(partial_trace(rho_new))) == 0
             break
         end
-
+        % TODO catch singular matrices, too
         lambda = sqrtm(partial_trace(rho_new));
         Lambda = kron(eye(d),lambda);
         if rcond(Lambda) < 1e-10

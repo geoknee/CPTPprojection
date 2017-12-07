@@ -3,7 +3,7 @@ function [ A ] = GGM_IO( d )
 %   Detailed explanation goes here
     
 % generate GGM inputs and outputs
-    preparations = cell(d*d-1);
+    preparations = cell(1,d*d-1);
     i = 1;
     for j=0:d-1
         for k=0:d-1

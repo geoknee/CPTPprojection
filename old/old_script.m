@@ -1,4 +1,4 @@
-for d=2:5   
+for d=2:2   
     close all; clear A; clear n;
     % num_qubits = 1;
     % initialise ground truth
