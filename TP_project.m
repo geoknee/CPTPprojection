@@ -4,15 +4,15 @@
         d = sqrt(sqrt(size(choi_vec)));
         d = d(1);
         % initialise A. TODO precompute this!
-        A = zeros([d*d,d*d*d*d]);
+        M = zeros([d*d,d*d*d*d]);
         for i=1:d
             e = zeros(1,d);
             e(i)  = 1;
             B = kron(eye(d),e);
-            A = A + kron(B,B);
+            M = M + kron(B,B);
         end
         b = reshape(eye(d),[],1);
-        S = eye(d*d*d*d)- (1.0/d) * (A'*A);
-        projected_choi_vec = S*choi_vec + (1.0/d)*A'*b;
+        S = eye(d*d*d*d)- (1.0/d) * (M'*M);
+        projected_choi_vec = S*choi_vec + (1.0/d)*M'*b;
     end
 
