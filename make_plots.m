@@ -1,17 +1,18 @@
 % read in 100 running times for each method, for each d.
-dmax = 3;
+clear;close all;
+dmax = 5;
+ensemble_size =10;
+gdapB_times = zeros(ensemble_size,dmax);
+mosek_times = zeros(ensemble_size,dmax);
+DIA_times   = zeros(ensemble_size,dmax);
 
-gdapB_times = zeros(100,dmax);
-mosek_times = zeros(100,dmax);
-DIA_times   = zeros(100,dmax);
-
-gdapB_errors = zeros(100,dmax);
-mosek_errors = zeros(100,dmax);
-DIA_errors   = zeros(100,dmax);
+gdapB_errors = zeros(ensemble_size,dmax);
+mosek_errors = zeros(ensemble_size,dmax);
+DIA_errors   = zeros(ensemble_size,dmax);
 
 
 for d=2:dmax
-    for i=1:100
+    for i=1:ensemble_size
         
         dir = sprintf('./benchmarking_results/d%i',d);
         
@@ -48,6 +49,7 @@ errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-gx');
 xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
+set(gca,'YScale','log');
 legend('DIA','gdapB','mosek')
 saveas(gcf,'time.png')
 
@@ -61,6 +63,7 @@ xlim([1.8,dmax+0.2])
 ylim([0,1])
 xlabel 'Hilbert space dimension'
 ylabel 'J distance';
+set(gca,'YScale','log')
 legend('DIA','gdapB','mosek')
 saveas(gcf,'errors.png')
 
