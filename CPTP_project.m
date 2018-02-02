@@ -1,4 +1,4 @@
-function [ projected_choi_vec ] = CPTP_project( choi_vec )
+function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, M  )
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
     x    = {choi_vec};
@@ -14,7 +14,7 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec )
 %         x{k+1}=0.5*PSD_project(x{k})+0.5*TP_project(x{k});   % AVERAGED 
         y{k}   = PSD_project(x{k}+p{k}); % DIJKSTRA
         p{k+1} = x{k}+p{k}-y{k};
-        x{k+1} = TP_project(y{k}+q{k});
+        x{k+1} = TP_project(y{k}+q{k}, MdagM, M);
         q{k+1} = y{k}+q{k}-x{k+1};
 %         GAP    = norm(x{end-1}-x{end});      
         if k>2

@@ -6,7 +6,7 @@ ensemble_size = 10;
 
 for d=2:6
     dir = sprintf('./benchmarking_results/d%i',d);
-    fprintf(char(10));
+    fprintf(newline);
     fprintf('%d ', d);
     A = GGM_IO(d);
     

@@ -5,9 +5,9 @@ addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
 cvx_solver mosek
-for method={'mosek','gdapB','DIA'}
-% for method={'gdapB'}
-    for d=2:6
+% for method={'mosek','gdapB','DIA'}
+for method={'gdapB'}
+    for d=2:3
         fprintf(char(10));
         fprintf('%d ', d);
 
