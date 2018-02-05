@@ -9,7 +9,7 @@ cvx_solver mosek
 for method={'gdapB'}
     for d=2:3
         fprintf(char(10));
-        fprintf('%d ', d);
+        fprintf('%d :', d);
 
         dir = sprintf('./benchmarking_results/d%i',d);
 
@@ -23,6 +23,8 @@ for method={'gdapB'}
                         tic;
                         [choi_ml_vec,solution, costs] = gdapB(A,n);
                         elapsedTime = toc;
+                        semilogy(costs)
+                        hold on
                     case 'DIA'
                         tic;
                         [choi_ml_vec, solution, costs] = DIA(A,n);
@@ -37,6 +39,5 @@ for method={'gdapB'}
         end
     end
 end
-
 
 

@@ -2,3 +2,4 @@ QETLAB-0.9/
 *.mat
 *.png
 *.m~
+*.DS_Store
