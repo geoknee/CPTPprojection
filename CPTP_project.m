@@ -7,7 +7,7 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, M  )
     p    = {0};
     q    = {0};
     y    = {0};
-    while GAP(end) >= 1e-12 
+    while GAP(end) >= 1e-6 
 %     for k=1:1000
 %         x{k+1}=PSD_project(TP_project(x{k}));     % ALTERNATING, seems to be fastest
 %         x{k+1}=TP_project(PSD_project(x{k}));     % alt - ALTERNATING, seems to be fastest
@@ -17,8 +17,9 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, M  )
         x{k+1} = TP_project(y{k}+q{k}, MdagM, M);
         q{k+1} = y{k}+q{k}-x{k+1};
 %         GAP    = norm(x{end-1}-x{end});      
-        if k>10
-            GAP(k)  = norm(p{k-1}-p{k})^2+norm(q{k-1}-q{k})^2+2*p{k-1}'*(x{k}-x{k-1}+2*q{k-1}'*(y{k}-y{k-1}));
+        if k>2
+%             GAP(k)  = norm(p{k-1}-p{k})^2+norm(q{k-1}-q{k})^2+2*p{k-1}'*(x{k}-x{k-1}+2*q{k-1}'*(y{k}-y{k-1}));
+            GAP(k) = norm(q{k-1}-q{k})^2+norm(p{k-1}-p{k})^2;
         end
         k = k + 1;
    end

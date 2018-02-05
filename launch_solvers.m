@@ -4,9 +4,9 @@ addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-cvx_solver mosek
-% for method={'mosek','gdapB','DIA'}
-for method={'gdapB'}
+
+for method={'sdpt3','mosek','gdapB','DIA'}
+% for method={'gdapB'}
     for d=2:3
         fprintf(char(10));
         fprintf('%d :', d);
@@ -23,15 +23,22 @@ for method={'gdapB'}
                         tic;
                         [choi_ml_vec,solution, costs] = gdapB(A,n);
                         elapsedTime = toc;
-                        semilogy(costs)
-                        hold on
+%                         semilogy(costs)
+%                         hold on
                     case 'DIA'
                         tic;
                         [choi_ml_vec, solution, costs] = DIA(A,n);
                         elapsedTime = toc;
-                    case 'mosek'  
+                    case 'mosek'
+                        cvx_solver mosek
                         tic;
                         [choi_ml_vec] = mosek(A,n);
+                        elapsedTime = toc;
+                        solution=[]; costs = []; % cannot currently extract these
+                    case 'sdpt3'
+                        cvx_solver sdpt3
+                        tic;
+                        [choi_ml_vec] = sdpt3(A,n);
                         elapsedTime = toc;
                         solution=[]; costs = []; % cannot currently extract these
                 end
