@@ -13,10 +13,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         B = kron(eye(d),e); 
         M = M + kron(B,B);
     end
+    M = sparse(M);
     MdagM = M'*M; 
     
     
-    choi_init = eye(d*d)/d;
+    choi_init = sparse(eye(d*d)/d);
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
@@ -27,7 +28,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         costs(i)     = cost(A,n,solution{i});
         D{i}         = CPTP_project(solution{i}-(1/mu)*gradient(A,n,solution{i}), MdagM, M)-solution{i};
 %         sum(svd(D{i}))
-        if sum(svd(D{i}))<1e-4
+        if sum(svd(D{i}))<1e-5
 %         if norm(D{i})<1e-3
 % %             i
             break

@@ -36,6 +36,7 @@ function [ A ] = GGM_IO( d )
         end
     end
 
+    A = sparse(A);
     
 end
 
