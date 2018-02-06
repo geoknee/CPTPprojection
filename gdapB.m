@@ -21,24 +21,27 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 1e-7;
-    mu = 1; % inverse learning rate?
-    for i=1:5e3
+    gamma = 1e-4; % higher means more demanding line search
+    mu = 1e2; % inverse learning rate
+    for i=1:5e5
+        mu = 1.05*mu;
 %         i;
-        costs(i)     = cost(A,n,solution{i});
+        costs(i)     = 0; % just debugging
+%         costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
         D{i}         = CPTP_project(solution{i}-(1/mu)*gradient(A,n,solution{i}), MdagM, M)-solution{i};
 %         sum(svd(D{i}))
-        if sum(svd(D{i}))<1e-5
-%         if norm(D{i})<1e-3
+%         if sum(svd(D{i}))<1e-15 % no point using trace norm because these
+%         are vectors
+%         if norm(D{i})<1e-13
 % %             i
-            break
-        end
+%             break
+%         end
 %         if norm(D{i})<1e-10   
 %             break
 %         end
         alpha = 1;
         while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*gradient(A,n,solution{i}))
-            alpha = 0.5 * alpha ;
+            alpha = 0.2 * alpha ;
         end
         solution{i+1} = solution{i} + alpha*D{i};
 %         if i>1
@@ -47,6 +50,15 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %                 break
 %             end
 %         end
+%     costs(end)
+        if i>1
+            if norm(solution{i}-solution{i-1})<1e-12
+                i
+                break
+            end
+        end
+        
+        
     end
 
     choi_ml_vec = CPTP_project(solution{end}, MdagM, M);

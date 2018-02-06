@@ -4,16 +4,18 @@ addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-
-% for method={'sdpt3','mosek','gdapB','DIA'}
+AA
+% for method={'mosek','gdapB','DIA','sdpt3'}
 for method={'gdapB'}
-    for d=4:4
+    for d=2:4
         fprintf(char(10));
         fprintf('%d :', d);
 
         dir = sprintf('./benchmarking_results/d%i',d);
 
-        A = GGM_IO(d);
+         A = PM_minimal(d);
+%          A = GGMall_IO(d);
+        
         for i = 1:ensemble_size % total number of simulated datasets
             fprintf('%d ', i); 
             load([dir,'/dataset',num2str(i)]);
@@ -21,7 +23,7 @@ for method={'gdapB'}
                 switch char(method)
                     case'gdapB'
                         tic;
-                        [choi_ml_vec,solution, costs] = gdapB(A,n);
+                        [choi_ml_vec, solution, costs] = gdapB(A,n);
                         elapsedTime = toc;
 %                         semilogy(costs)
 %                         hold on

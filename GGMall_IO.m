@@ -1,15 +1,12 @@
-function [ A ] = GGM_IO( d )
-%GGM_IO preparations are Gellman eigenstates, measurements are Gellman
-%expectations.
-% the problem with this approach is that expectations can be negative, i.e.
-% they are not probabilities! 
+function [ A ] = GGMall_IO( d )
+%GGMall_IO constructs a prepare/measure matrix featuring all eigenstates of
+%all but the trivial GGM matrices. so total number of combinations of
+%operators is d*(d*d-1) squared: d^6 overall.
 %   Detailed explanation goes here
     
 % generate GGM inputs and outputs
     preparations = cell(1,d*(d*d-1));
-    measurements = cell(1,d*d-1);
-    i = 1; % indexes preparations
-    m = 1; % indexes measurements
+    i = 1;
     for j=0:d-1
         for k=0:d-1
             if j==0 && k==0
@@ -21,12 +18,10 @@ function [ A ] = GGM_IO( d )
                 preparations{i} = V(:,l)*V(:,l)';
                 i = i + 1;
             end
-            measurements{m}=G;
-            m = m + 1;
         end
     end
     
-%     measurements = preparations;
+    measurements = preparations;
     
     % construct GGM I/O matrix
     i = 1;

@@ -11,7 +11,7 @@
 %             B = kron(eye(d),e); % this is expensice
 %             M = M + kron(B,B);  % this is expensive (kron)
 %         end
-        b = reshape(eye(d),[],1);
+        b = sparse(reshape(eye(d),[],1)); % TODO precompute this too
         S = eye(d*d*d*d)- (1.0/d) * MdagM;
         projected_choi_vec = S*choi_vec + (1.0/d)*M'*b;
     end

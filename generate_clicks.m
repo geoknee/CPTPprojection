@@ -4,11 +4,24 @@ addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
+
 for d=2:6
     dir = sprintf('./benchmarking_results/d%i',d);
     fprintf(newline);
     fprintf('%d ', d);
-    A = GGM_IO(d);
+    A = PM_minimal(d);
+%     A = GGMall_IO(d);
+    
+    % precompute matrices for TP_project
+    M = zeros([d*d,d*d*d*d]);
+    for i=1:d
+        e = zeros(1,d);
+        e(i)  = 1;
+        B = kron(eye(d),e); 
+        M = M + kron(B,B);
+    end
+    M = sparse(M);
+    MdagM = M'*M; 
     
     
     for i=1:ensemble_size
@@ -16,7 +29,7 @@ for d=2:6
         % generate random ground truth
         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
         choi_ground_vec = reshape(choi_ground,[],1);
-        choi_ground_vec = CPTP_project(choi_ground_vec);
+        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, M);
         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
