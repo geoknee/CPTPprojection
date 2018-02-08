@@ -1,12 +1,12 @@
 function [ g ] = gradient( A, n ,choi_vec)
-%UNTITLED9 Summary of this function goes here
-%   Detailed explanation goes here
-    p   = A*choi_vec;
-    p   = abs(p/sum(p));
-%     eta = n./p;
-%     g   = -(eta.'*A).';
-%     g = -A'*eta;
-    
+%gradient: calulates the gradient of the cost function we try to minimize
+% A             : (n_measurements x d^4 ) dimensional feature matrix
+% n             : observed counts n
+% choi_vec      : (d^4 x 1) vectorised choi matrix (candidate process)
+% g             : (d^4 x 1) is the gradient of the negative log-likelihood 
+  
+    p   = real(A*choi_vec);
+
     g = -A'*(n./p);
-    g =g / length(n); % regularise the gradient
+
 end

@@ -1,17 +1,20 @@
-    function [ projected_choi_vec ] = TP_project( choi_vec, MdagM, M)
-    %UNTITLED6 Summary of this function goes here
-    %   Detailed explanation goes here
-        d = sqrt(sqrt(size(choi_vec)));
-        d = d(1);
-%         % initialise A. TODO precompute this!
-%         M = zeros([d*d,d*d*d*d]);
-%         for i=1:d
-%             e = zeros(1,d);
-%             e(i)  = 1;
-%             B = kron(eye(d),e); % this is expensice
-%             M = M + kron(B,B);  % this is expensive (kron)
-%         end
-        b = sparse(reshape(eye(d),[],1)); % TODO precompute this too
-        S = eye(d*d*d*d)- (1.0/d) * MdagM;
-        projected_choi_vec = S*choi_vec + (1.0/d)*M'*b;
-    end
+function [ projected_choi_vec ] = TP_project( choi_vec, MdagM, Mdagb)
+%TP_projectt: project a matrix into the set of trace preserving maps
+% choi_vec          : is a vector with dimensions (d^4 x 1).
+% MdagM
+% b
+% M                 : helper matrices, previously computed, 
+%                   : which are used in the TP projection.
+%projected_choi_vec : (d^4 x 1) which represents a vectorised TP Choi
+%                   : matrix
+    d = sqrt(sqrt(size(choi_vec)));
+    d = d(1);
+    
+%     
+%     S = sparse(eye(d*d*d*d)- (1.0/d) * MdagM);
+%     projected_choi_vec = S*choi_vec + (1.0/d)*Mdagb;
+    
+    
+    projected_choi_vec = choi_vec -(1/d)*MdagM*choi_vec + (1.0/d)*Mdagb;
+    
+end

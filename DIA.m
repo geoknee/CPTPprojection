@@ -1,5 +1,5 @@
 function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
-%UNTITLED Summary of this function goes here
+%DIA: diluted RrhoR algorithm 
 %   here we follow Anis and Lvovsky NJP 2012
     d = sqrt(sqrt(size(A)));
     d = d(2);

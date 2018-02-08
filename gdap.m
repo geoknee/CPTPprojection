@@ -1,5 +1,5 @@
 function [ choi_ml_vec, outside_solution, inside_solution, outside_costs, inside_costs ] = gdap( A,n )
-%UNTITLED10 Summary of this function goes here
+%gdap projected gradient descent algorithm
 %   Detailed explanation goes here
     d = sqrt(sqrt(size(A)));
     d = d(2);

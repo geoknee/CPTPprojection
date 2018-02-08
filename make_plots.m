@@ -1,7 +1,7 @@
-% read in 100 running times for each method, for each d.
+% read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
 dmax = 4;
-ensemble_size =10;
+ensemble_size =20;
 gdapB_times = zeros(ensemble_size,dmax);
 mosek_times = zeros(ensemble_size,dmax);
 sdpt3_times = zeros(ensemble_size,dmax);
@@ -17,8 +17,10 @@ for d=2:dmax
     for i=1:ensemble_size
         
         dir = sprintf('./benchmarking_results/d%i',d);
-        
+        clear choi_ground
         load([dir,'/dataset',num2str(i)]);
+        
+        clear choi_ml_vec
         
         load([dir,'/DIA_results',num2str(i)]);
         DIA_times(i,d)  = elapsedTime;
@@ -43,10 +45,10 @@ for d=2:dmax
         
         load([dir,'/sdpt3_results',num2str(i)]);
         sdpt3_times(i,d) = elapsedTime;    
-        choi_mosek        = reshape(choi_ml_vec,[],d*d);
-        sdpt3_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_mosek/trace(choi_mosek));
+        choi_sdpt3        = reshape(choi_ml_vec,[],d*d);
+        sdpt3_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_sdpt3/trace(choi_sdpt3));
         
-        clear choi_ml_vec
+        
     end
 end
 

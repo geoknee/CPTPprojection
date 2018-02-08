@@ -1,6 +1,14 @@
-function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, M  )
-%UNTITLED7 Summary of this function goes here
-%   Detailed explanation goes here
+function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, Mdagb  )
+%CPTP_projectt: project a matrix into the set of CPTP maps
+% CPTP stands for completely positive trace preserving
+% choi_vec          : is a vector with dimensions (d^4 x 1).
+% MdagM
+% b
+% M                 : helper matrices, previously computed, 
+%                   : which are used in the TP projection.
+%projected_choi_vec : (d^4 x 1) which represents a vectorised CPTP Choi
+%                   : matrix
+
     x    = {choi_vec};
     GAP  = (1.0);
     k    = 1;
@@ -14,7 +22,7 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, M  )
 %         x{k+1}=0.5*PSD_project(x{k})+0.5*TP_project(x{k});   % AVERAGED 
         y{k}   = PSD_project(x{k}+p{k}); % DIJKSTRA
         p{k+1} = x{k}+p{k}-y{k};
-        x{k+1} = TP_project(y{k}+q{k}, MdagM, M);
+        x{k+1} = TP_project(y{k}+q{k}, MdagM, Mdagb);
         q{k+1} = y{k}+q{k}-x{k+1};
 %         GAP    = norm(x{end-1}-x{end});      
         if k>2

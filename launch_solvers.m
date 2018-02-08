@@ -1,13 +1,19 @@
-% run 
+% use a varitey of algorithms to find the maximum likelihood process 
+% from various datasets 
 % parpool(3)
+clear all
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 10;
+ensemble_size = 20;
 
-AA
+for d=2:4
+    for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
-for method={'gdapB'}
-    for d=2:4
+% for method={'gdapB'}
+% for method = {'sdpt3'}
+        fprintf(char(10));
+        fprintf(method{1});
+
         fprintf(char(10));
         fprintf('%d :', d);
 

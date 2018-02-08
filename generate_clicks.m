@@ -1,11 +1,10 @@
 % script to generate a number of simulated datasets
-% for varying dimension and using the GGM I/O matrix
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 10;
+ensemble_size = 100;
 
 
-for d=2:6
+for d=2:4
     dir = sprintf('./benchmarking_results/d%i',d);
     fprintf(newline);
     fprintf('%d ', d);
@@ -20,8 +19,9 @@ for d=2:6
         B = kron(eye(d),e); 
         M = M + kron(B,B);
     end
-    M = sparse(M);
-    MdagM = M'*M; 
+    MdagM = sparse(M'*M);
+    b = sparse(reshape(eye(d),[],1));
+    Mdagb = sparse(M'*b);
     
     
     for i=1:ensemble_size
@@ -29,11 +29,11 @@ for d=2:6
         % generate random ground truth
         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
         choi_ground_vec = reshape(choi_ground,[],1);
-        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, M);
+        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
-        p               = p/sum(p);
+%         p               = p/sum(p);
         % n             = mnrnd(1e4,p)';
         % n             = n/sum(n); % activate for multinomial noise
         

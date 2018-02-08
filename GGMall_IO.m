@@ -2,7 +2,6 @@ function [ A ] = GGMall_IO( d )
 %GGMall_IO constructs a prepare/measure matrix featuring all eigenstates of
 %all but the trivial GGM matrices. so total number of combinations of
 %operators is d*(d*d-1) squared: d^6 overall.
-%   Detailed explanation goes here
     
 % generate GGM inputs and outputs
     preparations = cell(1,d*(d*d-1));
