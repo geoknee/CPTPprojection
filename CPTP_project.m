@@ -3,8 +3,7 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, Mdagb  )
 % CPTP stands for completely positive trace preserving
 % choi_vec          : is a vector with dimensions (d^4 x 1).
 % MdagM
-% b
-% M                 : helper matrices, previously computed, 
+% Mdagb             : helper matrices, previously computed 
 %                   : which are used in the TP projection.
 %projected_choi_vec : (d^4 x 1) which represents a vectorised CPTP Choi
 %                   : matrix

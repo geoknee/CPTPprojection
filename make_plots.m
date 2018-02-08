@@ -54,30 +54,38 @@ end
 
 figure; hold on;
 
-errorbar(2:dmax,mean(DIA_times(:,2:end)),std(DIA_times(:,2:end)),'-rd');
-errorbar(2:dmax,mean(gdapB_times(:,2:end)),std(gdapB_times(:,2:end)),'-b*');
-errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-gx');
-errorbar(2:dmax,mean(sdpt3_times(:,2:end)),std(sdpt3_times(:,2:end)),'-kx');
+errorbar(2:dmax,mean(DIA_times(:,2:end)),std(DIA_times(:,2:end)),'-d','LineWidth',2);
+errorbar(2:dmax,mean(gdapB_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
+errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-x','LineWidth',2);
+errorbar(2:dmax,mean(sdpt3_times(:,2:end)),std(sdpt3_times(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
 set(gca,'YScale','log');
 legend('DIA','gdapB','mosek','sdpt3')
+box on
+grid on
+set(gca,'fontsize',18)
 saveas(gcf,'time.png')
+saveas(gcf,'time.eps','epsc')
 
 
 figure; hold on;
 
-errorbar(2:dmax,mean(DIA_errors(:,2:end)),std(DIA_errors(:,2:end)),'-rd');
-errorbar(2:dmax,mean(gdapB_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-b*');
-errorbar(2:dmax,mean(mosek_errors(:,2:end)),std(mosek_errors(:,2:end)),'-gx');
-errorbar(2:dmax,mean(sdpt3_errors(:,2:end)),std(sdpt3_errors(:,2:end)),'-kx');
+errorbar(2:dmax,mean(DIA_errors(:,2:end)),std(DIA_errors(:,2:end)),'-d','LineWidth',2);
+errorbar(2:dmax,mean(gdapB_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
+errorbar(2:dmax,mean(mosek_errors(:,2:end)),std(mosek_errors(:,2:end)),'-x','LineWidth',2);
+errorbar(2:dmax,mean(sdpt3_errors(:,2:end)),std(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 ylim([0,1])
 xlabel 'Hilbert space dimension'
 ylabel 'J distance';
 set(gca,'YScale','log')
 legend('DIA','gdapB','mosek','sdpt3')
+box on
+grid on
+set(gca,'fontsize',18)
 saveas(gcf,'errors.png')
+saveas(gcf,'errors.eps','epsc')
 
 

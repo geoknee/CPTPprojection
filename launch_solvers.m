@@ -7,10 +7,10 @@ addpath('./QETLAB-0.9/helpers')
 ensemble_size = 20;
 
 for d=2:4
-    for method={'mosek','gdapB','DIA'}
+%     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method={'gdapB'}
-% for method = {'sdpt3'}
+for method = {'DIA'}
         fprintf(char(10));
         fprintf(method{1});
 

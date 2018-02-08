@@ -6,9 +6,9 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
-    e = 0.1;  
-    costs = zeros(1,1e2);
-    for k=1:1e2
+    e = 0.0001;  
+%     costs = zeros(1,1e2);
+    for k=1:1e5
         costs(k)     = cost(A,n,solution{k});
         rho = reshape(solution{k},[],d*d) ;
         R   = reshape(gradient(A, n , solution{k}),[],d*d);
@@ -27,6 +27,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         rho_new = LI*rho_new*LI;
 %         rho_new = d*rho_new/trace(rho_new);
         solution{k+1} = reshape(rho_new,[],1);
+        costs(end)
         if k>20
             if var(costs(k-20:k)) < 1e-12
                 break
