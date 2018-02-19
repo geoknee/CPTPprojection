@@ -6,9 +6,9 @@ addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 20;
 
-for d=2:4
+for d=2:2
 %     for method={'mosek','gdapB','DIA'}
-% for method={'mosek','gdapB','DIA','sdpt3'}
+% for method={'mosek','gdapB','sdpt3'}
 % for method={'gdapB'}
 for method = {'DIA'}
         fprintf(char(10));
@@ -21,7 +21,7 @@ for method = {'DIA'}
 
          A = PM_minimal(d);
 %          A = GGMall_IO(d);
-        
+      
         for i = 1:ensemble_size % total number of simulated datasets
             fprintf('%d ', i); 
             load([dir,'/dataset',num2str(i)]);

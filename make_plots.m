@@ -1,6 +1,6 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 4;
+dmax = 5;
 ensemble_size =20;
 gdapB_times = zeros(ensemble_size,dmax);
 mosek_times = zeros(ensemble_size,dmax);
@@ -63,6 +63,7 @@ xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
 set(gca,'YScale','log');
 legend('DIA','gdapB','mosek','sdpt3')
+% legend('gdapB','mosek','sdpt3')
 box on
 grid on
 set(gca,'fontsize',18)
@@ -82,6 +83,7 @@ xlabel 'Hilbert space dimension'
 ylabel 'J distance';
 set(gca,'YScale','log')
 legend('DIA','gdapB','mosek','sdpt3')
+% legend('gdapB','mosek','sdpt3')
 box on
 grid on
 set(gca,'fontsize',18)
