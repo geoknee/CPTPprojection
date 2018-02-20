@@ -1,6 +1,6 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 5;
+dmax = 2;
 ensemble_size =20;
 gdapB_times = zeros(ensemble_size,dmax);
 mosek_times = zeros(ensemble_size,dmax);

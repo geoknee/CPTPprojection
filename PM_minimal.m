@@ -66,7 +66,5 @@ function [ A ] = PM_minimal( d )
 
     A = sparse(A);
     
-    
-
 end
 
