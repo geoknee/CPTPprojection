@@ -91,3 +91,51 @@ saveas(gcf,'errors.png')
 saveas(gcf,'errors.eps','epsc')
 
 
+
+figure; hold on;
+scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')
+scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','gdapB')
+scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
+scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
+
+legend('show','Location','southwest')
+
+ax = gca;
+ax.ColorOrderIndex = 1;
+
+scatter(DIA_errors(:,3),DIA_times(:,3),'<','filled')
+scatter(gdapB_errors(:,3),gdapB_times(:,3),'<','filled')
+scatter(mosek_errors(:,3),mosek_times(:,3),'<','filled')
+scatter(sdpt3_errors(:,3),sdpt3_times(:,3),'<','filled')
+
+ax = gca;
+ax.ColorOrderIndex = 1;
+
+scatter(DIA_errors(:,4),DIA_times(:,4),'d','filled')
+scatter(gdapB_errors(:,4),gdapB_times(:,4),'d','filled')
+scatter(mosek_errors(:,4),mosek_times(:,4),'d','filled')
+scatter(sdpt3_errors(:,4),sdpt3_times(:,4),'d','filled')
+
+ax = gca;
+ax.ColorOrderIndex = 1;
+
+scatter(DIA_errors(:,5),DIA_times(:,5),'p','filled')
+scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
+scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
+scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
+
+
+set(gca,'xscale','log')
+set(gca,'yscale','log')
+
+xlabel 'error'
+ylabel 'time (s)'
+
+box on
+grid on
+
+
+
+set(gca,'fontsize',18)
+saveas(gcf,'scatter.png')
+saveas(gcf,'scatter.eps','epsc')
