@@ -6,7 +6,7 @@ addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 20;
 
-for d=2:2
+for d=2:5
 %     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','sdpt3'}
 % for method={'gdapB'}

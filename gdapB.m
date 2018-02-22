@@ -28,8 +28,9 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     for i=1:5e5
 %         mu = 1.05*mu;
 %         i;
-        costs(i)     = 0; % just debugging
-%         costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
+%         costs(i)     = 0; % just debugging
+        costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
+%         costs(end)
         D{i}         = CPTP_project(solution{i}-(1/mu)*gradient(A,n,solution{i}), MdagM, Mdagb)-solution{i};
 %         sum(svd(D{i}))
 %         if sum(svd(D{i}))<1e-15 % no point using trace norm because these
@@ -38,6 +39,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         if norm(D{i})<(1e-3)*1/d
 %          if sum(svd(D{i}))<1e-4
 %             i
+            costs(end)
             break
         end
 %         if norm(D{i})<1e-10   

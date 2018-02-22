@@ -11,7 +11,7 @@ function [ projected_choi_vec ] = PSD_project( choi_vec )
     d = d(1);
     choi = reshape(choi_vec,[],d);
        
-    choi = (choi + choi')/2;
+    choi = (choi + choi')/2; % project onto Hermitian matrices
     
     
     [V,D] = eig(choi);
