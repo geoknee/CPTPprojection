@@ -14,31 +14,31 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 %         k
 %         costs(k)
         rho = reshape(solution{k},[],d*d) ;
+        rho = 0.5*rho + 0.5*rho'; %enforce hermitian
         R = 0;
         for i=1:length(n)
-            Rn   = reshape(A(i,:),[],d*d);
+            Rn   = conj(reshape(A(i,:),[],d*d)); % conj is important
             Rd   = real(trace(Rn*rho));
-            R = R + n(i)*Rn*1.0/Rd; %n(i) missing from Anis paper since they do not bin their data, all outcomes unique
+            R = R + n(i)*Rn*1.0/Rd; %n(i) missing from Anis paper since they do not bin their data, all outcomes unique.
+            % weirdly the minus sign makes a lot of difference...
         end
         e = 1; 
-        R = (e*R)+(1-e)*eye(d*d); % dilute
-        lambda  =  sqrtm(partial_trace(R*rho*R));
+        Rp = (e*R)+(1-e)*eye(d*d); % dilute
+        lambda  =  sqrtm(partial_trace(Rp*rho*Rp));
         LI      =  kron(inv(lambda),eye(d));
-        while cost(A,n,reshape(LI*R*rho*R*LI,[],1)) > cost(A,n,reshape(rho,[],1))
-            e       =  e * 0.2;
+        while cost(A,n,reshape(LI*Rp*rho*Rp*LI,[],1)) > cost(A,n,reshape(rho,[],1))
+            e       =  e * 0.5;
             if e < 1e-100
                 break
             end
-            R       =  (e*R)+(1-e)*eye(d*d);
-            lambda  =  sqrtm(partial_trace(R*rho*R));
-            lambda  = eye(d);
+            Rp       =  (e*R)+(1-e)*eye(d*d);
+            lambda  =  sqrtm(partial_trace(Rp*rho*Rp));
             LI      =  kron(inv(lambda),eye(d)); 
 %             Y  = kron(partial_trace(0.5*R*rho+0.5*rho*R),eye(d));
 %             LI = (1+e)*eye(d*d)- e * Y; % equation (A6) of Anis et al
         end
 
-        rho_new = LI*R*rho*R*LI;
-
+        rho_new = LI*Rp*rho*Rp*LI;
         solution{k+1} = reshape(rho_new,[],1);
 %         norm(rho_new-rho)
 

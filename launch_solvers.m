@@ -37,6 +37,8 @@ for method = {'DIA'}
                         tic;
                         [choi_ml_vec, solution, costs] = DIA(A,n);
                         elapsedTime = toc;
+                        semilogy(costs)
+                        hold on
                     case 'mosek'
                         cvx_solver mosek
                         tic;
