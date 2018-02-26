@@ -20,9 +20,9 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 1e-9; % higher means more demanding line search
+    gamma = 1e-8; % higher means more demanding line search
     
-    Lscale = norm(gradient(A,n,choi_init));
+%     Lscale = norm(gradient(A,n,choi_init));
     
     mu = 1; % inverse learning rate
     for i=1:5e5
@@ -36,12 +36,12 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         if sum(svd(D{i}))<1e-15 % no point using trace norm because these
 %         are vectors
 %         norm(D{i})
-        if norm(D{i})<(1e-3)*1/d
-%          if sum(svd(D{i}))<1e-4
-%             i
-            costs(end)
-            break
-        end
+%         if norm(D{i})<(1e-4)%*1/d
+% %          if sum(svd(D{i}))<1e-4
+% %             i
+% %             costs(end)
+%             break
+%         end
 %         if norm(D{i})<1e-10   
 %             break
 %         end
@@ -50,6 +50,9 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
             alpha = 0.2 * alpha ;
         end
         solution{i+1} = solution{i} + alpha*D{i};
+        if norm(solution{i+1}-solution{i})<1e-6
+            break
+        end
 %         if i>1
 % %             if var(costs(i-10:i)) < 1e-13
 %             if norm(alpha*D{i})<1e-14

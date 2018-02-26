@@ -98,7 +98,7 @@ scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','gdapB')
 scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
 scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
 
-legend('show','Location','southwest')
+legend('show','Location','northwest')
 
 ax = gca;
 ax.ColorOrderIndex = 1;
