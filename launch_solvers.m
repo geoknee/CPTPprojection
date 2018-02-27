@@ -4,11 +4,11 @@
 clear all
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 20;
+ensemble_size = 5;
 
 for d=2:5
 %     for method={'mosek','gdapB','DIA'}
-% for method={'mosek','gdapB','sdpt3'}
+% for method={'mosek','gdapB','DIA','sdpt3'}
 % for method={'gdapB'}
 for method = {'DIA'}
         fprintf(char(10));

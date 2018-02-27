@@ -1,6 +1,6 @@
 function [ projected_choi_vec ] = PSD_project( choi_vec )
 %PSD_projectt: project a matrix into the set of completely positive maps
-% we rely on Choi's theorem, that the Choi matrix's poitivty <--> the
+% we rely on Choi's theorem, that the Choi matrix's positivity <--> the
 % complete positivity of the map itself. Hence we use a projection of the
 % Choi matrix onto the set of positive semidefinite matrices.
 % choi_vec          : is a vector with dimensions (d^4 x 1).

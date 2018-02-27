@@ -9,11 +9,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     for i=1:d
         e = zeros(1,d);
         e(i)  = 1;
-        B = kron(eye(d),e); 
+        B = kron(speye(d),e); 
         M = M + kron(B,B);
     end
     MdagM = sparse(M'*M);
-    b = sparse(reshape(eye(d),[],1));
+    b = reshape(speye(d),[],1);
     Mdagb = sparse(M'*b);
     
     choi_init = sparse(eye(d*d)/d);
@@ -25,7 +25,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %     Lscale = norm(gradient(A,n,choi_init));
     
     mu = 1; % inverse learning rate
-    for i=1:5e5
+    for i=1:1e10
 %         mu = 1.05*mu;
 %         i;
 %         costs(i)     = 0; % just debugging
@@ -46,13 +46,18 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         alpha = 1;
-        while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*gradient(A,n,solution{i}))
+%         while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*gradient(A,n,solution{i}))
+        while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) % forgo Armijo condition to save gradient calculations
+
             alpha = 0.2 * alpha ;
         end
         solution{i+1} = solution{i} + alpha*D{i};
-        if norm(solution{i+1}-solution{i})<1e-6
+        if norm(solution{i+1}-solution{i})<1e-9
             break
         end
+%         if cost(A,n,solution{i})-cost(A,n,solution{i+1})<1e-9
+%             break
+%         end
 %         if i>1
 % %             if var(costs(i-10:i)) < 1e-13
 %             if norm(alpha*D{i})<1e-14

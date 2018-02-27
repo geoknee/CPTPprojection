@@ -9,7 +9,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 
-    for k=1:2000
+    for k=1:1e10
         costs(k)     = cost(A,n,solution{k});
 %         k
 %         costs(k)
@@ -43,14 +43,17 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         solution{k+1} = reshape(rho_new,[],1);
 %         norm(rho_new-rho)
 
-        if norm(rho_new-rho,'fro')<1e-6
+        if norm(rho_new-rho,'fro')<1e-9
 %             k
 %             costs(end)
 %             partial_trace(rho_new)
 %             eig(rho_new)
             break
-            
         end
+        
+%         if cost(A,n,solution{k})-cost(A,n,solution{k+1})<1e-9
+%             break
+%         end
         
     end
     choi_ml_vec = solution{end};
