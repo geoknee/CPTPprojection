@@ -43,7 +43,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         solution{k+1} = reshape(rho_new,[],1);
 %         norm(rho_new-rho)
 
-        if norm(rho_new-rho,'fro')<1e-9
+        if norm(rho_new-rho,'fro')<1e-6 %warning, making this very strict will result in very large datafiles
 %             k
 %             costs(end)
 %             partial_trace(rho_new)

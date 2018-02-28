@@ -20,7 +20,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 1e-8; % higher means more demanding line search
+    gamma = 0.01;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
@@ -31,7 +31,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         costs(i)     = 0; % just debugging
         costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
 %         costs(end)
-        D{i}         = CPTP_project(solution{i}-(1/mu)*gradient(A,n,solution{i}), MdagM, Mdagb)-solution{i};
+        G = gradient(A,n,solution{i});
+        D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
 %         sum(svd(D{i}))
 %         if sum(svd(D{i}))<1e-15 % no point using trace norm because these
 %         are vectors
@@ -46,13 +47,13 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         alpha = 1;
-%         while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*gradient(A,n,solution{i}))
-        while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) % forgo Armijo condition to save gradient calculations
+        while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*G)
+%         while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) % forgo Armijo condition to save gradient calculations
 
-            alpha = 0.2 * alpha ;
+            alpha = 0.8 * alpha ;
         end
         solution{i+1} = solution{i} + alpha*D{i};
-        if norm(solution{i+1}-solution{i})<1e-9
+        if norm(solution{i+1}-solution{i})<1e-6
             break
         end
 %         if cost(A,n,solution{i})-cost(A,n,solution{i+1})<1e-9
