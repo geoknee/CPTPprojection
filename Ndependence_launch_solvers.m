@@ -6,7 +6,7 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:3
+for d=2:2
 %     for method={'mosek','gdapB','DIA'}
 for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'DIA'}
@@ -20,6 +20,8 @@ for method={'mosek','gdapB','DIA','sdpt3'}
 %          A = GGMall_IO(d);
         for N=[2,4,8,16,32,64,128,256,512,1024,2048,4096]
             dir = sprintf('./Ndependence_benchmarking_results/d%i/N%i',d,N);
+            fprintf('[%d] ', N);
+            fprintf(newline);
             for i = 1:ensemble_size % total number of simulated datasets
                 fprintf('%d ', i); 
                 load([dir,'/dataset',num2str(i)]);

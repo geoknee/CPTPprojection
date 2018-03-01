@@ -8,8 +8,7 @@ ensemble_size = 20;
 
 for d=2:5
 %     for method={'mosek','gdapB','DIA'}
-% for method={'mosek','gdapB','DIA','sdpt3'}
-for method={'sedumi'}
+for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'DIA'}
         fprintf(char(10));
         fprintf(method{1});

@@ -4,6 +4,14 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     d = sqrt(sqrt(size(A)));
     d = d(2);
     
+    for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+        n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise
+    end
+%     n = reshape(n,[],2*d*d);% normalise clicks
+%     for i=1:d*d
+%         n(:,i) = n(:,i)/sum(n:,i)
+%     end
+    n = reshape(n,[],1);
     % precompute matrices for TP_project
     M = zeros([d*d,d*d*d*d]);
     for i=1:d
