@@ -72,13 +72,13 @@ xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
 set(gca,'YScale','log');
-legend('DIA','gdapB','mosek','sdpt3','sedumi')
+legend('DIA','gdapB','mosek','sdpt3')
 % legend('gdapB','mosek','sdpt3')
 box on
 grid on
 set(gca,'fontsize',18)
-saveas(gcf,'time.png')
-saveas(gcf,'time.eps','epsc')
+saveas(gcf,'./plots/time.png')
+saveas(gcf,'./plots/time.eps','epsc')
 
 
 figure; hold on;
@@ -93,13 +93,13 @@ ylim([0,1])
 xlabel 'Hilbert space dimension'
 ylabel 'J distance';
 set(gca,'YScale','log')
-legend('DIA','gdapB','mosek','sdpt3','sedumi')
+legend('DIA','gdapB','mosek','sdpt3')
 % legend('gdapB','mosek','sdpt3')
 box on
 grid on
 set(gca,'fontsize',18)
-saveas(gcf,'errors.png')
-saveas(gcf,'errors.eps','epsc')
+saveas(gcf,'./plots/errors.png')
+saveas(gcf,'./plots/errors.eps','epsc')
 
 
 
@@ -141,11 +141,11 @@ scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
 
 ax = gca;
 ax.ColorOrderIndex = 1;
-
-scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
-scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
+% 
+% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
+% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
+% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
+% scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
 % scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
 
 set(gca,'xscale','log')
@@ -157,8 +157,6 @@ ylabel 'time (s)'
 box on
 grid on
 
-
-
 set(gca,'fontsize',18)
-saveas(gcf,'scatter.png')
-saveas(gcf,'scatter.eps','epsc')
+saveas(gcf,'./plots/scatter.png')
+saveas(gcf,'./plots/scatter.eps','epsc')

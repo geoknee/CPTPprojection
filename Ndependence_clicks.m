@@ -4,7 +4,7 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:5
+for d=2:8
     
     fprintf(newline);
     fprintf('%d ', d);
@@ -33,11 +33,12 @@ for d=2:5
         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
-        p               = p/sum(p);
+        p               = reshape(p,[],d*d);
+%         p               = p/sum(p);
         
         for N=[2,4,8,16,32,64,128,256,512,1024,2048,4096]
-            n             = mnrnd(N,p)';
-            n             = n/sum(n); %  multinomial noise
+            
+            n           = reshape(mnrnd(N,p')',[],1);
         
 %         n               = p; % noiseless scenario
 

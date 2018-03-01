@@ -13,7 +13,7 @@ function [ choi_ml_vec] = cvx_wrapper( A,n )
     
     
 %     cvx_solver sedumi
-    cvx_begin %quiet
+    cvx_begin quiet
     variable cvx_choi(d*d,d*d) hermitian semidefinite
     variable P(d,d) hermitian semidefinite
     % todo TP constraint
