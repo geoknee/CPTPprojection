@@ -1,8 +1,9 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 2;
+dmax = 4;
 ensemble_size = 10;
-Ns = [2,4,8,16,32,64,128,256,512,1024,2048,4096];
+Npows = [1,2,3,4,5,6,7];
+Ns = 10.^Npows;
 % Ns = [2,4,8,16,32];
 gdapB_times  = zeros(ensemble_size,dmax,length(Ns));
 mosek_times  = zeros(ensemble_size,dmax,length(Ns));
@@ -18,26 +19,26 @@ sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
 
 
 for d=2:dmax
-    for Nindex=1:length(Ns)
+    for Nindex=1:length(Npows)
         for i=1:ensemble_size
 %             dir = sprintf('./benchmarking_results/d%i',d);
-            dir = sprintf('./Ndependence_benchmarking_results/d%i/N%i',d,Ns(Nindex));
+            dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npows(Nindex));
             clear choi_ground
             load([dir,'/dataset',num2str(i)]);
 
-%             clear choi_ml_vec
-% 
-%             load([dir,'/DIA_results',num2str(i)]);
-%             DIA_times(i,d,Nindex)  = elapsedTime;
-%             choi_DIA        = reshape(choi_ml_vec,[],d*d);
-%             DIA_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_DIA/trace(choi_DIA));
-% 
-%             clear choi_ml_vec
-% 
-%             load([dir,'/gdapB_results',num2str(i)]);
-%             gdapB_times(i,d,Nindex) = elapsedTime;
-%             choi_gdapB        = reshape(choi_ml_vec,[],d*d);
-%             gdapB_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_gdapB/trace(choi_gdapB));
+            clear choi_ml_vec
+
+            load([dir,'/DIA_results',num2str(i)]);
+            DIA_times(i,d,Nindex)  = elapsedTime;
+            choi_DIA        = reshape(choi_ml_vec,[],d*d);
+            DIA_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_DIA/trace(choi_DIA));
+
+            clear choi_ml_vec
+
+            load([dir,'/gdapB_results',num2str(i)]);
+            gdapB_times(i,d,Nindex) = elapsedTime;
+            choi_gdapB        = reshape(choi_ml_vec,[],d*d);
+            gdapB_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_gdapB/trace(choi_gdapB));
 
             clear choi_ml_vec
 
@@ -45,14 +46,14 @@ for d=2:dmax
             mosek_times(i,d,Nindex) = elapsedTime;    
             choi_mosek        = reshape(choi_ml_vec,[],d*d);
             mosek_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_mosek/trace(choi_mosek));
-% 
+
 %             clear choi_ml_vec
 % 
 %             load([dir,'/sdpt3_results',num2str(i)]);
 %             sdpt3_times(i,d,Nindex) = elapsedTime;    
 %             choi_sdpt3        = reshape(choi_ml_vec,[],d*d);
 %             sdpt3_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_sdpt3/trace(choi_sdpt3));
-% 
+
 %             clear choi_ml_vec
 % 
 %             load([dir,'/sedumi_results',num2str(i)]);
@@ -63,17 +64,19 @@ for d=2:dmax
         end 
     end
     
+    figure; hold on;
     
-%     errorbar(Ns,mean(DIA_times(:,d,:)),std(DIA_times(:,d,:)),'-d','LineWidth',2);
-%     errorbar(Ns,mean(gdapB_times(:,d,:)),std(gdapB_times(:,d,:)),'-*','LineWidth',2);
-    errorbar(Ns,squeeze(mean(mosek_times(:,d,:))),squeeze(std(mosek_times(:,d,:)))','-x','LineWidth',2);
-%     errorbar(Ns,mean(sdpt3_times(:,d,:)),std(sdpt3_times(:,d,:)),'-x','LineWidth',2);
-%     errorbar(Ns,mean(sedumi_times(:,d,:)),std(sedumi_times(:,d,:)),'-s','LineWidth',2);
+    errorbar(Ns,squeeze(mean(DIA_times(:,d,:)))',squeeze(std(DIA_times(:,d,:)))','-d','LineWidth',2);
+    errorbar(Ns,squeeze(mean(gdapB_times(:,d,:)))',squeeze(std(gdapB_times(:,d,:)))','-*','LineWidth',2);
+    errorbar(Ns,squeeze(mean(mosek_times(:,d,:)))',squeeze(std(mosek_times(:,d,:)))','-x','LineWidth',2);
+%     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
+
                     
     xlabel 'N'
     ylabel 'times taken (s)';
-    set(gca,'XScale','log');
-    legend('DIA','gdapB','mosek','sdpt3','sedumi')
+    set(gca,'XScale','log')
+    set(gca,'YScale','log');
+    legend('DIA','gdapB','mosek')
     % legend('gdapB','mosek','sdpt3')
     box on
     grid on
@@ -85,16 +88,16 @@ for d=2:dmax
 
     figure; hold on;
     
-%     errorbar(Ns,mean(DIA_errors(:,d,:)),std(DIA_errors(:,d,:)),'-d','LineWidth',2);
-%     errorbar(Ns,mean(gdapB_errors(:,d,:)),std(gdapB_errors(:,d,:)),'-*','LineWidth',2);
-    errorbar(Ns,squeeze(mean(mosek_errors(:,d,:))),squeeze(std(mosek_errors(:,d,:)))','-x','LineWidth',2);
-%     errorbar(Ns,mean(sdpt3_errors(:,d,:)),std(sdpt3_errors(:,d,:)),'-x','LineWidth',2);
-%     errorbar(Ns,mean(sedumi_errors(:,d,:)),std(sedumi_errors(:,d,:)),'-s','LineWidth',2);
+    errorbar(Ns,squeeze(mean(DIA_errors(:,d,:)))',squeeze(std(DIA_errors(:,d,:)))','-d','LineWidth',2);
+    errorbar(Ns,squeeze(mean(gdapB_errors(:,d,:)))',squeeze(std(gdapB_errors(:,d,:)))','-*','LineWidth',2);
+    errorbar(Ns,squeeze(mean(mosek_errors(:,d,:)))',squeeze(std(mosek_errors(:,d,:)))','-x','LineWidth',2);
+%     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
                     
     xlabel 'N'
     ylabel 'error';
   set(gca,'XScale','log');
-    legend('DIA','gdapB','mosek','sdpt3','sedumi')
+  set(gca,'YScale','log');
+    legend('DIA','gdapB','mosek')
     % legend('gdapB','mosek','sdpt3')
     box on
     grid on

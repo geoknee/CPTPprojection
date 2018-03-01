@@ -4,7 +4,7 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:8
+for d=2:5
     
     fprintf(newline);
     fprintf('%d ', d);
@@ -24,8 +24,8 @@ for d=2:8
     Mdagb = sparse(M'*b);
     
     
-    for i=1:ensemble_size
-        fprintf('%d ', i); 
+    for l=1:ensemble_size
+        fprintf('%d ', l); 
         % generate random ground truth
         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
         choi_ground_vec = reshape(choi_ground,[],1);
@@ -36,15 +36,19 @@ for d=2:8
         p               = reshape(p,[],d*d);
 %         p               = p/sum(p);
         
-        for N=[2,4,8,16,32,64,128,256,512,1024,2048,4096]
-            
+        for Npow=[0,1,2,3,4,5,6,7]
+            N = 10^Npow;
             n           = reshape(mnrnd(N,p')',[],1);
         
+            
+            for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+                n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies'
+            end
 %         n               = p; % noiseless scenario
 
 % save A as well, or assume fixed?
-            dir = sprintf('./Ndependence_benchmarking_results/d%i/N%i',d,N);
-            save([dir,'/dataset',num2str(i)],'choi_ground','n','p')
+            dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npow);
+            save([dir,'/dataset',num2str(l)],'choi_ground','n','p')
             
         end
     end
