@@ -11,6 +11,7 @@ function [ choi_ml_vec] = sdpt3( A,n )
     end
     b = reshape(eye(d),[],1);
     
+%     cvx_solver sdpt3
     cvx_begin quiet
     variable cvx_choi(d*d,d*d) hermitian semidefinite
     variable P(d,d) hermitian semidefinite

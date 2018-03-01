@@ -32,7 +32,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
 %         costs(end)
         G = gradient(A,n,solution{i});
-        D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
+%         D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
+        D         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
 %         sum(svd(D{i}))
 %         if sum(svd(D{i}))<1e-15 % no point using trace norm because these
 %         are vectors
@@ -47,12 +48,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         alpha = 1;
-        while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) +  gamma*alpha*(D{i}'*G)
-%         while cost(A,n,solution{i}+alpha*D{i}) > cost(A,n,solution{i}) % forgo Armijo condition to save gradient calculations
-
+        while cost(A,n,solution{i}+alpha*D) > cost(A,n,solution{i}) +  gamma*alpha*(D'*G)
             alpha = 0.8 * alpha ;
         end
-        solution{i+1} = solution{i} + alpha*D{i};
+%         solution{i+1} = solution{i} + alpha*D{i};
+        solution{i+1} = solution{i} + alpha*D;
         if norm(solution{i+1}-solution{i})<1e-6
             break
         end

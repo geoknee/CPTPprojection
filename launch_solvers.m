@@ -2,14 +2,14 @@
 % from various datasets 
 % parpool(3)
 clear all
-addpath('./QETLAB-0.9')
-addpath('./QETLAB-0.9/helpers')
+% addpath('./QETLAB-0.9')
+% addpath('./QETLAB-0.9/helpers')
 ensemble_size = 20;
 
 for d=2:5
 %     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
-for method={'gdapB'}
+for method={'sedumi'}
 % for method = {'DIA'}
         fprintf(char(10));
         fprintf(method{1});
@@ -42,13 +42,19 @@ for method={'gdapB'}
                     case 'mosek'
                         cvx_solver mosek
                         tic;
-                        [choi_ml_vec] = mosek(A,n);
+                        [choi_ml_vec] = cvx_wrapper(A,n);
                         elapsedTime = toc;
                         solution=[]; costs = []; % cannot currently extract these
                     case 'sdpt3'
                         cvx_solver sdpt3
                         tic;
-                        [choi_ml_vec] = sdpt3(A,n);
+                        [choi_ml_vec] = cvx_wrapper(A,n);
+                        elapsedTime = toc;
+                        solution=[]; costs = []; % cannot currently extract these
+                    case 'sedumi'
+                        cvx_solver sedumi
+                        tic;
+                        [choi_ml_vec] = cvx_wrapper(A,n);
                         elapsedTime = toc;
                         solution=[]; costs = []; % cannot currently extract these
                 end
