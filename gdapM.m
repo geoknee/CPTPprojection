@@ -42,8 +42,8 @@ function [ choi_ml_vec,solution, costs ] = gdapM( A,n )
         T{k+1}        = xi*T{k}-gamma*G;
         solution{k+1} = solution{k}+T{k+1};
 %         
-        if k>20
-            if var(costs(end-20:end))<1e-12
+        if k>50
+            if var(costs(end-50:end))<1e-12
                 break
             end
         end
