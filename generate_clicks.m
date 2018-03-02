@@ -1,10 +1,10 @@
 % script to generate a number of simulated datasets
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 100;
+ensemble_size = 20;
 
 
-for d=2:4
+for d=2:5
     dir = sprintf('./benchmarking_results/d%i',d);
     fprintf(newline);
     fprintf('%d ', d);

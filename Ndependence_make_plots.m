@@ -2,8 +2,9 @@
 clear;close all;
 dmax = 4;
 ensemble_size = 10;
-Npows = [1,2,3,4,5,6,7];
+Npows = [1,2,3,4,5,6,7,8,9,Inf];
 Ns = 10.^Npows;
+Ns(end)=10^12;
 % Ns = [2,4,8,16,32];
 gdapB_times  = zeros(ensemble_size,dmax,length(Ns));
 mosek_times  = zeros(ensemble_size,dmax,length(Ns));
@@ -83,7 +84,9 @@ for d=2:dmax
     set(gca,'fontsize',18)
     title(['d = ',num2str(d)])
     saveas(gcf,['./plots/timed',num2str(d),'.png'])
-    saveas(gcf,['./plots/timed',num2str(d),'.eps'],'epsc')
+%     saveas(gcf,['./plots/timed',num2str(d),'.eps'],'epsc')
+    set(gcf,'paperpositionmode','auto')
+    print(gcf,'-depsc2','-loose',['./plots/timed',num2str(d),'.eps'])
 
 
     figure; hold on;
@@ -104,8 +107,9 @@ for d=2:dmax
     set(gca,'fontsize',18)
     title(['d = ',num2str(d)])
     saveas(gcf,['./plots/errord',num2str(d),'.png'])
-    saveas(gcf,['./plots/errord',num2str(d),'.eps'],'epsc')
-
+%     saveas(gcf,['./plots/errord',num2str(d),'.eps'],'epsc')
+    print(gcf,'-depsc2','-loose',['./plots/errord',num2str(d),'.eps'])
+    set(gcf,'paperpositionmode','auto')
 end
 
 

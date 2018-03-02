@@ -14,12 +14,12 @@ function [ projected_choi_vec ] = PSD_project( choi_vec )
     choi = (choi + choi')/2; % project onto Hermitian matrices
     
 %     
-%     [V,D] = eig(choi);
-%     D = max(D,0);
-%     choi = V*D*V';
+    [V,D] = eig(choi);
+    D = max(D,0);
+    choi = V*D*V';
 
-    t = trace(choi);
-    choi = t*positiveProjection(choi/t); % Smolin method from EB. wants a
+%     t = trace(choi);
+%     choi = t*positiveProjection(choi/t); % Smolin method from EB. wants a
     %trace one matrix as input
     
     projected_choi_vec = reshape(choi,[],1);

@@ -6,7 +6,7 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:5
+for d=4:4   
 %     for method={'mosek','gdapB','DIA'}
 for method={'mosek','gdapB','DIA'}
 % for method = {'DIA'}
@@ -18,7 +18,7 @@ for method={'mosek','gdapB','DIA'}
 
         A = PM_minimal(d);
 %          A = GGMall_IO(d);
-        for Npow=[1,2,3,4,5,6,7]
+        for Npow=[1,2,3,4,5,6,7,8,9,Inf]
             N = 10^Npow;
             dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npow);
             fprintf(newline);

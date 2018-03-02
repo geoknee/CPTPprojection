@@ -160,3 +160,16 @@ grid on
 set(gca,'fontsize',18)
 saveas(gcf,'./plots/scatter.png')
 saveas(gcf,'./plots/scatter.eps','epsc')
+
+figure;
+
+for d=1:8
+    c(d)=cond(full(PM_minimal(d)));
+end
+figure
+plot(1:8,c,'LineWidth',2)
+xlabel('d')
+ylabel('condition number')
+set(gca,'fontsize',18)
+saveas(gcf,'cond.png')
+saveas(gcf,'cond.eps','epsc')

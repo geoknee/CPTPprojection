@@ -4,7 +4,7 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:5
+for d=4:4
     
     fprintf(newline);
     fprintf('%d ', d);
@@ -33,16 +33,23 @@ for d=2:5
         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
-        p               = reshape(p,[],d*d);
+        
 %         p               = p/sum(p);
         
-        for Npow=[0,1,2,3,4,5,6,7]
+        for Npow=[1,2,3,4,5,6,7,8,9,inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
+                                    
             N = 10^Npow;
-            n           = reshape(mnrnd(N,p')',[],1);
-        
             
-            for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-                n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies'
+            if isinf(N)
+                n = p;
+            else
+                p           = reshape(p,[],d*d);
+                n           = reshape(mnrnd(N,p')',[],1);
+        
+
+                for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies'
+                end
             end
 %         n               = p; % noiseless scenario
 
