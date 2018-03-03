@@ -13,7 +13,6 @@ function [ projected_choi_vec ] = PSD_project( choi_vec )
        
     choi = (choi + choi')/2; % project onto Hermitian matrices
     
-%     
     [V,D] = eig(choi);
     D = max(real(D),0); % real is important, dtype complex spoils functioning of max. choi is Hermitian so D should be real. 
     choi = V*D*V';
