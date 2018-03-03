@@ -9,7 +9,7 @@ ensemble_size = 20;
 for d=2:5
 %     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
-for method = {'gdapM'}
+for method = {'gdapB'}
         fprintf(char(10));
         fprintf(method{1});
 
@@ -32,7 +32,7 @@ for method = {'gdapM'}
                         elapsedTime = toc;
                     case'gdapB'
                         tic;
-                        [choi_ml_vec, solution, costs] = gdapM(A,n);
+                        [choi_ml_vec, solution, costs] = gdapB(A,n);
                         elapsedTime = toc;
 %                         semilogy(costs)
 %                         hold on

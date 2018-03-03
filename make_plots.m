@@ -42,7 +42,7 @@ for d=2:dmax
         
         
         load([dir,'/gdapM_results',num2str(i)]);
-        gdapB_times(i,d) = elapsedTime;
+        gdapM_times(i,d) = elapsedTime;
         choi_gdapM        = reshape(choi_ml_vec,[],d*d);
         gdapM_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_gdapM/trace(choi_gdapM));
         
@@ -188,5 +188,5 @@ plot(1:8,c,'LineWidth',2)
 xlabel('d')
 ylabel('condition number')
 set(gca,'fontsize',18)
-saveas(gcf,'cond.png')
-saveas(gcf,'cond.eps','epsc')
+saveas(gcf,'./plots/cond.png')
+saveas(gcf,'./plots/cond.eps','epsc')
