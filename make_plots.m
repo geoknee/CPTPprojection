@@ -180,13 +180,16 @@ saveas(gcf,'./plots/scatter.eps','epsc')
 
 figure;
 
-for d=1:8
-    c(d)=cond(full(PM_minimal(d)));
+for d=2:7
+    d
+    c1(d)=cond(full(PM_minimal(d)));
+    c2(d)=cond(full(GGMall_IO(d)));
 end
 figure
-plot(1:8,c,'LineWidth',2)
+bar(1:7,c1,'LineWidth',2,'DisplayName','minimal');hold on; bar(1:7,c2,'r','LineWidth',2,'DisplayName','GGM');
 xlabel('d')
 ylabel('condition number')
 set(gca,'fontsize',18)
+legend('show','Location','northwest')
 saveas(gcf,'./plots/cond.png')
 saveas(gcf,'./plots/cond.eps','epsc')
