@@ -27,21 +27,26 @@ for d=4:4
     for l=1:ensemble_size
         fprintf('%d ', l); 
         % generate random ground truth
-        choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
+%         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
+%         choi_ground_vec = reshape(choi_ground,[],1);
+%         choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
+%         choi_ground     = reshape(choi_ground_vec,[],d*d);
+        
+%         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
+        choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
         choi_ground_vec = reshape(choi_ground,[],1);
-        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
-        choi_ground     = reshape(choi_ground_vec,[],d*d);
 
         p               = real(A*choi_ground_vec);
         
 %         p               = p/sum(p);
         
-        for Npow=[1,2,3,4,5,6,7,8,9,inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
+        for Npow=[1,2,3,4,5,6,7,8,9,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
                                     
             N = 10^Npow;
             
             if isinf(N)
-                n = p;
+                p           = reshape(p,[],1);
+                n           = p;
             else
                 p           = reshape(p,[],d*d);
                 n           = reshape(mnrnd(N,p')',[],1);

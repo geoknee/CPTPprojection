@@ -76,7 +76,7 @@ figure; hold on;
 
 errorbar(2:dmax,mean(DIA_times(:,2:end)),std(DIA_times(:,2:end)),'-d','LineWidth',2);
 errorbar(2:dmax,mean(gdapB_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
-errorbar(2:dmax,mean(gdapM_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
+% errorbar(2:dmax,mean(gdapM_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
 errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sdpt3_times(:,2:end)),std(sdpt3_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sedumi_times(:,2:end)),std(sedumi_times(:,2:end)),'-s','LineWidth',2);
@@ -84,7 +84,7 @@ xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
 set(gca,'YScale','log');
-legend('DIA','gdapB','gdapM','mosek')
+legend('DIA','gdapB','mosek')
 % legend('gdapB','mosek','sdpt3')
 box on
 grid on
@@ -97,7 +97,7 @@ figure; hold on;
 
 errorbar(2:dmax,mean(DIA_errors(:,2:end)),std(DIA_errors(:,2:end)),'-d','LineWidth',2);
 errorbar(2:dmax,mean(gdapB_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
-errorbar(2:dmax,mean(gdapM_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
+% errorbar(2:dmax,mean(gdapM_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
 errorbar(2:dmax,mean(mosek_errors(:,2:end)),std(mosek_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sdpt3_errors(:,2:end)),std(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sedumi_errors(:,2:end)),std(sedumi_errors(:,2:end)),'-s','LineWidth',2);
@@ -119,7 +119,7 @@ saveas(gcf,'./plots/errors.eps','epsc')
 figure; hold on;
 scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')
 scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','gdapB')
-scatter(gdapM_errors(:,2),gdapM_times(:,2),'o','filled','DisplayName','gdapM')
+% scatter(gdapM_errors(:,2),gdapM_times(:,2),'o','filled','DisplayName','gdapM')
 scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
 % scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
 % scatter(sedumi_errors(:,2),sedumi_times(:,2),'o','filled','DisplayName','sedumi')
@@ -131,7 +131,7 @@ ax.ColorOrderIndex = 1;
 
 scatter(DIA_errors(:,3),DIA_times(:,3),'<','filled')
 scatter(gdapB_errors(:,3),gdapB_times(:,3),'<','filled')
-scatter(gdapM_errors(:,3),gdapM_times(:,3),'<','filled')
+% scatter(gdapM_errors(:,3),gdapM_times(:,3),'<','filled')
 scatter(mosek_errors(:,3),mosek_times(:,3),'<','filled')
 % scatter(sdpt3_errors(:,3),sdpt3_times(:,3),'<','filled')
 % scatter(sedumi_errors(:,3),sedumi_times(:,3),'<','filled')
@@ -141,7 +141,7 @@ ax.ColorOrderIndex = 1;
 
 scatter(DIA_errors(:,4),DIA_times(:,4),'d','filled')
 scatter(gdapB_errors(:,4),gdapB_times(:,4),'d','filled')
-scatter(gdapM_errors(:,4),gdapM_times(:,4),'d','filled')
+% scatter(gdapM_errors(:,4),gdapM_times(:,4),'d','filled')
 scatter(mosek_errors(:,4),mosek_times(:,4),'d','filled')
 % scatter(sdpt3_errors(:,4),sdpt3_times(:,4),'d','filled')
 % scatter(sedumi_errors(:,4),sedumi_times(:,4),'d','filled')
@@ -151,7 +151,7 @@ ax.ColorOrderIndex = 1;
 
 scatter(DIA_errors(:,5),DIA_times(:,5),'p','filled')
 scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
-scatter(gdapM_errors(:,5),gdapM_times(:,5),'p','filled')
+% scatter(gdapM_errors(:,5),gdapM_times(:,5),'p','filled')
 scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
 % scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
 % scatter(sedumi_errors(:,5),sedumi_times(:,5),'p','filled')
@@ -178,18 +178,18 @@ set(gca,'fontsize',18)
 saveas(gcf,'./plots/scatter.png')
 saveas(gcf,'./plots/scatter.eps','epsc')
 
-figure;
-
-for d=2:7
-    d
-    c1(d)=cond(full(PM_minimal(d)));
-    c2(d)=cond(full(GGMall_IO(d)));
-end
-figure
-bar(1:7,c1,'LineWidth',2,'DisplayName','minimal');hold on; bar(1:7,c2,'r','LineWidth',2,'DisplayName','GGM');
-xlabel('d')
-ylabel('condition number')
-set(gca,'fontsize',18)
-legend('show','Location','northwest')
-saveas(gcf,'./plots/cond.png')
-saveas(gcf,'./plots/cond.eps','epsc')
+% figure;
+% 
+% for d=2:7
+%     d
+%     c1(d)=cond(full(PM_minimal(d)));
+%     c2(d)=cond(full(GGMall_IO(d)));
+% end
+% figure
+% bar(1:7,c1,'LineWidth',2,'DisplayName','minimal');hold on; bar(1:7,c2,'r','LineWidth',2,'DisplayName','GGM');
+% xlabel('d')
+% ylabel('condition number')
+% set(gca,'fontsize',18)
+% legend('show','Location','northwest')
+% saveas(gcf,'./plots/cond.png')
+% saveas(gcf,'./plots/cond.eps','epsc')
