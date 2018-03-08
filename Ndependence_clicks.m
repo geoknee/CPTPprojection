@@ -6,7 +6,7 @@ ensemble_size = 10;
 
 for d=4:4
     
-    fprintf(newline);
+    fprintf(char(10));
     fprintf('%d ', d);
     A = PM_minimal(d);
 %     A = GGMall_IO(d);

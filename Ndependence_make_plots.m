@@ -77,7 +77,7 @@ for d=2:dmax
     ylabel 'times taken (s)';
     set(gca,'XScale','log')
     set(gca,'YScale','log');
-    legend('DIA','gdapB','mosek')
+    legend('DIA','gdapB','mosek''Location','NorthWest')
     % legend('gdapB','mosek','sdpt3')
     box on
     grid on
@@ -108,8 +108,9 @@ for d=2:dmax
     title(['d = ',num2str(d)])
     saveas(gcf,['./plots/errord',num2str(d),'.png'])
 %     saveas(gcf,['./plots/errord',num2str(d),'.eps'],'epsc')
-    print(gcf,'-depsc2','-loose',['./plots/errord',num2str(d),'.eps'])
     set(gcf,'paperpositionmode','auto')
+    print(gcf,'-depsc2','-loose',['./plots/errord',num2str(d),'.eps'])
+
 end
 
 

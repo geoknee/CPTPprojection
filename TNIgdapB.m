@@ -5,7 +5,13 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     d = d(2);
 
     
-    choi_init = sparse(eye(d*d)/d);
+%     choi_init = sparse(eye(d*d)/d); % bear in mind this is in TP, so on the border of TNI
+    
+    choi_init     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
+    choi_init_vec = reshape(choi_init,[],1);
+    choi_init_vec = CPTNI_project(choi_init_vec);
+    choi_init     = reshape(choi_init_vec,[],d*d);
+        
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
@@ -13,13 +19,13 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
-    mu = 0.1; % inverse learning rate
+    mu = 10000; % inverse learning rate
     for i=1:1e10
 %         mu = 1.05*mu;
-%         i;
+%         i
 %         costs(i)     = 0; % just debugging
         costs(i)     = cost(A,n,solution{i}); % this not strictly necessary and quite expensive
-        costs(end)
+%         costs(end)
         G = gradient(A,n,solution{i});
 %         D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
         D         = CPTNI_project(solution{i}-(1/mu)*G)-solution{i};
@@ -67,8 +73,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         
         
     end
-%     plot(costs)
-%     hold on
+    plot(costs)
+    hold on
     choi_ml_vec = CPTNI_project(solution{end});
 end
 

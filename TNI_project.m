@@ -8,16 +8,15 @@ function [ projected_choi_vec ] = TNI_project( choi_vec)
     
     choi = reshape(choi_vec,[],d*d);
     
-    Y = partial_trace(choi);
+    Y = kron(partial_trace(choi),eye(d));
+    
+%     Y = (Y+Y')/2;
+    [V,D] = eig(Y);
+    D = min(real(D),1);
+    Y_proj = V*D*V';
     
     
-   
-    [V,D] = eig(eye(d)-Y);
-    D = max(real(D),0);
-    Y_proj = eye(d) - V*D*V';
-    
-    
-    choi_proj = choi + kron(eye(d),Y_proj-Y);
+    choi_proj = choi + Y_proj-Y;
    
     projected_choi_vec = reshape(choi_proj,[],1);
     

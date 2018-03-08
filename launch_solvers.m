@@ -4,9 +4,9 @@
 clear all
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 20;
+ensemble_size = 50;
 
-for d=2:5
+for d=2:8
     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'gdapB'}
@@ -40,8 +40,8 @@ for d=2:5
                         tic;
                         [choi_ml_vec, solution, costs] = DIA(A,n);
                         elapsedTime = toc;
-                        semilogy(costs)
-                        hold on
+%                         semilogy(costs)
+%                         hold on
                     case 'mosek'
                         cvx_solver mosek
                         tic;

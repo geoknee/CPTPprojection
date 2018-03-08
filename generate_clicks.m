@@ -1,12 +1,12 @@
 % script to generate a number of simulated datasets
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 20;
+ensemble_size = 50;
 
 
-for d=2:5
+for d=2:8
     dir = sprintf('./benchmarking_results/d%i',d);
-    fprintf(newline);
+    fprintf(char(10));
     fprintf('%d ', d);
     A = PM_minimal(d);
 %     A = GGMall_IO(d);
@@ -27,14 +27,14 @@ for d=2:5
     for i=1:ensemble_size
         fprintf('%d ', i); 
         % generate random ground truth
-%         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
-%         choi_ground_vec = reshape(choi_ground,[],1);
-%         choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
-%         choi_ground     = reshape(choi_ground_vec,[],d*d);
+        choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
+        choi_ground_vec = reshape(choi_ground,[],1);
+        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
+        choi_ground     = reshape(choi_ground_vec,[],d*d);
         
 %         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
-        choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
-        choi_ground_vec = reshape(choi_ground,[],1);
+%         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+%         choi_ground_vec = reshape(choi_ground,[],1);
         
         p               = real(A*choi_ground_vec);
 %         p               = p/sum(p);

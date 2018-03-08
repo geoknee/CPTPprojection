@@ -8,9 +8,9 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
+    costs = zeros(1e4);
+    for k=1:1e4
 
-    for k=1:1e10
-        costs(k)     = cost(A,n,solution{k});
 %         k
 %         costs(k)
         rho = reshape(solution{k},[],d*d) ;
@@ -50,8 +50,8 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 %             eig(rho_new)
             break
         end
-        
-%         if cost(A,n,solution{k})-cost(A,n,solution{k+1})<1e-9
+        costs(k+1)     = cost(A,n,solution{k+1});
+%         if abs(costs(k)-costs(k+1))<1e-9
 %             break
 %         end
         
