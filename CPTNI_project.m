@@ -12,7 +12,7 @@ function [ projected_choi_vec ] = CPTNI_project( choi_vec)
     p    = {0};
     q    = {0};
     y    = {0};
-    while GAP(end) > 1e-6 
+    while GAP(end) > 1e-12 
 % %         k
 %     for k=1:1000
 %         x{k+1}=PSD_project(TNI_project(x{k}));     % ALTERNATING, seems to be fastest

@@ -53,7 +53,9 @@ for d=4:4
         
 
                 for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies'
+                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
+                    % TODO make sure that this is simply dividing whole
+                    % likelihood by a constant.
                 end
             end
 %         n               = p; % noiseless scenario

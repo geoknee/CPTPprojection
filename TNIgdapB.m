@@ -15,12 +15,13 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 0.01;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
+    gamma = 0.03;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
-    mu = 10000; % inverse learning rate
-    for i=1:1e10
+    mu = 1; % inverse learning rate
+    old_cost = 1e10;
+    for i=1:1e4
 %         mu = 1.05*mu;
 %         i
 %         costs(i)     = 0; % just debugging
@@ -44,16 +45,22 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         end
         alpha = 1;
         while cost(A,n,solution{i}+alpha*D) > cost(A,n,solution{i}) +  gamma*alpha*(D'*G)
-            alpha = 0.8 * alpha ;
+            alpha = 0.2 * alpha ;
             if alpha < 1e-15
                 break
             end
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
-        if norm(solution{i+1}-solution{i})<1e-6
+        new_cost = cost(A,n,solution{i});
+%         if norm(solution{i+1}-solution{i})<1e-6
+%             break
+%         end
+        if old_cost - new_cost < 1e-9
+%             new_cost
             break
         end
+        old_cost = new_cost;
 %         if cost(A,n,solution{i})-cost(A,n,solution{i+1})<1e-9
 %             break
 %         end
@@ -73,8 +80,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         
         
     end
-    plot(costs)
-    hold on
+%     plot(costs)
+%     hold on
     choi_ml_vec = CPTNI_project(solution{end});
 end
 

@@ -29,18 +29,26 @@ for d=2:2
             eig(choi_ground)
         end
 
-        p               = real(A*choi_ground_vec);
-%         p               = p/sum(p);
-        % n             = mnrnd(1e4,p)';
-        % n             = n/sum(n); % activate for multinomial noise
-        
+        p               = real(A*choi_ground_vec);        
         n               = p; % noiseless scenario
-%         
+
+%         N           = 1e4;
+%         p           = reshape(p,[],d*d);
+%         for j = 1:d*d
+%             p(2*d*d+1,j)  = 1-sum(p(:,j)); % expand to a TP process in d+1
+%         end
+%         n           = mnrnd(N,p')';
+%         n           = n(1:2*d*d,:); % discard binned state
+%         n           =reshape(n,[],1);
+
+%       
+        [choi_ml_vecTNI, ~, ~] = TNIgdapB(A,n);
+        choi_mlTNI = reshape(choi_ml_vecTNI,[],d*d);
+
         [choi_ml_vecTP, ~, ~]  = gdapB(A,n);
         choi_mlTP = reshape(choi_ml_vecTP,[],d*d);
 
-        [choi_ml_vecTNI, ~, ~] = TNIgdapB(A,n);
-        choi_mlTNI = reshape(choi_ml_vecTNI,[],d*d);
+
 % 
 %         errorTP(i) = trace_dist(choi_mlTP/trace(choi_mlTP),choi_ground/trace(choi_ground));
 %         errorTNI(i) = trace_dist(choi_mlTNI/trace(choi_mlTNI),choi_ground/trace(choi_ground)); % is this a good measure for TNI processes?
@@ -49,8 +57,8 @@ for d=2:2
         errorTNI(i) = norm(choi_mlTNI-choi_ground);
         
 % % save A as well, or assume fixed?
-        figure;plot(errorTP);hold on; plot(errorTNI); legend('TP assumed','TNI assumed')
+
 %         save([dir,'/dataset',num2str(i)],'choi_ground','n','p')
     end
-    
+            figure;plot(errorTP);hold on; plot(errorTNI); legend('TP assumed','TNI assumed')
 end
