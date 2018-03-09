@@ -1,7 +1,7 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
 dmax = 8;
-ensemble_size = 50;
+ensemble_size = 5;
 gdapB_times  = zeros(ensemble_size,dmax);
 gdapM_times  = zeros(ensemble_size,dmax);
 mosek_times  = zeros(ensemble_size,dmax);
@@ -18,6 +18,7 @@ DIA_errors      = zeros(ensemble_size,dmax);
 
 
 for d=2:dmax
+    d
     for i=1:ensemble_size
         
         dir = sprintf('./benchmarking_results/d%i',d);
@@ -41,12 +42,12 @@ for d=2:dmax
         clear choi_ml_vec
         
         
-        load([dir,'/gdapM_results',num2str(i)]);
-        gdapM_times(i,d) = elapsedTime;
-        choi_gdapM        = reshape(choi_ml_vec,[],d*d);
-        gdapM_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_gdapM/trace(choi_gdapM));
-        
-        clear choi_ml_vec
+%         load([dir,'/gdapM_results',num2str(i)]);
+%         gdapM_times(i,d) = elapsedTime;
+%         choi_gdapM        = reshape(choi_ml_vec,[],d*d);
+%         gdapM_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_gdapM/trace(choi_gdapM));
+%         
+%         clear choi_ml_vec
         
         
         load([dir,'/mosek_results',num2str(i)]);
@@ -54,12 +55,12 @@ for d=2:dmax
         choi_mosek        = reshape(choi_ml_vec,[],d*d);
         mosek_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_mosek/trace(choi_mosek));
         
-        clear choi_ml_vec
-        
-        load([dir,'/sdpt3_results',num2str(i)]);
-        sdpt3_times(i,d) = elapsedTime;    
-        choi_sdpt3        = reshape(choi_ml_vec,[],d*d);
-        sdpt3_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_sdpt3/trace(choi_sdpt3));
+%         clear choi_ml_vec
+%         
+%         load([dir,'/sdpt3_results',num2str(i)]);
+%         sdpt3_times(i,d) = elapsedTime;    
+%         choi_sdpt3        = reshape(choi_ml_vec,[],d*d);
+%         sdpt3_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_sdpt3/trace(choi_sdpt3));
         
 %         clear choi_ml_vec
 %         
@@ -155,15 +156,32 @@ scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
 scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
 % scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
 % scatter(sedumi_errors(:,5),sedumi_times(:,5),'p','filled')
+% 
+ax = gca;
+ax.ColorOrderIndex = 1;
+% 
+scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
+scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
+scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
+% scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
+% scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
 
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
-% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
-% scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
-% scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
+scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
+scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
+scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
+
+
+ax = gca;
+ax.ColorOrderIndex = 1;
+% 
+scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
+scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
+scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
+
+
 
 set(gca,'xscale','log')
 set(gca,'yscale','log')

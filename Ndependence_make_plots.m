@@ -2,7 +2,7 @@
 clear;close all;
 dmax = 4;
 ensemble_size = 10;
-Npows = [1,2,3,4,5,6,7,8,9,Inf];
+Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
 Ns(end)=10^12;
 % Ns = [2,4,8,16,32];
@@ -19,7 +19,7 @@ DIA_errors      = zeros(ensemble_size,dmax,length(Ns));
 sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
 
 
-for d=2:dmax
+for d=4:dmax
     for Nindex=1:length(Npows)
         for i=1:ensemble_size
 %             dir = sprintf('./benchmarking_results/d%i',d);

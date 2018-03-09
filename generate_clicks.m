@@ -1,7 +1,7 @@
 % script to generate a number of simulated datasets
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 50;
+ensemble_size = 5;
 
 
 for d=2:8

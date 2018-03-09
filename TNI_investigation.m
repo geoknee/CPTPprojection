@@ -30,7 +30,8 @@ for d=2:2
         end
 
         p               = real(A*choi_ground_vec);        
-        n               = p; % noiseless scenario
+    
+        dn               = p; % noiseless scenario
 
 %         N           = 1e4;
 %         p           = reshape(p,[],d*d);
