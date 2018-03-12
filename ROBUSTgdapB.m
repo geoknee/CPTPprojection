@@ -1,4 +1,4 @@
-function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
+function [ choi_ml_vec,solution, costs ] = ROBUSTgdapB( A,n )
 %gdapB projected gradient descent with backtracking
 %   Detailed explanation goes here
     d = sqrt(sqrt(size(A)));
@@ -35,9 +35,9 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     costs = 0;
     for i=1:1e4
 %         mu = 1.05*mu;
-%         i;
+%         i
 
-        G = gradient(A,n,solution{i});
+        G = ROBUSTgradient(A,n,solution{i});
 %         D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
         D         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
 %         sum(svd(D{i}))
@@ -54,14 +54,17 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         alpha = 1;
-        B = cost(A,n,solution{i}) + gamma*alpha*(D'*G);
-        while cost(A,n,solution{i}+alpha*D) > B  
+        B = ROBUSTcost(A,n,solution{i}) + gamma*alpha*(D'*G);
+        while ROBUSTcost(A,n,solution{i}+alpha*D) > B  
             alpha = 0.8 * alpha ; % less crude
 %             alpha = 0.2 * alpha ; % more crude
+            if alpha < 1e-15
+                break
+            end
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
-%         new_cost = cost(A,n,solution{i});
+%         new_cost = cost(A,n,solution{i})
         if norm(solution{i+1}-solution{i})<1e-6 % criterion in solution space rather than costs seems to work better for pgd
             break
         end

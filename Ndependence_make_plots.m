@@ -77,7 +77,9 @@ for d=4:dmax
     ylabel 'times taken (s)';
     set(gca,'XScale','log')
     set(gca,'YScale','log');
-    legend('DIA','gdapB','mosek''Location','NorthWest')
+    legend('DIA','gdapB','mosek',
+    
+    'Location','NorthWest')
     % legend('gdapB','mosek','sdpt3')
     box on
     grid on
