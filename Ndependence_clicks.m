@@ -27,14 +27,14 @@ for d=4:4
     for l=1:ensemble_size
         fprintf('%d ', l); 
         % generate random ground truth
-%         choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
-%         choi_ground_vec = reshape(choi_ground,[],1);
-%         choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
-%         choi_ground     = reshape(choi_ground_vec,[],d*d);
-        
-%         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
-        choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+        choi_ground     = rand(d*d,d*d)-rand(d*d,d*d)+1.0j*rand(d*d,d*d)-1.0j*rand(d*d,d*d);
         choi_ground_vec = reshape(choi_ground,[],1);
+        choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
+        choi_ground     = reshape(choi_ground_vec,[],d*d);
+        
+% %         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
+%         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+%         choi_ground_vec = reshape(choi_ground,[],1);
 
         p               = real(A*choi_ground_vec);
         

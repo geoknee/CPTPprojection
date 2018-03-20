@@ -1,10 +1,10 @@
 % script to generate a number of simulated datasets
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
-ensemble_size = 5;
+ensemble_size = 10;
 
 
-for d=2:8
+for d=2:5
     dir = sprintf('./benchmarking_results/d%i',d);
     fprintf(char(10));
     fprintf('%d ', d);
@@ -32,7 +32,7 @@ for d=2:8
 %         choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
 %         choi_ground     = reshape(choi_ground_vec,[],d*d);
         
-%         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
+        choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
         choi_ground_vec = reshape(choi_ground,[],1);
         

@@ -1,7 +1,7 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
 dmax = 4;
-ensemble_size = 10;
+ensemble_size = 5;
 Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
 Ns(end)=10^12;
@@ -65,54 +65,96 @@ for d=4:dmax
         end 
     end
     
-    figure; hold on;
+    figure; ax1 = subplot(2,2,1); hold on;
     
-    errorbar(Ns,squeeze(mean(DIA_times(:,d,:)))',squeeze(std(DIA_times(:,d,:)))','-d','LineWidth',2);
-    errorbar(Ns,squeeze(mean(gdapB_times(:,d,:)))',squeeze(std(gdapB_times(:,d,:)))','-*','LineWidth',2);
-    errorbar(Ns,squeeze(mean(mosek_times(:,d,:)))',squeeze(std(mosek_times(:,d,:)))','-x','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(DIA_times(:,d,1:end-1)))',squeeze(std(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(gdapB_times(:,d,1:end-1)))',squeeze(std(gdapB_times(:,d,1:end-1)))','-*','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(mosek_times(:,d,1:end-1)))',squeeze(std(mosek_times(:,d,1:end-1)))','-x','LineWidth',2);
 %     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
 
                     
-    xlabel 'N'
+%     xlabel 'N'
     ylabel 'times taken (s)';
     set(gca,'XScale','log')
     set(gca,'YScale','log');
-    legend('DIA','gdapB','mosek',
-    
-    'Location','NorthWest')
+    xticks(Ns(1:end))
+    yticks([1e-3,1e-2,1e-1,1e0,1e1,1e2])
+    box on; grid on;
+    xticklabels([])
+%     legend('DIA','gdapB','mosek','Location','NorthWest')
     % legend('gdapB','mosek','sdpt3')
     box on
     grid on
-    set(gca,'fontsize',18)
-    title(['d = ',num2str(d)])
-    saveas(gcf,['./plots/timed',num2str(d),'.png'])
-%     saveas(gcf,['./plots/timed',num2str(d),'.eps'],'epsc')
-    set(gcf,'paperpositionmode','auto')
-    print(gcf,'-depsc2','-loose',['./plots/timed',num2str(d),'.eps'])
-
-
-    figure; hold on;
+%     set(gca,'fontsize',18)
     
-    errorbar(Ns,squeeze(mean(DIA_errors(:,d,:)))',squeeze(std(DIA_errors(:,d,:)))','-d','LineWidth',2);
-    errorbar(Ns,squeeze(mean(gdapB_errors(:,d,:)))',squeeze(std(gdapB_errors(:,d,:)))','-*','LineWidth',2);
-    errorbar(Ns,squeeze(mean(mosek_errors(:,d,:)))',squeeze(std(mosek_errors(:,d,:)))','-x','LineWidth',2);
+    ax2 = subplot(2,2,2); hold on; pbaspect([1 4 1]);
+    
+    errorbar(Ns(end),squeeze(mean(DIA_times(:,d,end)))',squeeze(std(DIA_times(:,d,end)))','-d','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(gdapB_times(:,d,end)))',squeeze(std(gdapB_times(:,d,end)))','-*','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(mosek_times(:,d,end)))',squeeze(std(mosek_times(:,d,end)))','-x','LineWidth',2);
+    
+    set(gca,'XScale','log');
+    set(gca,'YScale','log');
+    box on; grid on;
+    ax = gca;
+    xticks([])
+    ax.YAxisLocation = 'right';
+%     title(['d = ',num2str(d)])
+%     saveas(gcf,['./plots/timed',num2str(d),'.png'])
+% %     saveas(gcf,['./plots/timed',num2str(d),'.eps'],'epsc')
+%     set(gcf,'paperpositionmode','auto')
+%     print(gcf,'-depsc2','-loose',['./plots/timed',num2str(d),'.eps'])
+
+
+%     figure; 
+    ax3 = subplot(2,2,3); hold on;  
+    
+   errorbar(Ns(1:end-1),squeeze(mean(DIA_errors(:,d,1:end-1)))',squeeze(std(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(gdapB_errors(:,d,1:end-1)))',squeeze(std(gdapB_errors(:,d,1:end-1)))','-*','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(mosek_errors(:,d,1:end-1)))',squeeze(std(mosek_errors(:,d,1:end-1)))','-x','LineWidth',2);
 %     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
-                    
+
+
     xlabel 'N'
     ylabel 'error';
-  set(gca,'XScale','log');
-  set(gca,'YScale','log');
-    legend('DIA','gdapB','mosek')
+    set(gca,'XScale','log');
+    set(gca,'YScale','log');
+    xticks(Ns(1:end))
+    yticks([1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
+    box on; grid on;
+    legend('DIA','pgdB','mosek')
+    
+    ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
+    errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(gdapB_errors(:,d,end)))',squeeze(std(gdapB_errors(:,d,end)))','-*','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(mosek_errors(:,d,end)))',squeeze(std(mosek_errors(:,d,end)))','-x','LineWidth',2);
+    
+    xlabel('$\infty$','Interpreter','latex')
+    yticks([1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
+    xticks([])
+%     ylabel 'error';
+    ax=gca;
+    ax.YAxisLocation = 'right';
+    set(gca,'XScale','log');
+    set(gca,'YScale','log');
+%     legend('DIA','gdapB','mosek')
     % legend('gdapB','mosek','sdpt3')
+    
+    
     box on
     grid on
-    set(gca,'fontsize',18)
-    title(['d = ',num2str(d)])
-    saveas(gcf,['./plots/errord',num2str(d),'.png'])
-%     saveas(gcf,['./plots/errord',num2str(d),'.eps'],'epsc')
-    set(gcf,'paperpositionmode','auto')
-    print(gcf,'-depsc2','-loose',['./plots/errord',num2str(d),'.eps'])
+%     set(gca,'fontsize',18)
+%     title(['d = ',num2str(d)])
+   
+    linkaxes([ax1,ax2],'y')
+    linkaxes([ax3,ax4],'y')
+%     linkaxes([ax1,ax3],'x')
+%     linkaxes([ax2,ax4],'x')
 
+    saveas(gcf,['./plots/timeerrord',num2str(d),'.png'])
+    saveas(gcf,['./plots/ALTtimeerrord',num2str(d),'.eps'],'epsc')
+    set(gcf,'paperpositionmode','auto')
+    print(gcf,'-depsc2','-loose',['./plots/timeerrord',num2str(d),'.eps'])
 end
 
 

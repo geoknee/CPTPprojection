@@ -6,6 +6,9 @@ function [ c ] = cost( A, n , choi_vec )
 % c             : (scalar) is the negative log-likelihood 
 
     p  = real(A*choi_vec); % the forward model
+    
+%     n  = n./sum(n);
+%     p  = p./sum(p);
 
     c = real(-(n.'*reallog(p)));
 end

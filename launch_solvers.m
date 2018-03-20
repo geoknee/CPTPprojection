@@ -1,4 +1,4 @@
-% use a varitey of algorithms to find the maximum likelihood process 
+    % use a varitey of algorithms to find the maximum likelihood process 
 % from various datasets 
 % parpool(3)
 clear all
@@ -6,7 +6,7 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 5;
 
-for d=2:8
+for d=2:5
     for method={'mosek','gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'gdapB'}
@@ -24,6 +24,7 @@ for d=2:8
         for i = 1:ensemble_size % total number of simulated datasets
             fprintf('%d ', i); 
             load([dir,'/dataset',num2str(i)]);
+            n = n./sum(n);
 
                 switch char(method)
                     case'gdapM'

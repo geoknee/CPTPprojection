@@ -7,7 +7,7 @@ function [ g ] = ROBUSTgradient( A, n ,choi_vec)
   
     p   = real(A*choi_vec);
     
-    eps = 1e-15;
+    eps = 1e-16;
     
     if nnz(p)<length(p)
         sprintf('p=0 occured')

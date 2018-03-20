@@ -6,7 +6,7 @@ function [ choi ] = randomCPTP(d, M)
  % 
 
 
- X = randn(d*d,M)+ 1.0j*randn(d*d,M);
+ X = randn(d*d,M)+ 1.0j*randn(d*d,M); %Ginibre matrix
  
  rho = X*X';
  

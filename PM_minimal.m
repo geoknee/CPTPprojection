@@ -64,7 +64,7 @@ function [ A ] = PM_minimal( d )
         end
     end
 
-    A = sparse(A);
+    A = sparse(A/d*d); % this normalisation is such that sum_ij p_ij = 1
     
 end
 

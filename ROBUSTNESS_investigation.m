@@ -3,9 +3,9 @@
 % addpath('./QETLAB-0.9/helpers')
 clear;
 ensemble_size = 100;
-
-
-for d=2:2
+close all;
+d=2;
+for rank=1:4
     fprintf('%d: ', d);
     A = PM_minimal(d);  
     
@@ -17,7 +17,7 @@ for d=2:2
 %         choi_ground_vec = CPTNI_project(choi_ground_vec);
 %         choi_ground     = reshape(choi_ground_vec,[],d*d);
 %         
-        choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
+        choi_ground     = randomCPTP(d,rank); % kraus rank 1, i.e unitary map.
 %         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
         choi_ground_vec = reshape(choi_ground,[],1);
         
@@ -58,6 +58,16 @@ for d=2:2
 % % save A as well, or assume fixed?
 
 %         save([dir,'/dataset',num2str(i)],'choi_ground','n','p')
+    
     end
-%             figure;plot(error);hold on; plot(errorROBUST); legend('gdapB','ROBUSTgdapB')
+    hold on; plot(errorROBUST,'LineWidth',2);
 end
+
+legend('rank 1','rank2','rank3','rank4')
+set(gca,'YScale','log');
+xlabel('run')
+ylabel('error')
+grid on
+box on
+set(gca,'fontsize',18)
+print(gcf,'-depsc2','-loose',['./plots/ROBUSTNESSd',num2str(d),'.eps'])

@@ -26,11 +26,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 0.01;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
+    gamma = 0.3;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
-    mu = 1; % inverse learning rate
+    mu = 2.2/(d*d); % inverse learning rate
     old_cost = 1e10;
     costs = 0;
     for i=1:1e4
@@ -38,6 +38,19 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         i;
 
         G = gradient(A,n,solution{i});
+%         norm(G)
+%         if norm(G)<1e-6
+%             break
+%         end
+        
+%         % glancy stopping criterion NJP 14 095017
+%         
+%         r(i) = max(eig(reshape(-G,[],d*d))) % TODO glancy has -N term. we are omitting
+%         if r(i)<1e-6*0.5*(d*d-1)
+%             break
+%         end
+%         
+        
 %         D{i}         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
         D         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
 %         sum(svd(D{i}))
@@ -54,22 +67,25 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         alpha = 1;
-        B = cost(A,n,solution{i}) + gamma*alpha*(D'*G);
+        new_cost = cost(A,n,solution{i});
+        B = new_cost + gamma*alpha*(D'*G);
         while cost(A,n,solution{i}+alpha*D) > B  
             alpha = 0.8 * alpha ; % less crude
 %             alpha = 0.2 * alpha ; % more crude
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
-%         new_cost = cost(A,n,solution{i});
+
         if norm(solution{i+1}-solution{i})<1e-6 % criterion in solution space rather than costs seems to work better for pgd
             break
         end
+        
+
 %         if old_cost - new_cost < 1e-9
 % %             new_cost
 %             break
 %         end
-%         old_cost = new_cost;
+        old_cost = new_cost;
 %         costs(i)     = 0; % just debugging
 %         costs(i+1)     = cost(A,n,solution{i+1}); % this not strictly necessary and quite expensive
 %         costs(end)
@@ -94,7 +110,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     end
 %     plot(costs)
 %     hold on
-    choi_ml_vec = CPTP_project(solution{end}, MdagM, Mdagb);
+%     choi_ml_vec = CPTP_project(solution{end}, MdagM, Mdagb);
+    choi_ml_vec = solution{end};
 end
 
 
