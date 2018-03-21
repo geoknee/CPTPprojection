@@ -160,26 +160,26 @@ scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
-scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
+% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
+% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
+% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
 % scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
 % scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
 
-ax = gca;
-ax.ColorOrderIndex = 1;
+% ax = gca;
+% ax.ColorOrderIndex = 1;
+% % 
+% scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
+% scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
+% scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
 % 
-scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
-scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
-scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
-
-
-ax = gca;
-ax.ColorOrderIndex = 1;
 % 
-scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
-scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
-scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
+% ax = gca;
+% ax.ColorOrderIndex = 1;
+% % 
+% scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
+% scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
+% scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
 
 
 
@@ -188,6 +188,8 @@ set(gca,'yscale','log')
 
 xlabel 'error'
 ylabel 'time (s)'
+
+set(gca,'XTick',([1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,1e0]))
 
 box on
 grid on

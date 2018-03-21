@@ -32,8 +32,10 @@ for d=2:5
 %         choi_ground_vec = CPTP_project(choi_ground_vec, MdagM, Mdagb);
 %         choi_ground     = reshape(choi_ground_vec,[],d*d);
         
-        choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
-        choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+%         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
+%         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+        
+        choi_ground     = randomCPTP_quasi_pure(d,0.9);
         choi_ground_vec = reshape(choi_ground,[],1);
         
         p               = real(A*choi_ground_vec);
@@ -42,7 +44,7 @@ for d=2:5
         % n             = n/sum(n); % activate for multinomial noise
         
         n               = p; % noiseless scenario
-        n               =n./sum(n);
+        n               = n./sum(n);
 
 % save A as well, or assume fixed?
        

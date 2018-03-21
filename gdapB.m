@@ -9,7 +9,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %     for i=1:d*d
 %         n(:,i) = n(:,i)/sum(n:,i)
 %     end
-    n = reshape(n,[],1);
+%     n = reshape(n,[],1);
     % precompute matrices for TP_project
     M = zeros([d*d,d*d*d*d]);
     for i=1:d
@@ -26,14 +26,14 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 0.3;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
+    gamma = 0.1;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
-    mu = 2.2/(d*d); % inverse learning rate
+    mu = 2/(d*d); % inverse learning rate
     old_cost = 1e10;
     costs = 0;
-    for i=1:1e4
+    for i=1:1e10
 %         mu = 1.05*mu;
 %         i;
 
@@ -70,19 +70,23 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         new_cost = cost(A,n,solution{i});
         B = new_cost + gamma*alpha*(D'*G);
         while cost(A,n,solution{i}+alpha*D) > B  
-            alpha = 0.8 * alpha ; % less crude
+            alpha = 0.5 * alpha;  % less crude
+            B = new_cost + gamma*alpha*(D'*G);
+            if alpha < 1e-15
+                break
+            end
 %             alpha = 0.2 * alpha ; % more crude
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
-
+% 
         if norm(solution{i+1}-solution{i})<1e-6 % criterion in solution space rather than costs seems to work better for pgd
             break
         end
         
 
-%         if old_cost - new_cost < 1e-9
-% %             new_cost
+%         if (old_cost - new_cost)/old_cost < 1e-10
+% %             new_cost;
 %             break
 %         end
         old_cost = new_cost;
