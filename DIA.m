@@ -50,7 +50,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 %             eig(rho_new)
             break
         end
-        costs(k+1)     = cost(A,n,solution{k+1});
+%         costs(k+1)     = cost(A,n,solution{k+1});
 %         if abs(costs(k)-costs(k+1))<1e-9
 %             break
 %         end

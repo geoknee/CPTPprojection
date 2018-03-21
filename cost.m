@@ -6,10 +6,19 @@ function [ c ] = cost( A, n , choi_vec )
 % c             : (scalar) is the negative log-likelihood 
 
     p  = real(A*choi_vec); % the forward model
-    
 %     n  = n./sum(n);
 %     p  = p./sum(p);
 
+
+%     eps = 1e-16;
+%     
+%     if nnz(p)<length(p)
+%         sprintf('p=0 occured')
+%     end
+%     
+%     p(find(p<eps)) = eps;
+    
+    
     c = real(-(n.'*reallog(p)));
 end
 

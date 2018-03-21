@@ -42,6 +42,7 @@ for d=2:5
         % n             = n/sum(n); % activate for multinomial noise
         
         n               = p; % noiseless scenario
+        n               =n./sum(n);
 
 % save A as well, or assume fixed?
        

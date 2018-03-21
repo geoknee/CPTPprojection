@@ -2,7 +2,7 @@
 % script to generate a number of simulated datasets
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 5;
+ensemble_size = 10;
 
 for d=4:4
     
@@ -50,13 +50,15 @@ for d=4:4
             else
                 p           = reshape(p,[],d*d);
                 n           = reshape(mnrnd(N,p')',[],1);
+                
+                n           = n./sum(n);
         
-
-                for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
-                    % TODO make sure that this is simply dividing whole
-                    % likelihood by a constant.
-                end
+% 
+%                 for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+%                     n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
+%                     % TODO make sure that this is simply dividing whole
+%                     % likelihood by a constant.
+%                 end
             end
 %         n               = p; % noiseless scenario
 
