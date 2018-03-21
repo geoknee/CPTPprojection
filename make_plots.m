@@ -1,7 +1,7 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 5;
-ensemble_size = 10;
+dmax = 8;
+ensemble_size = 30;
 gdapB_times  = zeros(ensemble_size,dmax);
 gdapM_times  = zeros(ensemble_size,dmax);
 mosek_times  = zeros(ensemble_size,dmax);
@@ -119,7 +119,7 @@ saveas(gcf,'./plots/errors.eps','epsc')
 
 figure; hold on;
 scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')
-scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','gdapB')
+scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','pgdB')
 % scatter(gdapM_errors(:,2),gdapM_times(:,2),'o','filled','DisplayName','gdapM')
 scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
 % scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
@@ -160,26 +160,26 @@ scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
-% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
+scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
+scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
+scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
 % scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
 % scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% % 
-% scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
-% scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
-% scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
+ax = gca;
+ax.ColorOrderIndex = 1;
+% 
+scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
+scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
+scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
 % 
 % 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% % 
-% scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
-% scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
-% scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
+ax = gca;
+ax.ColorOrderIndex = 1;
+% 
+scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
+scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
+scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
 
 
 

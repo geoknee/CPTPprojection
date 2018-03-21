@@ -8,7 +8,8 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
-    costs = zeros(1e4);
+%     costs = zeros(1e4);
+    costs=0;
     for k=1:1e4
 
 %         k
@@ -43,7 +44,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         solution{k+1} = reshape(rho_new,[],1);
 %         norm(rho_new-rho)
 
-        if norm(rho_new-rho,'fro')<1e-6 %warning, making this very strict will result in very large datafiles
+        if norm(rho_new-rho,'fro')<1e-5 %warning, making this very strict will result in very large datafiles
 %             k
 %             costs(end)
 %             partial_trace(rho_new)

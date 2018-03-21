@@ -9,7 +9,7 @@ purityTemp=0;
 %Generate exponialy decreasing eigenvalues with the specified purity
 while purityTemp<purity
     lambda = lambda + 0.001; %increase std until reach correct purity
-    lam = exp(-lambda*(1:d*d)); %exponential distribution of eigenvalues
+    lam = real(exp(-lambda*(1:d*d))); %exponential distribution of eigenvalues
     lamb = lam/sum(lam);
     purityTemp = sum(lamb.^2);
 end
@@ -18,6 +18,8 @@ choi = 0;
 for i=1:d*d
     choi = choi + lamb(i)*randomCPTP(d,1);
 end
+
+choi = d*choi/trace(choi);
 
 % trace(choi*choi)/(d*d);
 

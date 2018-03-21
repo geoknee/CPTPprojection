@@ -26,11 +26,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);
-    gamma = 0.1;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
+    gamma = 0.3;%1e-6; % higher means more demanding line search. Boyd and Vandenberghe suggest between 0.01 and 0.3
     
 %     Lscale = norm(gradient(A,n,choi_init));
     
-    mu = 2/(d*d); % inverse learning rate
+    mu = 1.5/(d*d); % inverse learning rate
     old_cost = 1e10;
     costs = 0;
     for i=1:1e10
@@ -80,7 +80,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
 % 
-        if norm(solution{i+1}-solution{i})<1e-6 % criterion in solution space rather than costs seems to work better for pgd
+        if norm(solution{i+1}-solution{i})<5e-5 % criterion in solution space rather than costs seems to work better for pgd
             break
         end
         

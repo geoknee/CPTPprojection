@@ -1,3 +1,6 @@
 [Dolphin]
-Timestamp=2018,3,21,10,40,44
+ShowPreview=true
+SortOrder=1
+Sorting=2
+Timestamp=2018,3,21,20,55,27
 ViewMode=1

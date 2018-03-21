@@ -1,7 +1,7 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
 dmax = 4;
-ensemble_size = 5;
+ensemble_size = 30;
 Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
 Ns(end)=10^12;
@@ -76,11 +76,11 @@ for d=4:dmax
 %     xlabel 'N'
     ylabel 'times taken (s)';
     set(gca,'XScale','log')
-    set(gca,'YScale','log');
-    xticks(Ns(1:end))
-    yticks([1e-3,1e-2,1e-1,1e0,1e1,1e2])
+%     set(gca,'YScale','log');
+    set(gca,'XTick',Ns(1:end-1))
+%     set(gca,'YTick',[1e-3,1e-2,1e-1,1e0,1e1,1e2])
     box on; grid on;
-    xticklabels([])
+    set(gca,'XTickLabel',[])
 %     legend('DIA','gdapB','mosek','Location','NorthWest')
     % legend('gdapB','mosek','sdpt3')
     box on
@@ -94,10 +94,10 @@ for d=4:dmax
     errorbar(Ns(end),squeeze(mean(mosek_times(:,d,end)))',squeeze(std(mosek_times(:,d,end)))','-x','LineWidth',2);
     
     set(gca,'XScale','log');
-    set(gca,'YScale','log');
+%     set(gca,'YScale','log');
     box on; grid on;
     ax = gca;
-    xticks([])
+    set(gca,'XTick',[])
     ax.YAxisLocation = 'right';
 %     title(['d = ',num2str(d)])
 %     saveas(gcf,['./plots/timed',num2str(d),'.png'])
@@ -119,10 +119,10 @@ for d=4:dmax
     ylabel 'error';
     set(gca,'XScale','log');
     set(gca,'YScale','log');
-    xticks(Ns(1:end))
-    yticks([1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
+    set(gca,'XTick',Ns(1:end))
+    set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
     box on; grid on;
-    legend('DIA','pgdB','mosek')
+    legend('DIA','pgdB','mosek','Location','southwest')
     
     ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
     errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);
@@ -130,8 +130,8 @@ for d=4:dmax
     errorbar(Ns(end),squeeze(mean(mosek_errors(:,d,end)))',squeeze(std(mosek_errors(:,d,end)))','-x','LineWidth',2);
     
     xlabel('$\infty$','Interpreter','latex')
-    yticks([1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
-    xticks([])
+    set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
+    set(gcs,'XTick',[])
 %     ylabel 'error';
     ax=gca;
     ax.YAxisLocation = 'right';

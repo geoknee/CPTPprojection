@@ -4,12 +4,12 @@
 clear all
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 10;
+ensemble_size = 30;
 
 for d=4:4   
-    for method={'gdapB','DIA'}
+%     for method={'mosek','gdapB','DIA'}
 % for method={'gdapB'}
-% for method = {'DIA'}
+for method = {'gdapB','mosek'}
         fprintf(char(10));
         fprintf(method{1});
 
@@ -21,7 +21,7 @@ for d=4:4
         for Npow=[1,2,3,4,5,6,7,8,Inf]
             N = 10^Npow;
             dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npow);
-            fprintf(newline);
+            fprintf(char(10));
             fprintf('[%d] ', N);
             for i = 1:ensemble_size % total number of simulated datasets
                 fprintf('%d ', i); 
