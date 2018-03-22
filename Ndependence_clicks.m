@@ -52,11 +52,11 @@ for d=4:4
                 p           = reshape(p,[],1);
                 n           = p;
             else
-                p           = reshape(p,[],d*d);
-                for m=1:2*d*d
-                    p(m,:) = p(m,:)./sum(p(m,:));
+                pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
+                for m=1:d*d % loop over input states
+                    pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
                 end
-                n           = reshape(mnrnd(N,p),[],1);
+                n           = reshape(mnrnd(N,pmat),[],1);
                 
                 n           = n./sum(n);
 %                 sum(n)
