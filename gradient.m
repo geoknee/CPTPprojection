@@ -10,14 +10,14 @@ function [ g ] = gradient( A, n ,choi_vec)
 %     n   = n./sum(n);
 %     p   = p./sum(p);
     
-% 
-%     eps = 1e-16;
-%     
-%     if nnz(p)<length(p)
-%         sprintf('p=0 occured')
-%     end
-%     
-%     p(find(p<eps)) = eps;
+
+    eps = 1e-16;
+    
+    if nnz(p)<length(p)
+        sprintf('p=0 occured')
+    end
+    
+    p(find(p<eps)) = eps;
 %     
     
     g = -A'*(n./p);

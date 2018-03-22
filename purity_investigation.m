@@ -33,12 +33,25 @@ for d=2:5
 
         rank_square(i)  = rank(choi_ground);
         purity_square(i)= sum(eig(choi_ground).^2/d^2);
+        
+        
+        choi_quasi      = randomCPTP_quasi_pure(d,0.9);
+        
+        rank_quasi(i)  = rank(choi_quasi);
+        purity_quasi(i)= sum(eig(choi_quasi).^2/d^2);
+        
     end
     mean_rank_square = mean(rank_square);
     std_rank_square  = std(rank_square);
 
     mean_purity_square = mean(purity_square);
     std_purity_square = std(purity_square);
+    
+    mean_rank_quasi = mean(rank_quasi);
+    std_rank_quasi  = std(rank_quasi);
+    
+    mean_purity_quasi = mean(purity_quasi);
+    std_purity_quasi = std(purity_quasi);
     
     ax = gca;
     ax.ColorOrderIndex = d-1;
@@ -48,6 +61,8 @@ for d=2:5
     ax = gca;
     ax.ColorOrderIndex = d-1;
     errorbar(mean_rank_square,mean_purity_square,std_purity_square,std_purity_square,std_rank_square,std_rank_square,'d','LineWidth',2,'DisplayName',num2str(d))
+    errorbar(mean_rank_quasi,mean_purity_quasi,std_purity_quasi,std_purity_quasi,std_rank_quasi,std_rank_quasi,'d','LineWidth',2,'DisplayName',num2str(d))
+
     end
 %     print(gcf,'-depsc2','-loose',['./plots/puritygaussiand',num2str(d),'.eps'])
 xlabel('rank')

@@ -131,7 +131,7 @@ for d=4:dmax
     
     xlabel('$\infty$','Interpreter','latex')
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
-    set(gcs,'XTick',[])
+    set(gca,'XTick',[])
 %     ylabel 'error';
     ax=gca;
     ax.YAxisLocation = 'right';

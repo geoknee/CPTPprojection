@@ -137,6 +137,11 @@ scatter(mosek_errors(:,3),mosek_times(:,3),'<','filled')
 % scatter(sdpt3_errors(:,3),sdpt3_times(:,3),'<','filled')
 % scatter(sedumi_errors(:,3),sedumi_times(:,3),'<','filled')
 
+%triangles
+% plot([mean(DIA_errors(:,3)),mean(mosek_errors(:,3))],[mean(DIA_times(:,3)),mean(mosek_times(:,3))],'k')
+% plot([mean(DIA_errors(:,3)),mean(gdapB_errors(:,3))],[mean(DIA_times(:,3)),mean(gdapB_times(:,3))],'k')
+% plot([mean(gdapB_errors(:,3)),mean(mosek_errors(:,3))],[mean(gdapB_times(:,3)),mean(mosek_times(:,3))],'k')
+
 ax = gca;
 ax.ColorOrderIndex = 1;
 
@@ -147,6 +152,11 @@ scatter(mosek_errors(:,4),mosek_times(:,4),'d','filled')
 % scatter(sdpt3_errors(:,4),sdpt3_times(:,4),'d','filled')
 % scatter(sedumi_errors(:,4),sedumi_times(:,4),'d','filled')
 
+% plot([mean(DIA_errors(:,4)),mean(mosek_errors(:,4))],[mean(DIA_times(:,4)),mean(mosek_times(:,4))],'k')
+% plot([mean(DIA_errors(:,4)),mean(gdapB_errors(:,4))],[mean(DIA_times(:,4)),mean(gdapB_times(:,4))],'k')
+% plot([mean(gdapB_errors(:,4)),mean(mosek_errors(:,4))],[mean(gdapB_times(:,4)),mean(mosek_times(:,4))],'k')
+
+
 ax = gca;
 ax.ColorOrderIndex = 1;
 
@@ -156,24 +166,31 @@ scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
 scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
 % scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
 % scatter(sedumi_errors(:,5),sedumi_times(:,5),'p','filled')
-% 
+
+% plot([mean(DIA_errors(:,5)),mean(mosek_errors(:,5))],[mean(DIA_times(:,5)),mean(mosek_times(:,5))],'k')
+% plot([mean(DIA_errors(:,5)),mean(gdapB_errors(:,5))],[mean(DIA_times(:,5)),mean(gdapB_times(:,5))],'k')
+% plot([mean(gdapB_errors(:,5)),mean(mosek_errors(:,5))],[mean(gdapB_times(:,5)),mean(mosek_times(:,5))],'k')
+
+
+
+% % 
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
 scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
 scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
 scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
-% scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
-% scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
-
+% % scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
+% % scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
+% 
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
 scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
 scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
 scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
-% 
-% 
+% % 
+% % 
 ax = gca;
 ax.ColorOrderIndex = 1;
 % 
