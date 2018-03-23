@@ -10,6 +10,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     solution  = {choi_init};
 %     costs = zeros(1e4);
     costs=0;
+    old_cost = 1e10;
     for k=1:1e4
 
 %         k
@@ -42,16 +43,24 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 
         rho_new = LI*Rp*rho*Rp*LI;
         solution{k+1} = reshape(rho_new,[],1);
+        new_cost = cost(A,n,solution{k+1});
 %         norm(rho_new-rho)
 
-        if norm(rho_new-rho,'fro')<1e-5 %warning, making this very strict will result in very large datafiles
-%             k
-%             costs(end)
-%             partial_trace(rho_new)
-%             eig(rho_new)
+%         if norm(rho_new-rho,'fro')<1e-5 %warning, making this very strict will result in very large datafiles
+% %             k
+% %             costs(end)
+% %             partial_trace(rho_new)
+% %             eig(rho_new)
+%             break
+%         end
+
+        if (new_cost)/old_cost > 1- 1e-9
+%             new_cost;
             break
         end
-%         costs(k+1)     = cost(A,n,solution{k+1});
+        old_cost = new_cost;
+        
+        %         costs(k+1)     = cost(A,n,solution{k+1});
 %         if abs(costs(k)-costs(k+1))<1e-9
 %             break
 %         end

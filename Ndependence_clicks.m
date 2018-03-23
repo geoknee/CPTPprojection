@@ -2,7 +2,7 @@
 % script to generate a number of simulated datasets
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 30;
+ensemble_size = 10;
 
 for d=4:4
     
@@ -44,7 +44,7 @@ for d=4:4
         p               = p/sum(p);
         p               = p*d*d;
         
-        for Npow=[1,2,3,4,5,6,7,8,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
+        for Npow=[1,2,3,4,5,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
                                     
             N = 10^Npow
             

@@ -80,15 +80,14 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
 % 
-        if norm(solution{i+1}-solution{i})<5e-5 % criterion in solution space rather than costs seems to work better for pgd
-            break
-        end
-        
-
-%         if (old_cost - new_cost)/old_cost < 1e-10
-% %             new_cost;
+%         if norm(solution{i+1}-solution{i})<5e-5 % criterion in solution space rather than costs seems to work better for pgd
 %             break
 %         end
+%         
+
+        if (new_cost)/old_cost > 1- 1e-9
+            break
+        end
         old_cost = new_cost;
 %         costs(i)     = 0; % just debugging
 %         costs(i+1)     = cost(A,n,solution{i+1}); % this not strictly necessary and quite expensive

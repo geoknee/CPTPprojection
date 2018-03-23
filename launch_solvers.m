@@ -6,8 +6,8 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 30;
 
-for d=2:8
-    for method={'mosek','gdapB','DIA'}
+for d=2:4
+    for method={'gdapB','DIA'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'gdapB'}
         fprintf(char(10));
@@ -34,13 +34,13 @@ for d=2:8
                     case'gdapB'
                         tic;
                         [choi_ml_vec, solution, costs] = gdapB(A,n);
-                        elapsedTime = toc;
+                        elapsedTime = toc
 %                         semilogy(costs)
 %                         hold on
                     case 'DIA'
                         tic;
                         [choi_ml_vec, solution, costs] = DIA(A,n);
-                        elapsedTime = toc;
+                        elapsedTime = toc
 %                         semilogy(costs)
 %                         hold on
                     case 'mosek'
