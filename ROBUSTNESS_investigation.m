@@ -44,7 +44,7 @@ for rank=1:4
 %         [choi_ml_vec, ~, ~] = gdapB(A,n);
 %         choi_ml = reshape(choi_ml_vec,[],d*d);
 
-        [choi_ml_vecROBUST, ~, ~]  = ROBUSTgdapB(A,n);
+        [choi_ml_vecROBUST, ~, ~]  = gdapB(A,n);
         choi_mlROBUST = reshape(choi_ml_vecROBUST,[],d*d);
 
 

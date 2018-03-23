@@ -120,11 +120,12 @@ saveas(gcf,'./plots/errors.eps','epsc')
 
 
 %%
-figure; hold on;
+figure('Position',[1 0 400 250]); hold on;
 
 for d = 2:dmax
     ax = gca;
     ax.ColorOrderIndex = 1;
+    ax.YAxisLocation = 'right';
     
     DIAx(d)    = mean(DIA_errors(:,d));
     DIAxbar(d) = std(DIA_errors(:,d));
@@ -168,12 +169,13 @@ xlabel 'error'
 ylabel 'time (s)'
 
 set(gca,'XTick',([1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,1e0]))
-
+xlim([5e-5,5e-2])
+ylim([1e-2,1e2])
 box on
 grid on
 legend('DIA','pgdB','mosek','Location','northwest')
 
-set(gca,'fontsize',18)
+set(gca,'fontsize',12)
 saveas(gcf,'./plots/triangles.png')
 saveas(gcf,'./plots/triangles.eps','epsc')
 
