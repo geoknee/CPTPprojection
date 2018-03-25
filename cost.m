@@ -20,5 +20,7 @@ function [ c ] = cost( A, n , choi_vec )
     
     
     c = real(-(n.'*reallog(p)));
+    
+%     c = c./length(n); % normalisation for number of observations
 end
 

@@ -84,8 +84,10 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
 %         
-
-        if (new_cost)/old_cost > 1- 1e-9
+        if (old_cost - new_cost)  < 1e-10
+%             old_cost-new_cost
+%         if (new_cost)/old_cost > 1- 1e-5
+%             new_cost
             break
         end
         old_cost = new_cost;

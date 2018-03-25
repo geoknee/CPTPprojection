@@ -21,5 +21,7 @@ function [ g ] = gradient( A, n ,choi_vec)
 %     
     
     g = -A'*(n./p);
+    
+%     g = g/length(n); % normalisation for number of observations
 
 end

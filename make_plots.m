@@ -1,6 +1,6 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 4;
+dmax = 5;
 ensemble_size = 30;
 gdapB_times  = zeros(ensemble_size,dmax);
 gdapM_times  = zeros(ensemble_size,dmax);
