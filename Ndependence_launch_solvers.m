@@ -31,7 +31,7 @@ for d=4:4
                         case'gdapB'
                             tic;
                             [choi_ml_vec, solution, costs] = gdapB(A,n);
-                            elapsedTime = toc
+                            elapsedTime = toc;
     %                         semilogy(costs)
     %                         hold on
                         case 'DIA'

@@ -47,7 +47,9 @@ for rank=1:4
         [choi_ml_vecROBUST, ~, ~]  = gdapB(A,n);
         choi_mlROBUST = reshape(choi_ml_vecROBUST,[],d*d);
 
-
+        % EB identity trick
+%         q = 1e-3;
+%         choi_mlROBUST = (choi_mlROBUST-q*eye(d*d)/d)/(1-q);
 % 
 %         errorTP(i) = trace_dist(choi_mlTP/trace(choi_mlTP),choi_ground/trace(choi_ground));
 %         errorTNI(i) = trace_dist(choi_mlTNI/trace(choi_mlTNI),choi_ground/trace(choi_ground)); % is this a good measure for TNI processes?
