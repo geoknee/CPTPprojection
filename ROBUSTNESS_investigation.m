@@ -5,6 +5,8 @@ clear;
 ensemble_size = 100;
 close all;
 d=2;
+fig1 = figure;
+fig2 = figure;
 for rank=1:4
     fprintf('%d: ', d);
     A = PM_minimal(d);  
@@ -43,28 +45,30 @@ for rank=1:4
 %       
 %         [choi_ml_vec, ~, ~] = gdapB(A,n);
 %         choi_ml = reshape(choi_ml_vec,[],d*d);
-
         [choi_ml_vecROBUST, ~, ~]  = gdapB(A,n);
+        [choi_ml_vecROBUST_IT, ~, ~]  = gdapB_IT(A,n);
         choi_mlROBUST = reshape(choi_ml_vecROBUST,[],d*d);
+        choi_mlROBUST_IT = reshape(choi_ml_vecROBUST_IT,[],d*d);
 
-        % EB identity trick
-%         q = 1e-3;
-%         choi_mlROBUST = (choi_mlROBUST-q*eye(d*d)/d)/(1-q);
 % 
 %         errorTP(i) = trace_dist(choi_mlTP/trace(choi_mlTP),choi_ground/trace(choi_ground));
 %         errorTNI(i) = trace_dist(choi_mlTNI/trace(choi_mlTNI),choi_ground/trace(choi_ground)); % is this a good measure for TNI processes?
         
 %         error(i) = norm(choi_ml-choi_ground);
         errorROBUST(i) = norm(choi_mlROBUST-choi_ground);
+        errorROBUST_IT(i) = norm(choi_mlROBUST_IT-choi_ground);
         
 % % save A as well, or assume fixed?
 
 %         save([dir,'/dataset',num2str(i)],'choi_ground','n','p')
     
     end
-    hold on; plot(errorROBUST,'LineWidth',2);
+    figure(fig1); plot(errorROBUST,'LineWidth',2); hold on;
+    figure(fig2); plot(errorROBUST_IT,'LineWidth',2); hold on;
 end
 
+figure(fig1)
+title('Conditioned PGDB')
 legend('rank 1','rank2','rank3','rank4')
 set(gca,'YScale','log');
 xlabel('run')
@@ -73,3 +77,14 @@ grid on
 box on
 set(gca,'fontsize',18)
 print(gcf,'-depsc2','-loose',['./plots/ROBUSTNESSd',num2str(d),'.eps'])
+
+figure(fig2)
+title('identity trick')
+legend('rank 1','rank2','rank3','rank4')
+set(gca,'YScale','log');
+xlabel('run')
+ylabel('error')
+grid on
+box on
+set(gca,'fontsize',18)
+print(gcf,'-depsc2','-loose',['./plots/ROBUSTNESSd_IT',num2str(d),'.eps'])
