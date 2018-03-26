@@ -122,7 +122,7 @@ saveas(gcf,'./plots/errors.eps','epsc')
 %%
 figure('Position',[1 0 400 250]); hold on;
 
-for d = 2:dmax
+for d = 2:7
     ax = gca;
     ax.ColorOrderIndex = 1;
     ax.YAxisLocation = 'right';

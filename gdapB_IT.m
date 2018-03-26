@@ -118,8 +118,8 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     end
 %     plot(costs)
 %     hold on
-%     choi_ml_vec = CPTP_project(solution{end}, MdagM, Mdagb);
-    choi_ml_vec = solution{end};
+    choi_ml_vec = CPTP_project(solution{end}, MdagM, Mdagb);
+%     choi_ml_vec = solution{end};
 end
 
 

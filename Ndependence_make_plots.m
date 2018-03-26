@@ -64,7 +64,7 @@ for d=4:dmax
 
         end 
     end
-    
+    %%
     figure; ax1 = subplot(2,2,1); hold on;
     
     errorbar(Ns(1:end-1),squeeze(mean(DIA_times(:,d,1:end-1)))',squeeze(std(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
@@ -84,7 +84,7 @@ for d=4:dmax
 %     legend('DIA','gdapB','mosek','Location','NorthWest')
     % legend('gdapB','mosek','sdpt3')
     box on
-    grid on
+    grid off
 %     set(gca,'fontsize',18)
     
     ax2 = subplot(2,2,2); hold on; pbaspect([1 4 1]);

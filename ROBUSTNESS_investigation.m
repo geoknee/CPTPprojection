@@ -2,7 +2,7 @@
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
 clear;
-ensemble_size = 100;
+ensemble_size = 1000;
 close all;
 d=2;
 fig1 = figure;
@@ -68,6 +68,8 @@ for rank=1:4
 end
 
 figure(fig1)
+pbaspect([4,1,1])
+ylim([1e-7,1])
 title('Conditioned PGDB')
 legend('rank 1','rank2','rank3','rank4')
 set(gca,'YScale','log');
@@ -79,6 +81,8 @@ set(gca,'fontsize',18)
 print(gcf,'-depsc2','-loose',['./plots/ROBUSTNESSd',num2str(d),'.eps'])
 
 figure(fig2)
+pbaspect([4,1,1])
+ylim([1e-7,1])
 title('identity trick')
 legend('rank 1','rank2','rank3','rank4')
 set(gca,'YScale','log');
