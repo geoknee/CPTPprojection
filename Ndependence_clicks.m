@@ -44,14 +44,14 @@ for d=4:4
         p               = p/sum(p);
         p               = p*d*d;
         
-        for Npow=[1,3,5,6,7,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
+        for Npow=[1,3,5,7,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise
                                     
             N = 10^Npow
             
             if isinf(N)
                 p           = reshape(p,[],1);
                 n           = p;
-                n           = n./sum(n);
+%                 n           = n./sum(n);
             else
                 pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
                 for m=1:d*d % loop over input states
@@ -59,7 +59,7 @@ for d=4:4
                 end
                 n           = reshape(mnrnd(N,pmat),[],1);
                 
-                n           = n./sum(n);
+%                 n           = n./sum(n);
 %                 sum(n)
 
         

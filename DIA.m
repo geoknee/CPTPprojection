@@ -5,6 +5,10 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 
     d = sqrt(sqrt(size(A)));
     d = d(2);
+    
+    N = sum(n);
+    n = n/N;
+    
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
