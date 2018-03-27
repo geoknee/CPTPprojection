@@ -95,7 +95,7 @@ for d=4:dmax
     
     set(gca,'XScale','log');
 %     set(gca,'YScale','log');
-    box on; grid on;
+    box on; grid off;
     ax = gca;
     set(gca,'XTick',[])
     ax.YAxisLocation = 'right';
@@ -119,7 +119,7 @@ for d=4:dmax
     ylabel 'error';
     set(gca,'XScale','log');
     set(gca,'YScale','log');
-    set(gca,'XTick',Ns(1:end))
+    set(gca,'XTick',[1e1,1e3,1e5,1e7,1e9])
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
     box on; grid on;
     legend('DIA','pgdB','mosek','Location','southwest')

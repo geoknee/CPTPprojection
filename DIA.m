@@ -6,8 +6,12 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     d = sqrt(sqrt(size(A)));
     d = d(2);
     
-    N = sum(n);
-    n = n/N;
+    if sum(n) == 1
+        N = 10^12; % catch noiseless case this way
+    else       
+        N = sum(n);
+        n = n/N;
+    end
     
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
@@ -48,6 +52,14 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         rho_new = LI*Rp*rho*Rp*LI;
         solution{k+1} = reshape(rho_new,[],1);
         new_cost = cost(A,n,solution{k+1});
+        
+%         p = real(A*solution{k+1});
+%         cs{k+1} = mcs(p,n,N);
+%         if cs{k} - cs{k+1} < 1e-12
+%             cs{k+1}
+%             break
+%         end
+        
 %         norm(rho_new-rho)
 
 %         if norm(rho_new-rho,'fro')<1e-5 %warning, making this very strict will result in very large datafiles
@@ -57,7 +69,7 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 % %             eig(rho_new)
 %             break
 %         end
-        if (old_cost - new_cost)  < 1e-10
+        if sqrt(N)*(old_cost - new_cost)  < 1e-5
 %         if (new_cost)/old_cost > 1- 1e-9
 %             new_cost;
             break

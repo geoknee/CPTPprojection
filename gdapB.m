@@ -4,8 +4,14 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     d = sqrt(sqrt(size(A)));
     d = d(2);
     
-    N = sum(n);
-    n = n/N;
+    if sum(n) == 1
+        N = 10^12; % catch noiseless case this way
+    else       
+        N = sum(n);
+        n = n/N;
+    end
+
+    
     
 
 %     n = reshape(n,[],2*d*d);% normalise clicks
@@ -36,6 +42,7 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     mu = 1.5/(d*d); % inverse learning rate
     old_cost = 1e10;
     costs = 0;
+    cs{1} = 1e10;
     for i=1:1e10
 %         mu = 1.05*mu;
 %         i;
@@ -46,10 +53,11 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
         
-%         % glancy stopping criterion NJP 14 095017
-%         
-%         r(i) = max(eig(reshape(-G,[],d*d))) % TODO glancy has -N term. we are omitting
-%         if r(i)<1e-6*0.5*(d*d-1)
+%         % Glancy stopping criterion NJP 14 095017
+%         i
+%         r(i) = d*max(eig(reshape(G.',[],d*d))) - length(n)% Glancy's N is my length(n)
+%         if r(i)<(d^4-d^2)
+%             r(i)
 %             break
 %         end
 %         
@@ -82,19 +90,25 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
+%         p = real(A*solution{i+1});
+%         cs{i+1} = mcs(p,n,N);
+%         if (d^4-d^2)*(cs{i} - cs{i+1}) < 1e-12
+%             cs{i+1}
+%             break
+%         end
         
-
+        
 % 
 %         if norm(solution{i+1}-solution{i})<5e-5 % criterion in solution space rather than costs seems to work better for pgd
 %             break
 %         end
 % %         
-        if (old_cost - new_cost)  < 1e-10
+        if sqrt(N)*(old_cost - new_cost)  < 1e-5
 %             old_cost-new_cost
 %         if (new_cost)/old_cost > 1- 1e-5
 %             new_cost
-            p = real(A*solution{i+1});
-            mcs(p,n)
+%             p = real(A*solution{i+1});
+%             mcs(p,n,N)
             break
         end
         old_cost = new_cost;
