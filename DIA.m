@@ -53,12 +53,12 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         solution{k+1} = reshape(rho_new,[],1);
         new_cost = cost(A,n,solution{k+1});
         
-%         p = real(A*solution{k+1});
-%         cs{k+1} = mcs(p,n,N);
-%         if cs{k} - cs{k+1} < 1e-12
-%             cs{k+1}
-%             break
-%         end
+        p = real(A*solution{k+1});
+        cs{k+1} = mcs(p,n,N);
+        if (d^4-d^2)*(cs{k} - cs{k+1}) < 1e-12
+%             cs{i+1}
+            break
+        end
         
 %         norm(rho_new-rho)
 
@@ -69,11 +69,11 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 % %             eig(rho_new)
 %             break
 %         end
-        if sqrt(N)*(old_cost - new_cost)  < 1e-5
-%         if (new_cost)/old_cost > 1- 1e-9
-%             new_cost;
-            break
-        end
+%         if sqrt(N)*(old_cost - new_cost)  < 1e-5
+% %         if (new_cost)/old_cost > 1- 1e-9
+% %             new_cost;
+%             break
+%         end
         old_cost = new_cost;
         
         %         costs(k+1)     = cost(A,n,solution{k+1});

@@ -90,12 +90,12 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
         end
 %         solution{i+1} = solution{i} + alpha*D{i};
         solution{i+1} = solution{i} + alpha*D;
-%         p = real(A*solution{i+1});
-%         cs{i+1} = mcs(p,n,N);
-%         if (d^4-d^2)*(cs{i} - cs{i+1}) < 1e-12
+        p = real(A*solution{i+1});
+        cs{i+1} = mcs(p,n,N);
+        if (d^4-d^2)*(cs{i} - cs{i+1}) < 1e-12
 %             cs{i+1}
-%             break
-%         end
+            break
+        end
         
         
 % 
@@ -103,14 +103,14 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
 %             break
 %         end
 % %         
-        if sqrt(N)*(old_cost - new_cost)  < 1e-5
-%             old_cost-new_cost
-%         if (new_cost)/old_cost > 1- 1e-5
-%             new_cost
-%             p = real(A*solution{i+1});
-%             mcs(p,n,N)
-            break
-        end
+%         if sqrt(N)*(old_cost - new_cost)  < 1e-5
+% %             old_cost-new_cost
+% %         if (new_cost)/old_cost > 1- 1e-5
+% %             new_cost
+% %             p = real(A*solution{i+1});
+% %             mcs(p,n,N)
+%             break
+%         end
         old_cost = new_cost;
 %         costs(i)     = 0; % just debugging
 %         costs(i+1)     = cost(A,n,solution{i+1}); % this not strictly necessary and quite expensive

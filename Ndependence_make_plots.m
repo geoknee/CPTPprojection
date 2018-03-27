@@ -2,7 +2,7 @@
 clear;close all;
 dmax = 4;
 ensemble_size = 10;
-Npows = [1,3,5,7,Inf]; % can probably manage up to 9
+Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
 Ns(end)=10^12;
 % Ns = [2,4,8,16,32];
