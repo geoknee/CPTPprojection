@@ -69,11 +69,11 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 % %             eig(rho_new)
 %             break
 %         end
-%         if sqrt(N)*(old_cost - new_cost)  < 1e-5
-% %         if (new_cost)/old_cost > 1- 1e-9
-% %             new_cost;
-%             break
-%         end
+        if (old_cost - new_cost)  < 1e-10
+%         if (new_cost)/old_cost > 1- 1e-9
+%             new_cost;
+            break
+        end
         old_cost = new_cost;
         
         %         costs(k+1)     = cost(A,n,solution{k+1});

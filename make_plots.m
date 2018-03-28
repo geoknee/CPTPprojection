@@ -122,7 +122,7 @@ saveas(gcf,'./plots/errors.eps','epsc')
 %%
 figure('Position',[1 0 400 250]); hold on;
 
-for d = 2:7
+for d = 2:6
     ax = gca;
     ax.ColorOrderIndex = 1;
     ax.YAxisLocation = 'right';
@@ -169,7 +169,7 @@ xlabel 'error'
 ylabel 'time (s)'
 
 set(gca,'XTick',([1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,1e0]))
-xlim([5e-5,5e-2])
+% xlim([5e-5,5e-2])
 ylim([1e-2,1e2])
 box on
 grid on
