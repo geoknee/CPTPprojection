@@ -7,7 +7,8 @@ clear all
 ensemble_size = 10;
 
 for d=4:4   
-    for method={'mosek','gdapB','DIA'}
+    for method={'mosek','gdapB','DIA','LinInversion'}
+%     for method={'LinInversion'}
 % for method={'DIA'}
 % for method = {'DIA'}
         fprintf(char(10));
@@ -58,6 +59,11 @@ for d=4:4
                             [choi_ml_vec] = cvx_wrapper(A,n);
                             elapsedTime = toc;
                             solution=[]; costs = []; % cannot currently extract these
+                        case 'LinInversion'
+                            tic;
+                            choi_ml_vec = LinInversion(A,n);
+                            elapsedTime = toc;
+                            solution = []; costs = [];
                     end
                     save([dir,'/',char(method),'_results',num2str(i)],'elapsedTime','choi_ml_vec','costs','solution')
             end

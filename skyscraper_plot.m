@@ -2,7 +2,8 @@
 
 d = 4;
 
-choi_ground     = randomCPTP_quasi_pure(d,0.9);
+% choi_ground     = randomCPTP_quasi_pure(d,0.9);
+choi_ground     = randomCPTP(d,d*d);
 choi_ground_vec = reshape(choi_ground,[],1);
 
 A = PM_minimal(d);
@@ -39,7 +40,7 @@ xlim([0,d*d+0.5])
 zlim([-1,1])
 zlabel('Re$C_{\mathcal{E}}$','Interpreter','latex')
 set(gca,'fontsize',18)
-saveas(gcf,'./plots/ssREAL.png')
+saveas(gcf,'./plots/FULLRANKssREAL.png')
 figure('Position',[1 0 300 300]);
 b2 = bar3(imag(choi_ml))
 
@@ -61,6 +62,6 @@ zlim([-1,1])
 zlabel('Im$C_{\mathcal{E}}$','Interpreter','latex')
 
 set(gca,'fontsize',18)
-saveas(gcf,'./plots/ssIMAG.png')
+saveas(gcf,'./plots/FULLRANKssIMAG.png')
 
 % saveas(gcf,'./plots/ss.eps','epsc')

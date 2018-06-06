@@ -48,6 +48,13 @@ for d=4:dmax
             choi_mosek        = reshape(choi_ml_vec,[],d*d);
             mosek_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_mosek/trace(choi_mosek));
 
+            clear choi_ml_vec
+            
+            load([dir,'/LinInversion_results',num2str(i)]);
+            LI_times(i,d,Nindex) = elapsedTime;    
+            choi_LI        = reshape(choi_ml_vec,[],d*d);
+            LI_errors(i,d,Nindex) = trace_dist(choi_ground/trace(choi_ground),choi_LI/trace(choi_LI));
+
 %             clear choi_ml_vec
 % 
 %             load([dir,'/sdpt3_results',num2str(i)]);
@@ -70,7 +77,9 @@ for d=4:dmax
     errorbar(Ns(1:end-1),squeeze(mean(DIA_times(:,d,1:end-1)))',squeeze(std(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(gdapB_times(:,d,1:end-1)))',squeeze(std(gdapB_times(:,d,1:end-1)))','-*','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(mosek_times(:,d,1:end-1)))',squeeze(std(mosek_times(:,d,1:end-1)))','-x','LineWidth',2);
-%     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(LI_times(:,d,1:end-1)))',squeeze(std(LI_times(:,d,1:end-1)))','-x','LineWidth',2);
+
+    %     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
 
                     
 %     xlabel 'N'
@@ -92,6 +101,8 @@ for d=4:dmax
     errorbar(Ns(end),squeeze(mean(DIA_times(:,d,end)))',squeeze(std(DIA_times(:,d,end)))','-d','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(gdapB_times(:,d,end)))',squeeze(std(gdapB_times(:,d,end)))','-*','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(mosek_times(:,d,end)))',squeeze(std(mosek_times(:,d,end)))','-x','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(LI_times(:,d,end)))',squeeze(std(LI_times(:,d,end)))','-x','LineWidth',2);
+
     
     set(gca,'XScale','log');
 %     set(gca,'YScale','log');
@@ -112,7 +123,9 @@ for d=4:dmax
    errorbar(Ns(1:end-1),squeeze(mean(DIA_errors(:,d,1:end-1)))',squeeze(std(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(gdapB_errors(:,d,1:end-1)))',squeeze(std(gdapB_errors(:,d,1:end-1)))','-*','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(mosek_errors(:,d,1:end-1)))',squeeze(std(mosek_errors(:,d,1:end-1)))','-x','LineWidth',2);
-%     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(LI_errors(:,d,1:end-1)))',squeeze(std(LI_errors(:,d,1:end-1)))','-x','LineWidth',2);
+
+    %     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
 
 
     xlabel 'N'
@@ -122,12 +135,13 @@ for d=4:dmax
     set(gca,'XTick',[1e1,1e3,1e5,1e7,1e9])
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
     box on; grid on;
-    legend('DIA','pgdB','mosek','Location','southwest')
+    legend('DIA','pgdB','mosek','LinInversion','Location','southwest')
     
     ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
     errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(gdapB_errors(:,d,end)))',squeeze(std(gdapB_errors(:,d,end)))','-*','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(mosek_errors(:,d,end)))',squeeze(std(mosek_errors(:,d,end)))','-x','LineWidth',2);
+    errorbar(Ns(end),squeeze(mean(LI_errors(:,d,end)))',squeeze(std(LI_errors(:,d,end)))','-x','LineWidth',2);
     
     xlabel('$\infty$','Interpreter','latex')
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
@@ -147,7 +161,7 @@ for d=4:dmax
 %     title(['d = ',num2str(d)])
    
     linkaxes([ax1,ax2],'y')
-    linkaxes([ax3,ax4],'y')
+%     linkaxes([ax3,ax4],'y')
 %     linkaxes([ax1,ax3],'x')
 %     linkaxes([ax2,ax4],'x')
 
