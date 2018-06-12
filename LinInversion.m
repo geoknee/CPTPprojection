@@ -30,20 +30,21 @@ function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergen
 %     choi_LI_vec     = reshape(choi_LI,[],1);
     choi_LI_vec = CPTP_project(A\n, MdagM, Mdagb);
     
-    choi_LI     = reshape(choi_LI_vec,[],d*d);
-    if prod(eig(choi_LI)>-1e-3)
-        fprintf('CP')
-    else
-        fprintf('not CP')
-        min(eig(choi_LI))
-    end
-        
-    if norm(partial_trace(choi_LI)-eye(d))<1e-4
-        fprintf('TP')
-    else
-        fprintf('not TP')
-        norm(partial_trace(choi_LI)-eye(d))        
-    end
+%     choi_LI     = reshape(choi_LI_vec,[],d*d);
+%     norm(partial_trace(choi_LI)-eye(d))
+%     if prod(eig(choi_LI)>-1e-3)
+%         fprintf('CP')
+%     else
+%         fprintf('not CP')
+%         min(eig(choi_LI))
+%     end
+%         
+%     if norm(partial_trace(choi_LI)-eye(d))<1e-4
+%         fprintf('TP')
+%     else
+%         fprintf('not TP')
+%         norm(partial_trace(choi_LI)-eye(d))        
+%     end
     
 end
 

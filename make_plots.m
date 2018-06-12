@@ -193,8 +193,8 @@ grid on
 legend('DIA','pgdB','mosek','Location','northwest')
 
 set(gca,'fontsize',12)
-saveas(gcf,'./plots/triangles.png')
-saveas(gcf,'./plots/triangles.eps','epsc')
+saveas(gcf,['./plots/',ensemble,'triangles.png'])
+saveas(gcf,['./plots/',ensemble,'triangles.eps'],'epsc')
 
 
 % scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')

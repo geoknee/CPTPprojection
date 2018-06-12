@@ -3,7 +3,10 @@
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
-
+default_ensemble = 'qp';
+if ~exist ensemble
+    ensemble = default_ensemble
+end
 for d=2:7
     
     fprintf(char(10));
@@ -36,8 +39,13 @@ for d=2:7
 %         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
 %         choi_ground_vec = reshape(choi_ground,[],1);
 
-        
-        choi_ground     = randomCPTP_quasi_pure(d,0.9);
+        switch ensemble
+            case 'qp'
+                choi_ground     = randomCPTP_quasi_pure(d,0.9);
+            case 'fr'
+                choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+        end
+                
 %         partial_trace(choi_ground)
         choi_ground_vec = reshape(choi_ground,[],1);
 

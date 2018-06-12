@@ -1,5 +1,9 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
+default_ensemble = 'qp';
+if ~exist ensemble
+    ensemble = default_ensemble
+end
 dmax = 7;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
@@ -165,10 +169,10 @@ for d=2:dmax
 %     linkaxes([ax1,ax3],'x')
 %     linkaxes([ax2,ax4],'x')
 
-    saveas(gcf,['./plots/timeerrord',num2str(d),'.png'])
-    saveas(gcf,['./plots/ALTtimeerrord',num2str(d),'.eps'],'epsc')
+    saveas(gcf,['./plots/',ensemble,'timeerrord',num2str(d),'.png'])
+    saveas(gcf,['./plots/',ensemble,'ALTtimeerrord',num2str(d),'.eps'],'epsc')
     set(gcf,'paperpositionmode','auto')
-    print(gcf,'-depsc2','-loose',['./plots/timeerrord',num2str(d),'.eps'])
+    print(gcf,'-depsc2','-loose',['./plots/',ensemble,'timeerrord',num2str(d),'.eps'])
 end
 
 
