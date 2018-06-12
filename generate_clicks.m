@@ -35,7 +35,13 @@ for d=2:8
 %         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
 %         choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
         
-        choi_ground     = randomCPTP_quasi_pure(d,0.9);
+        switch ensemble
+            case 'qp'
+                choi_ground     = randomCPTP_quasi_pure(d,0.9);
+            case 'fr'
+                choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+        end
+        
         choi_ground_vec = reshape(choi_ground,[],1);
         
         p               = real(A*choi_ground_vec);
