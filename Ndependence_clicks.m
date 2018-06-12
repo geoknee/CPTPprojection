@@ -4,7 +4,7 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=4:4
+for d=2:2
     
     fprintf(char(10));
     fprintf('%d ', d);
@@ -38,11 +38,12 @@ for d=4:4
 
         
         choi_ground     = randomCPTP_quasi_pure(d,0.9);
+        partial_trace(choi_ground)
         choi_ground_vec = reshape(choi_ground,[],1);
 
         p               = real(A*choi_ground_vec);
-        p               = p/sum(p);
-        p               = p*d*d;
+%         p               = p/sum(p);
+%         p               = p*d*d;
         
         for Npow=[1,2,3,4,5,6,7,8,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise                            
             N = 10^Npow

@@ -3,7 +3,7 @@ Npowmin = 3;
 Npowmax = 6;
 for d = 4:4
     A = PM_minimal(d);
-    ensemble_size = 1000;
+    ensemble_size = 100;
 
     for l=1:ensemble_size
             fprintf(char(10));
@@ -57,7 +57,8 @@ for d = 4:4
     %                 end
                 end
 
-                choi_li = LinInversion(A,n);
+%                 choi_li = LinInversion(A,n);
+                choi_li = gdapB(A,n);
 %                 distance_to_CP(Npow,l) = norm(reshape(choi_li,[],d*d)-reshape(PSD_project(choi_li),[],d*d),'fro');
                 choi_li_matrix = reshape(choi_li,[],d*d);
                 choi_li_matrix = (choi_li_matrix'+choi_li_matrix)/2;
