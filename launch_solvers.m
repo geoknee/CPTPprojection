@@ -6,8 +6,9 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 30;
 
-for d=2:8
-    for method={'mosek','gdapB','DIA'}
+for d=2:7
+%     for method={'mosek','gdapB','DIA','LinInversion'}
+    for method={'LinInversion'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'gdapB'}
         fprintf(char(10));
@@ -61,6 +62,11 @@ for d=2:8
                         [choi_ml_vec] = cvx_wrapper(A,n);
                         elapsedTime = toc;
                         solution=[]; costs = []; % cannot currently extract these
+                    case 'LinInversion'
+                        tic;
+                        choi_ml_vec = LinInversion(A,n);
+                        elapsedTime = toc;
+                        solution = []; costs = [];
                 end
                 save([dir,'/',char(method),'_results',num2str(i)],'elapsedTime','choi_ml_vec','costs','solution')
         end

@@ -55,7 +55,7 @@ for d=2:dmax
         choi_mosek        = reshape(choi_ml_vec,[],d*d);
         mosek_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_mosek/trace(choi_mosek));
         
-%         clear choi_ml_vec
+
 %         
 %         load([dir,'/sdpt3_results',num2str(i)]);
 %         sdpt3_times(i,d) = elapsedTime;    
@@ -68,7 +68,14 @@ for d=2:dmax
 %         sedumi_times(i,d) = elapsedTime;    
 %         choi_sedumi        = reshape(choi_ml_vec,[],d*d);
 %         sedumi_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_sedumi/trace(choi_sedumi));
-        
+
+
+%         clear choi_ml_vec
+%         load([dir,'/LinInversion_results',num2str(i)]);
+%         li_times(i,d)  = elapsedTime;    
+%         choi_li        = reshape(choi_ml_vec,[],d*d);
+%         li_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_li/trace(choi_li));
+%         
         
     end
 end
@@ -81,6 +88,7 @@ errorbar(2:dmax,mean(gdapB_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineW
 errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sdpt3_times(:,2:end)),std(sdpt3_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sedumi_times(:,2:end)),std(sedumi_times(:,2:end)),'-s','LineWidth',2);
+% errorbar(2:dmax,mean(li_times(:,2:end)),std(li_times(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
@@ -102,12 +110,13 @@ errorbar(2:dmax,mean(gdapB_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','Lin
 errorbar(2:dmax,mean(mosek_errors(:,2:end)),std(mosek_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sdpt3_errors(:,2:end)),std(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,mean(sedumi_errors(:,2:end)),std(sedumi_errors(:,2:end)),'-s','LineWidth',2);
+% errorbar(2:dmax,mean(li_errors(:,2:end)),std(li_errors(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 ylim([0,1])
 xlabel 'Hilbert space dimension'
 ylabel 'J distance';
 set(gca,'YScale','log')
-legend('DIA','gdapB','gdapM','mosek')
+legend('DIA','gdapB','mosek')
 % legend('gdapB','mosek','sdpt3')
 box on
 grid on
@@ -122,7 +131,7 @@ saveas(gcf,'./plots/errors.eps','epsc')
 %%
 figure('Position',[1 0 400 250]); hold on;
 
-for d = 2:6
+for d = 2:dmax
     ax = gca;
     ax.ColorOrderIndex = 1;
     ax.YAxisLocation = 'right';
@@ -148,6 +157,13 @@ for d = 2:6
     
     errorbar(mosekx(d),moseky(d),mosekybar(d),mosekybar(d),mosekxbar(d),mosekxbar(d),'LineWidth',2)
     
+%     lix(d)    = mean(li_errors(:,d));
+%     lixbar(d) = std(li_errors(:,d));
+%     liy(d)    = mean(li_times(:,d));
+%     liybar(d) = std(li_times(:,d));
+%     
+%     errorbar(lix(d),liy(d),liybar(d),liybar(d),lixbar(d),lixbar(d),'LineWidth',2)
+    
     %triangles
 %     plot([DIAx(d),gdapBx(d)],[DIAy(d),gdapBy(d)],'k')
 %     plot([DIAx,mosekx],[DIAy,moseky],'k')
@@ -160,6 +176,7 @@ ax.ColorOrderIndex = 1;
 plot(DIAx,DIAy,'LineWidth',2)
 plot(gdapBx,gdapBy,'LineWidth',2)
 plot(mosekx,moseky,'LineWidth',2)
+% plot(lix,liy,'LineWidth',2)
 
 
 set(gca,'xscale','log')

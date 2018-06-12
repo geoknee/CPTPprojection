@@ -17,7 +17,7 @@ function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergen
     
 
 
-    A = full(A); % remove if using lsqminnorm
+%     A = full(A); % remove if using lsqminnorm
 %     choi_LI_vec = pinv(A)*n;
 %     choi_LI_vec = PSD_project(pinv(A)*n); % TODO check J distance ok for
 %     not TP maps

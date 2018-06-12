@@ -4,7 +4,7 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:2
+for d=2:7
     
     fprintf(char(10));
     fprintf('%d ', d);
@@ -38,7 +38,7 @@ for d=2:2
 
         
         choi_ground     = randomCPTP_quasi_pure(d,0.9);
-        partial_trace(choi_ground)
+%         partial_trace(choi_ground)
         choi_ground_vec = reshape(choi_ground,[],1);
 
         p               = real(A*choi_ground_vec);
@@ -64,11 +64,11 @@ for d=2:2
 
         
 % 
-%                 for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-%                     n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
-%                     % TODO make sure that this is simply dividing whole
-%                     % likelihood by a constant.
-%                 end
+                for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
+                    % TODO make sure that this is simply dividing whole
+                    % likelihood by a constant.
+                end
             end
 %         n               = p; % noiseless scenario
 

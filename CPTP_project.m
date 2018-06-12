@@ -14,7 +14,7 @@ function [ projected_choi_vec ] = CPTP_project( choi_vec, MdagM, Mdagb  )
     p    = {0};
     q    = {0};
     y    = {0};
-    while GAP(end) >= 1e-3
+    while GAP(end) >= 1e-4
 %         GAP(end)
 %     for k=1:1000
 %         x{k+1}=PSD_project(TP_project(x{k}));     % ALTERNATING, seems to be fastest

@@ -6,9 +6,9 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:2  
+for d=2:7  
 %     for method={'mosek','gdapB','DIA','LinInversion'}
-    for method={'gdapB','LinInversion'}
+    for method={'LinInversion'}
 % for method={'DIA'}
 % for method = {'DIA'}
         fprintf(char(10));

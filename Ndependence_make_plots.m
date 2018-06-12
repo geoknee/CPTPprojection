@@ -1,6 +1,6 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
-dmax = 2;
+dmax = 7;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
