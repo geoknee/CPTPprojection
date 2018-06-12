@@ -8,7 +8,7 @@ ensemble_size = 30;
 
 for d=2:7
 %     for method={'mosek','gdapB','DIA','LinInversion'}
-    for method={'LinInversion'}
+    for method={'gdapB'}
 % for method={'mosek','gdapB','DIA','sdpt3'}
 % for method = {'gdapB'}
         fprintf(char(10));

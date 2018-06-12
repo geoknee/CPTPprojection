@@ -4,12 +4,12 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     d = sqrt(sqrt(size(A)));
     d = d(2);
     
-    if sum(n) == 1
-        N = 10^12; % catch noiseless case this way
-    else       
-        N = sum(n);
-        n = n/N;
-    end
+%     if sum(n) == 1
+%         N = 10^12; % catch noiseless case this way
+%     else       
+%         N = sum(n);
+%         n = n/N;
+%     end
 
     
     

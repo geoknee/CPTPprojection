@@ -6,12 +6,12 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
     d = sqrt(sqrt(size(A)));
     d = d(2);
     
-    if sum(n) == 1
-        N = 10^12; % catch noiseless case this way
-    else       
-        N = sum(n);
-        n = n/N;
-    end
+%     if sum(n) == 1
+%         N = 10^12; % catch noiseless case this way
+%     else       
+%         N = sum(n);
+%         n = n/N;
+%     end
     
     choi_init = eye(d*d)/d;
     choi_init = reshape(choi_init,[],1);
@@ -54,11 +54,11 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
         new_cost = cost(A,n,solution{k+1});
         
         p = real(A*solution{k+1});
-        cs{k+1} = mcs(p,n,N);
-        if (d^4-d^2)*(cs{k} - cs{k+1}) < 1e-12
-%             cs{i+1}
-            break
-        end
+%         cs{k+1} = mcs(p,n,N);
+%         if (d^4-d^2)*(cs{k} - cs{k+1}) < 1e-12
+% %             cs{i+1}
+%             break
+%         end
         
 %         norm(rho_new-rho)
 
