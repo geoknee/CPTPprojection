@@ -19,7 +19,7 @@ DIA_errors      = zeros(ensemble_size,dmax,length(Ns));
 sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
 
 
-for d=4:dmax
+for d=2:dmax
     for Nindex=1:length(Npows)
         for i=1:ensemble_size
 %             dir = sprintf('./benchmarking_results/d%i',d);

@@ -23,9 +23,27 @@ function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergen
 %     not TP maps
 %     choi_LI_vec = CPTP_project(pinv(A)*n, MdagM, Mdagb);
 %     choi_LI_vec = lsqminnorm(A,n);
-    choi_LI_vec = PSD_project(A\n);
-%     choi_LI_vec = CPTP_project(A\n, MdagM, Mdagb);
-
+%     choi_LI_vec = PSD_project(A\n);
+%     choi_LI_vec = A\n;
+%     choi_LI     = reshape(choi_LI_vec,[],d*d);
+%     choi_LI     = d*choi_LI/trace(choi_LI); % correct normalisation
+%     choi_LI_vec     = reshape(choi_LI,[],1);
+    choi_LI_vec = CPTP_project(A\n, MdagM, Mdagb);
+    
+    choi_LI     = reshape(choi_LI_vec,[],d*d);
+    if prod(eig(choi_LI)>-1e-3)
+        fprintf('CP')
+    else
+        fprintf('not CP')
+        min(eig(choi_LI))
+    end
+        
+    if norm(partial_trace(choi_LI)-eye(d))<1e-4
+        fprintf('TP')
+    else
+        fprintf('not TP')
+        norm(partial_trace(choi_LI)-eye(d))        
+    end
     
 end
 

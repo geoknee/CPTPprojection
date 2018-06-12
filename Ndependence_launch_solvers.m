@@ -6,9 +6,9 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=4:4   
-    for method={'mosek','gdapB','DIA','LinInversion'}
-%     for method={'LinInversion'}
+for d=2:4   
+%     for method={'mosek','gdapB','DIA','LinInversion'}
+    for method={'gdapB','LinInversion'}
 % for method={'DIA'}
 % for method = {'DIA'}
         fprintf(char(10));
@@ -38,7 +38,7 @@ for d=4:4
                         case 'DIA'
                             tic;
                             [choi_ml_vec, solution, costs] = DIA(A,n);
-                            elapsedTime = toc
+                            elapsedTime = toc;
                             semilogy(costs)
                             hold on
                         case 'mosek'
