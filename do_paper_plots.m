@@ -21,7 +21,7 @@ clear all;
 
 ensemble = 'qp';
 drange = [4];
-LIswitch = 1;
+LIswitch = 0;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf];
 
@@ -49,6 +49,7 @@ ensemble = 'fr';
 drange = [4];
 LIswitch = 0;
 ensemble_size = 10;
+Npows = [1,2,3,4,5,6,7,8,Inf];
 
 Ndependence_clicks;
 Ndependence_launch_solvers;
@@ -62,6 +63,7 @@ ensemble = 'qp';
 drange = [7];
 LIswitch = 1; % with
 ensemble_size = 10;
+Npows = [1,2,3,4,5,6,7,8,Inf];
 
 Ndependence_clicks;
 Ndependence_launch_solvers;
