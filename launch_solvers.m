@@ -1,16 +1,45 @@
-    % use a varitey of algorithms to find the maximum likelihood process 
+% use a varitey of algorithms to perform process tomography
 % from various datasets 
 % parpool(3)
-clear all
+% clear all
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 30;
+%% check global variable set
+if exist('ensemble')
+   fprintf(['ensemble = ',ensemble])
+else
+    error('you must set the ensemble variable to either qp (quasi pure) or fr (full rank)')
+end
 
-for d=2:5
-    for method={'mosek','gdapB','DIA'}
-%     for method={'gdapB'}
-% for method={'mosek','gdapB','DIA','sdpt3'}
-% for method = {'gdapB'}
+if exist('drange')
+    fprintf(['drange = ',drange])
+else
+    error('you must set the drange variable')
+end
+
+if exist('LIswitch')
+    fprintf(['LIswitch = ',LIswitch])
+else
+    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+end
+
+if exist('ensemble_size')
+    fprintf(['ensemble_size = ',ensemble_size])
+else
+    error('you must set the ensemble_size variable')
+end
+
+
+%%
+if LIswitch
+    list_of_methods = {'mosek','gdapB','DIA','LinInversion'};
+else
+    list_of_methods = {'mosek','gdapB','DIA'};
+end
+
+for d=drange
+    for method=list_of_methods
+
         fprintf(char(10));
         fprintf(method{1});
 

@@ -17,14 +17,14 @@ function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergen
     
 
 
-    A = full(A); % remove if using lsqminnorm
-    choi_LI_vec = pinv(A)*n;
+%     A = full(A); % remove if using lsqminnorm
+%     choi_LI_vec = pinv(A)*n;
 %     choi_LI_vec = PSD_project(pinv(A)*n); % TODO check J distance ok for
 %     not TP maps
 %     choi_LI_vec = CPTP_project(pinv(A)*n, MdagM, Mdagb);
 %     choi_LI_vec = lsqminnorm(A,n);
 %     choi_LI_vec = PSD_project(A\n);
-%     choi_LI_vec = A\n;
+    choi_LI_vec = A\n;
     choi_LI     = reshape(choi_LI_vec,[],d*d);
     choi_LI     = 0.5*(choi_LI+choi_LI');
 %     choi_LI     = d*choi_LI/trace(choi_LI); % correct normalisation

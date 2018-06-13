@@ -37,6 +37,7 @@ for d = 4:4
     %                 n           = n./sum(n);
                 else
                     pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
+                    pmat           = pmat./sum(pmat,2); % does not look necessary but it is useful to avoid near misses where probs sum to 1-e.
 %                     for m=1:d*d % loop over input states
 %                         pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
 %                     end
@@ -95,8 +96,9 @@ for Npow=Npowmin:Npowmax
 %     histogram(real(distance_to_CP(Npow,:)))
 %     subplot(1,2,2)
     subplot(1,2,1)
-    hold on;
-    title('Smallest eigenvalue (Full rank ensemble)')
+    hold on;box on;
+%     title('Smallest eigenvalue (Full rank ensemble)')
+%     title('Smallest eigenvalue')
     xlabel('smallest eigenvalue')
     ylabel('number')
     h = histogram(real(smallest_ev(d,Npow,:)),'DisplayName',num2str(10^Npow));
@@ -105,11 +107,12 @@ for Npow=Npowmin:Npowmax
     h.FaceAlpha = 1;
     h.EdgeAlpha = 1;
     subplot(1,2,2)
-    xlabel('distance')
+    xlabel('distance to TP')
     ylabel('number')
     hold on;
-    title('Frobenius distance to TP (Full rank ensemble)')
-    hold on;
+%     title('Frobenius distance to TP (Full rank ensemble)')
+%     title('Frobenius distance to TP ')
+    hold on; box on;
     h = histogram(real(frob_dist_to_TP(d,Npow,:)),'DisplayName',num2str(10^Npow));
 % %     hp= histogram(real(smallest_evPROJECTED(d,Npow,:)));
     h.EdgeColor = 'none';

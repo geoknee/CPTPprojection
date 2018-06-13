@@ -1,15 +1,38 @@
 % read in ensemble_size running times and precisions for each method, for each d.
-clear;close all;
-default_ensemble = 'qp';
+%% check global variable set
 if exist('ensemble')
+   fprintf(['ensemble = ',ensemble])
 else
-    ensemble = default_ensemble
+    error('you must set the ensemble variable to either qp (quasi pure) or fr (full rank)')
 end
-dmax = 4;
-ensemble_size = 10;
-Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
+
+if exist('drange')
+    fprintf(['drange = ',drange])
+else
+    error('you must set the drange variable')
+end
+
+if exist('LIswitch')
+    fprintf(['LIswitch = ',LIswitch])
+else
+    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+end
+
+if exist('ensemble_size')
+    fprintf(['ensemble_size = ',ensemble_size])
+else
+    error('you must set the ensemble_size variable')
+end
+
+if exist('Npows')
+    fprintf(['Npows = ',ensemble_size])
+else
+    error('you must set the Npows variable')
+end
+%%
 Ns = 10.^Npows;
 Ns(end)=10^12;
+dmax = drange(end);
 % Ns = [2,4,8,16,32];
 gdapB_times  = zeros(ensemble_size,dmax,length(Ns));
 mosek_times  = zeros(ensemble_size,dmax,length(Ns));
@@ -24,7 +47,7 @@ DIA_errors      = zeros(ensemble_size,dmax,length(Ns));
 sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
 
 
-for d=4:dmax
+for d=drange
     for Nindex=1:length(Npows)
         for i=1:ensemble_size
 %             dir = sprintf('./benchmarking_results/d%i',d);
@@ -82,7 +105,10 @@ for d=4:dmax
     errorbar(Ns(1:end-1),squeeze(mean(DIA_times(:,d,1:end-1)))',squeeze(std(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(gdapB_times(:,d,1:end-1)))',squeeze(std(gdapB_times(:,d,1:end-1)))','-*','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(mosek_times(:,d,1:end-1)))',squeeze(std(mosek_times(:,d,1:end-1)))','-x','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(LI_times(:,d,1:end-1)))',squeeze(std(LI_times(:,d,1:end-1)))','-x','LineWidth',2);
+    
+    if LIswitch
+        errorbar(Ns(1:end-1),squeeze(mean(LI_times(:,d,1:end-1)))',squeeze(std(LI_times(:,d,1:end-1)))','-x','LineWidth',2);
+    end
 
     %     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
 
@@ -106,8 +132,9 @@ for d=4:dmax
     errorbar(Ns(end),squeeze(mean(DIA_times(:,d,end)))',squeeze(std(DIA_times(:,d,end)))','-d','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(gdapB_times(:,d,end)))',squeeze(std(gdapB_times(:,d,end)))','-*','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(mosek_times(:,d,end)))',squeeze(std(mosek_times(:,d,end)))','-x','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(LI_times(:,d,end)))',squeeze(std(LI_times(:,d,end)))','-x','LineWidth',2);
-
+    if LIswitch
+        errorbar(Ns(end),squeeze(mean(LI_times(:,d,end)))',squeeze(std(LI_times(:,d,end)))','-x','LineWidth',2);
+    end
     
     set(gca,'XScale','log');
 %     set(gca,'YScale','log');
@@ -125,11 +152,12 @@ for d=4:dmax
 %     figure; 
     ax3 = subplot(2,2,3); hold on;  
     
-   errorbar(Ns(1:end-1),squeeze(mean(DIA_errors(:,d,1:end-1)))',squeeze(std(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(mean(DIA_errors(:,d,1:end-1)))',squeeze(std(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(gdapB_errors(:,d,1:end-1)))',squeeze(std(gdapB_errors(:,d,1:end-1)))','-*','LineWidth',2);
     errorbar(Ns(1:end-1),squeeze(mean(mosek_errors(:,d,1:end-1)))',squeeze(std(mosek_errors(:,d,1:end-1)))','-x','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(LI_errors(:,d,1:end-1)))',squeeze(std(LI_errors(:,d,1:end-1)))','-x','LineWidth',2);
-
+    if LIswitch
+        errorbar(Ns(1:end-1),squeeze(mean(LI_errors(:,d,1:end-1)))',squeeze(std(LI_errors(:,d,1:end-1)))','-x','LineWidth',2);
+    end
     %     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
 
 
@@ -140,13 +168,19 @@ for d=4:dmax
     set(gca,'XTick',[1e1,1e3,1e5,1e7,1e9])
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
     box on; grid on;
-    legend('DIA','pgdB','mosek','LIFP','Location','southwest')
+    if LIswitch
+        legend('DIA','pgdB','mosek','LIFP','Location','southwest')
+    else
+        legend('DIA','pgdB','mosek','Location','southwest')
+    end
     
     ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
     errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(gdapB_errors(:,d,end)))',squeeze(std(gdapB_errors(:,d,end)))','-*','LineWidth',2);
     errorbar(Ns(end),squeeze(mean(mosek_errors(:,d,end)))',squeeze(std(mosek_errors(:,d,end)))','-x','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(LI_errors(:,d,end)))',squeeze(std(LI_errors(:,d,end)))','-x','LineWidth',2);
+    if LIswitch    
+        errorbar(Ns(end),squeeze(mean(LI_errors(:,d,end)))',squeeze(std(LI_errors(:,d,end)))','-x','LineWidth',2);
+    end
     
     xlabel('$\infty$','Interpreter','latex')
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
@@ -176,62 +210,3 @@ for d=4:dmax
     print(gcf,'-depsc2','-loose',['./plots/',ensemble,'timeerrord',num2str(d),'.eps'])
 end
 
-
-% figure; hold on;
-% scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')
-% scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','gdapB')
-% scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
-% scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
-% scatter(sedumi_errors(:,2),sedumi_times(:,2),'o','filled','DisplayName','sedumi')
-% 
-% legend('show','Location','northwest')
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,3),DIA_times(:,3),'<','filled')
-% scatter(gdapB_errors(:,3),gdapB_times(:,3),'<','filled')
-% scatter(mosek_errors(:,3),mosek_times(:,3),'<','filled')
-% scatter(sdpt3_errors(:,3),sdpt3_times(:,3),'<','filled')
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,4),DIA_times(:,4),'d','filled')
-% scatter(gdapB_errors(:,4),gdapB_times(:,4),'d','filled')
-% scatter(mosek_errors(:,4),mosek_times(:,4),'d','filled')
-% scatter(sdpt3_errors(:,4),sdpt3_times(:,4),'d','filled')
-% scatter(sedumi_errors(:,4),sedumi_times(:,4),'d','filled')
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,5),DIA_times(:,5),'p','filled')
-% scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
-% scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
-% scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
-% scatter(sedumi_errors(:,5),sedumi_times(:,5),'p','filled')
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
-% scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
-% scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
-% 
-% set(gca,'xscale','log')
-% set(gca,'yscale','log')
-% 
-% xlabel 'error'
-% ylabel 'time (s)'
-% 
-% box on
-% grid on
-% 
-% 
-% 
-% set(gca,'fontsize',18)
-% saveas(gcf,'scatter.png')
-% saveas(gcf,'scatter.eps','epsc')

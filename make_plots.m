@@ -1,12 +1,34 @@
 % read in ensemble_size running times and precisions for each method, for each d.
-clear;close all;
-dmax = 5;
-ensemble_size = 30;
-default_ensemble = 'qp';
+
+%% check global variable set
 if exist('ensemble')
+   fprintf(['ensemble = ',ensemble])
 else
-    ensemble = default_ensemble
+    error('you must set the ensemble variable to either qp (quasi pure) or fr (full rank)')
 end
+
+if exist('drange')
+    fprintf(['drange = ',drange])
+else
+    error('you must set the drange variable')
+end
+
+if exist('LIswitch')
+    fprintf(['LIswitch = ',LIswitch])
+else
+    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+end
+
+if exist('ensemble_size')
+    fprintf(['ensemble_size = ',ensemble_size])
+else
+    error('you must set the ensemble_size variable')
+end
+
+
+%%
+dmax = drange(end);
+
 gdapB_times  = zeros(ensemble_size,dmax);
 gdapM_times  = zeros(ensemble_size,dmax);
 mosek_times  = zeros(ensemble_size,dmax);
@@ -22,7 +44,7 @@ DIA_errors      = zeros(ensemble_size,dmax);
 % sedumi_errors   = zeros(ensemble_size,dmax);
 
 
-for d=2:dmax
+for d=drange
     d
     for i=1:ensemble_size
         
@@ -200,117 +222,3 @@ legend('DIA','pgdB','mosek','Location','northwest')
 set(gca,'fontsize',12)
 saveas(gcf,['./plots/',ensemble,'triangles.png'])
 saveas(gcf,['./plots/',ensemble,'triangles.eps'],'epsc')
-
-
-% scatter(DIA_errors(:,2),DIA_times(:,2),'o','filled','DisplayName','DIA')
-% scatter(gdapB_errors(:,2),gdapB_times(:,2),'o','filled','DisplayName','pgdB')
-% % scatter(gdapM_errors(:,2),gdapM_times(:,2),'o','filled','DisplayName','gdapM')
-% scatter(mosek_errors(:,2),mosek_times(:,2),'o','filled','DisplayName','mosek')
-% % scatter(sdpt3_errors(:,2),sdpt3_times(:,2),'o','filled','DisplayName','sdpt3')
-% % scatter(sedumi_errors(:,2),sedumi_times(:,2),'o','filled','DisplayName','sedumi')
-% 
-% legend('show','Location','northwest')
-% 
-% 
-% 
-% errorbar(mean(DIA_errors(:,3)),mean(DIA_times(:,3)),std(DIA_times(:,3)),'<','filled')
-% scatter(gdapB_errors(:,3),gdapB_times(:,3),'<','filled')
-% % scatter(gdapM_errors(:,3),gdapM_times(:,3),'<','filled')
-% scatter(mosek_errors(:,3),mosek_times(:,3),'<','filled')
-% % scatter(sdpt3_errors(:,3),sdpt3_times(:,3),'<','filled')
-% % scatter(sedumi_errors(:,3),sedumi_times(:,3),'<','filled')
-% 
-% %triangles
-% % plot([mean(DIA_errors(:,3)),mean(mosek_errors(:,3))],[mean(DIA_times(:,3)),mean(mosek_times(:,3))],'k')
-% % plot([mean(DIA_errors(:,3)),mean(gdapB_errors(:,3))],[mean(DIA_times(:,3)),mean(gdapB_times(:,3))],'k')
-% % plot([mean(gdapB_errors(:,3)),mean(mosek_errors(:,3))],[mean(gdapB_times(:,3)),mean(mosek_times(:,3))],'k')
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,4),DIA_times(:,4),'d','filled')
-% scatter(gdapB_errors(:,4),gdapB_times(:,4),'d','filled')
-% % scatter(gdapM_errors(:,4),gdapM_times(:,4),'d','filled')
-% scatter(mosek_errors(:,4),mosek_times(:,4),'d','filled')
-% % scatter(sdpt3_errors(:,4),sdpt3_times(:,4),'d','filled')
-% % scatter(sedumi_errors(:,4),sedumi_times(:,4),'d','filled')
-% 
-% % plot([mean(DIA_errors(:,4)),mean(mosek_errors(:,4))],[mean(DIA_times(:,4)),mean(mosek_times(:,4))],'k')
-% % plot([mean(DIA_errors(:,4)),mean(gdapB_errors(:,4))],[mean(DIA_times(:,4)),mean(gdapB_times(:,4))],'k')
-% % plot([mean(gdapB_errors(:,4)),mean(mosek_errors(:,4))],[mean(gdapB_times(:,4)),mean(mosek_times(:,4))],'k')
-% 
-% 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% 
-% scatter(DIA_errors(:,5),DIA_times(:,5),'p','filled')
-% scatter(gdapB_errors(:,5),gdapB_times(:,5),'p','filled')
-% % scatter(gdapM_errors(:,5),gdapM_times(:,5),'p','filled')
-% scatter(mosek_errors(:,5),mosek_times(:,5),'p','filled')
-% % scatter(sdpt3_errors(:,5),sdpt3_times(:,5),'p','filled')
-% % scatter(sedumi_errors(:,5),sedumi_times(:,5),'p','filled')
-% 
-% % plot([mean(DIA_errors(:,5)),mean(mosek_errors(:,5))],[mean(DIA_times(:,5)),mean(mosek_times(:,5))],'k')
-% % plot([mean(DIA_errors(:,5)),mean(gdapB_errors(:,5))],[mean(DIA_times(:,5)),mean(gdapB_times(:,5))],'k')
-% % plot([mean(gdapB_errors(:,5)),mean(mosek_errors(:,5))],[mean(gdapB_times(:,5)),mean(mosek_times(:,5))],'k')
-% 
-% 
-% 
-% % % 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% % 
-% scatter(DIA_errors(:,6),DIA_times(:,6),'s','filled')
-% scatter(gdapB_errors(:,6),gdapB_times(:,6),'s','filled')
-% scatter(mosek_errors(:,6),mosek_times(:,6),'s','filled')
-% % % scatter(sdpt3_errors(:,6),sdpt3_times(:,6),'s','filled')
-% % % scatter(sedumi_errors(:,6),sedumi_times(:,6),'s','filled')
-% % 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% % 
-% scatter(DIA_errors(:,7),DIA_times(:,7),'o','filled')
-% scatter(gdapB_errors(:,7),gdapB_times(:,7),'o','filled')
-% scatter(mosek_errors(:,7),mosek_times(:,7),'o','filled')
-% % % 
-% % % 
-% ax = gca;
-% ax.ColorOrderIndex = 1;
-% % 
-% scatter(DIA_errors(:,8),DIA_times(:,8),'<','filled')
-% scatter(gdapB_errors(:,8),gdapB_times(:,8),'<','filled')
-% scatter(mosek_errors(:,8),mosek_times(:,8),'<','filled')
-% 
-% 
-% 
-% set(gca,'xscale','log')
-% set(gca,'yscale','log')
-% 
-% xlabel 'error'
-% ylabel 'time (s)'
-% 
-% set(gca,'XTick',([1e-8,1e-7,1e-6,1e-5,1e-4,1e-3,1e-2,1e-1,1e0]))
-% 
-% box on
-% grid on
-% 
-% set(gca,'fontsize',18)
-% saveas(gcf,'./plots/scatter.png')
-% saveas(gcf,'./plots/scatter.eps','epsc')
-% 
-% 
-% % figure;
-% % 
-% % for d=2:7
-% %     d
-% %     c1(d)=cond(full(PM_minimal(d)));
-% %     c2(d)=cond(full(GGMall_IO(d)));
-% % end
-% % figure
-% % bar(1:7,c1,'LineWidth',2,'DisplayName','minimal');hold on; bar(1:7,c2,'r','LineWidth',2,'DisplayName','GGM');
-% % xlabel('d')
-% % ylabel('condition number')
-% % set(gca,'fontsize',18)
-% % legend('show','Location','northwest')
-% % saveas(gcf,'./plots/cond.png')
-% % saveas(gcf,'./plots/cond.eps','epsc')

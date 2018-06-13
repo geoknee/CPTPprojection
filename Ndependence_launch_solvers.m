@@ -1,12 +1,44 @@
 % use a varitey of algorithms to find the maximum likelihood process 
 % from various datasets 
 % parpool(3)
-clear all
+% clear all
 % addpath('./QETLAB-0.9')
 % addpath('./QETLAB-0.9/helpers')
-ensemble_size = 10;
+%% check global variable set
+if exist('ensemble')
+   fprintf(['ensemble = ',ensemble])
+else
+    error('you must set the ensemble variable to either qp (quasi pure) or fr (full rank)')
+end
 
-for d=4:4
+if exist('drange')
+    fprintf(['drange = ',drange])
+else
+    error('you must set the drange variable')
+end
+
+if exist('LIswitch')
+    fprintf(['LIswitch = ',LIswitch])
+else
+    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+end
+
+if exist('ensemble_size')
+    fprintf(['ensemble_size = ',ensemble_size])
+else
+    error('you must set the ensemble_size variable')
+end
+
+if exist('Npows')
+    fprintf(['Npows = ',ensemble_size])
+else
+    error('you must set the Npows variable')
+end
+
+
+%%
+
+for d=drange
     for method={'mosek','gdapB','DIA','LinInversion'}
 %     for method={'LinInversion'}
 % for method={'DIA'}
@@ -19,7 +51,7 @@ for d=4:4
 
         A = PM_minimal(d);
 %          A = GGMall_IO(d);
-        for Npow=[1,2,3,4,5,6,7,8,Inf]
+        for Npow=Npows
 %         for Npow=[Inf]
             N = 10^Npow;
             dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npow);
