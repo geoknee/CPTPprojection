@@ -208,5 +208,6 @@ for d=drange
     saveas(gcf,['./plots/',ensemble,'ALTtimeerrord',num2str(d),'.eps'],'epsc')
     set(gcf,'paperpositionmode','auto')
     print(gcf,'-depsc2','-loose',['./plots/',ensemble,'timeerrord',num2str(d),'.eps'])
+    savefig(['./plots/',ensemble,'timeerrord',num2str(d)])
 end
 
