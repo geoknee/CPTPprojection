@@ -2,9 +2,13 @@
 addpath('./QETLAB-0.9')
 addpath('./QETLAB-0.9/helpers')
 ensemble_size = 30;
+default_ensemble = 'qp';
+if exist('ensemble')
+else
+    ensemble = default_ensemble
+end
 
-
-for d=2:8
+for d=2:5
     dir = sprintf('./benchmarking_results/d%i',d);
     fprintf(char(10));
     fprintf('%d ', d);

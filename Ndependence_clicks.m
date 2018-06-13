@@ -4,10 +4,12 @@
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 default_ensemble = 'qp';
-if ~exist ensemble
+if exist('ensemble')
+else
     ensemble = default_ensemble
 end
-for d=2:7
+% figure;
+for d=4:4
     
     fprintf(char(10));
     fprintf('%d ', d);
@@ -54,29 +56,42 @@ for d=2:7
 %         p               = p*d*d;
         
         for Npow=[1,2,3,4,5,6,7,8,Inf] % above Npow=9 the memory requirements are huge for simulating multinomial noise                            
+%         for Npow=[Inf]
             N = 10^Npow
             
             if isinf(N)
-                p           = reshape(p,[],1);
+%                 p           = reshape(p,[],1);
                 n           = p;
 %                 n           = n./sum(n);
             else
                 pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
-                for m=1:d*d % loop over input states
-                    pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
-                end
-                n           = reshape(mnrnd(N,pmat),[],1);
+%                 subplot(3,1,1)
+%                 bar3(pmat);
+%                 hold on;
+%                 for m=1:d*d % loop over input states
+%                     pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
+%                 end
+                nmat        = mnrnd(N,pmat);
+                nmat        = nmat./sum(nmat,2); % proper normalisation so that sum(nmat,2)=1
+                n           = reshape(nmat,[],1);
                 
 %                 n           = n./sum(n);
 %                 sum(n)
 
         
 % 
-                for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-                    n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
-                    % TODO make sure that this is simply dividing whole
-                    % likelihood by a constant.
-                end
+%                 for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+%                     n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
+%                     % TODO make sure that this is simply dividing whole
+%                     % likelihood by a constant.
+%                 end
+%                 if Npow ==2
+%                     l = 2
+%                 else
+%                     l = 3
+%                 end
+%                 subplot(3,1,l)
+%                 bar3(reshape(n,[],2*d*d));
             end
 %         n               = p; % noiseless scenario
 

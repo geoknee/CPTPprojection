@@ -1,10 +1,11 @@
 % read in ensemble_size running times and precisions for each method, for each d.
 clear;close all;
 default_ensemble = 'qp';
-if ~exist ensemble
+if exist('ensemble')
+else
     ensemble = default_ensemble
 end
-dmax = 7;
+dmax = 4;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf]; % can probably manage up to 9
 Ns = 10.^Npows;
@@ -23,7 +24,7 @@ DIA_errors      = zeros(ensemble_size,dmax,length(Ns));
 sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
 
 
-for d=2:dmax
+for d=4:dmax
     for Nindex=1:length(Npows)
         for i=1:ensemble_size
 %             dir = sprintf('./benchmarking_results/d%i',d);
@@ -139,7 +140,7 @@ for d=2:dmax
     set(gca,'XTick',[1e1,1e3,1e5,1e7,1e9])
     set(gca,'YTick',[1e-5,1e-4,1e-3,1e-2,1e-1,1e0])
     box on; grid on;
-    legend('DIA','pgdB','mosek','LinInversion','Location','southwest')
+    legend('DIA','pgdB','mosek','LIFP','Location','southwest')
     
     ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
     errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);

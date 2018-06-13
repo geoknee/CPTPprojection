@@ -16,11 +16,11 @@ for d = 4:4
     %         choi_ground     = reshape(choi_ground_vec,[],d*d);
 
     % %         choi_ground     = randomCPTP(d,1); % kraus rank 1, i.e unitary map.
-            choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
+%             choi_ground     = randomCPTP(d,d*d); % kraus rank is full.
     %         choi_ground_vec = reshape(choi_ground,[],1);
 
 
-%             choi_ground     = randomCPTP_quasi_pure(d,0.9);
+            choi_ground     = randomCPTP_quasi_pure(d,0.9);
             choi_ground_vec = reshape(choi_ground,[],1);
 
             p               = real(A*choi_ground_vec);
@@ -32,32 +32,35 @@ for d = 4:4
                 N = 10^Npow;
 
                 if isinf(N)
-                    p           = reshape(p,[],1);
+%                     p           = reshape(p,[],1);
                     n           = p;
     %                 n           = n./sum(n);
                 else
                     pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
-                    for m=1:d*d % loop over input states
-                        pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
-                    end
-                    n           = mnrnd(N,pmat);
-                    for m=1:d*d
-                        n(m,:)   = n(m,:)./sum(n(m,:)); % proper normalisation so that click counts are now frequencies
-                    end
-                    n           = reshape(n,[],1);
+%                     for m=1:d*d % loop over input states
+%                         pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
+%                     end
+                    nmat           = mnrnd(N,pmat);
+%                     for m=1:d*d
+%                         n(m,:)   = n(m,:)./sum(n(m,:)); % proper normalisation so that click counts are now frequencies
+%                     end
+                    nmat        = nmat./sum(nmat,2); % proper normalisation so that sum(nmat,2)=1
+                    n           = reshape(nmat,[],1);
+               
 
 %                     n           = n./sum(n);
     %                 sum(n)
 
 
     % 
-                    for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-                        n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
-%                         TODO make sure that this is simply dividing whole
-                        % likelihood by a constant.
-                    end
+%                     for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
+%                         n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
+% %                         TODO make sure that this is simply dividing whole
+%                         % likelihood by a constant.
+%                     end
                 end
-
+                
+%                 choi_li = choi_ground_vec;
                 choi_li = LinInversion(A,n);
 %                 choi_li = gdapB(A,n);
 %                 distance_to_CP(Npow,l) = norm(reshape(choi_li,[],d*d)-reshape(PSD_project(choi_li),[],d*d),'fro');
@@ -115,8 +118,8 @@ for Npow=Npowmin:Npowmax
    
 %     hp.EdgeColor = 'none';
 end
-% lgd = legend('show');
-% title(lgd,'N')
+lgd = legend('show');
+title(lgd,'N')
 % subplot(1,2,1)
 % title('distance to CP')
 % legend('Npow = 2','Npow = 3')
@@ -156,31 +159,22 @@ plot([0,0],yl,'-k')
 %                 N = 10^Npow;
 % 
 %                 if isinf(N)
-%                     p           = reshape(p,[],1);
+% %                     p           = reshape(p,[],1);
 %                     n           = p;
 %     %                 n           = n./sum(n);
 %                 else
 %                     pmat           = reshape(p,[],2*d*d); % need an object with n_measurement_outcomes columns
-%                     for m=1:d*d % loop over input states
-%                         pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
-%                     end
-%                     n           = mnrnd(N,pmat);
-%                     for m=1:d*d
-%                         n(m,:)   = n(m,:)./sum(n(m,:)); % proper normalisation so that click counts are now frequencies
-%                     end
-%                     n           = reshape(n,[],1);
-% 
-% %                     n           = n./sum(n);
-%     %                 sum(n)
-% 
-% 
-%     % 
-%                     for i=1:2*d*d:(2*d*d*d*d-d*d) % for each preparation take the click distribution
-%                         n(i:i+2*d*d-1) = n(i:i+2*d*d-1)/sum(n(i:i+2*d*d-1)); % normalise to 'frequencies' 
-%                         % TODO make sure that this is simply dividing whole
-%                         % likelihood by a constant.
-%                     end
+% %                     for m=1:d*d % loop over input states
+% %                         pmat(m,:) = pmat(m,:)./sum(pmat(m,:));
+% %                     end
+%                     nmat           = mnrnd(N,pmat);
+% %                     for m=1:d*d
+% %                         n(m,:)   = n(m,:)./sum(n(m,:)); % proper normalisation so that click counts are now frequencies
+% %                     end
+%                     nmat        = nmat./sum(nmat,2); % proper normalisation so that sum(nmat,2)=1
+%                     n           = reshape(nmat,[],1);
 %                 end
+%     % 
 % 
 %                 choi_li = LinInversion(A,n);
 % %                 choi_li = gdapB(A,n);

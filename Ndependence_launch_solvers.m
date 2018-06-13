@@ -6,9 +6,9 @@ clear all
 % addpath('./QETLAB-0.9/helpers')
 ensemble_size = 10;
 
-for d=2:7  
-%     for method={'mosek','gdapB','DIA','LinInversion'}
-    for method={'LinInversion'}
+for d=4:4
+    for method={'mosek','gdapB','DIA','LinInversion'}
+%     for method={'LinInversion'}
 % for method={'DIA'}
 % for method = {'DIA'}
         fprintf(char(10));
@@ -19,8 +19,8 @@ for d=2:7
 
         A = PM_minimal(d);
 %          A = GGMall_IO(d);
-%         for Npow=[1,2,3,4,5,6,7,8,Inf]
-        for Npow=[Inf]
+        for Npow=[1,2,3,4,5,6,7,8,Inf]
+%         for Npow=[Inf]
             N = 10^Npow;
             dir = sprintf('./Ndependence_benchmarking_results/d%i/Npow%i',d,Npow);
             fprintf(char(10));
@@ -40,8 +40,8 @@ for d=2:7
                             tic;
                             [choi_ml_vec, solution, costs] = DIA(A,n);
                             elapsedTime = toc;
-                            semilogy(costs)
-                            hold on
+%                             semilogy(costs)
+%                             hold on
                         case 'mosek'
                             cvx_solver mosek
                             tic;

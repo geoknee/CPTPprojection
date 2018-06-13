@@ -2,6 +2,11 @@
 clear;close all;
 dmax = 5;
 ensemble_size = 30;
+default_ensemble = 'qp';
+if exist('ensemble')
+else
+    ensemble = default_ensemble
+end
 gdapB_times  = zeros(ensemble_size,dmax);
 gdapM_times  = zeros(ensemble_size,dmax);
 mosek_times  = zeros(ensemble_size,dmax);
