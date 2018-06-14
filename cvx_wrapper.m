@@ -26,7 +26,11 @@ function [ choi_ml_vec] = cvx_wrapper( A,n )
     M*choi_vec_cvx == b; % this is for TP
     cvx_end
     cvx_time = toc;
-
-    choi_ml_vec = choi_vec_cvx;
+    
+    if isnan(choi_vec_cvx)
+        choi_ml_vec = reshape(eye(d*d),[],1);
+    else
+        choi_ml_vec = choi_vec_cvx;
+    end
 end
 
