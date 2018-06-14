@@ -102,15 +102,15 @@ for d=drange
     %%
     figure; ax1 = subplot(2,2,1); hold on;
     
-    errorbar(Ns(1:end-1),squeeze(mean(DIA_times(:,d,1:end-1)))',squeeze(std(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(gdapB_times(:,d,1:end-1)))',squeeze(std(gdapB_times(:,d,1:end-1)))','-*','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(mosek_times(:,d,1:end-1)))',squeeze(std(mosek_times(:,d,1:end-1)))','-x','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(DIA_times(:,d,1:end-1)))',squeeze(nanstd(DIA_times(:,d,1:end-1)))','-d','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(gdapB_times(:,d,1:end-1)))',squeeze(nanstd(gdapB_times(:,d,1:end-1)))','-*','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(mosek_times(:,d,1:end-1)))',squeeze(nanstd(mosek_times(:,d,1:end-1)))','-x','LineWidth',2);
     
     if LIswitch
-        errorbar(Ns(1:end-1),squeeze(mean(LI_times(:,d,1:end-1)))',squeeze(std(LI_times(:,d,1:end-1)))','-x','LineWidth',2);
+        errorbar(Ns(1:end-1),squeeze(nanmean(LI_times(:,d,1:end-1)))',squeeze(nanstd(LI_times(:,d,1:end-1)))','-x','LineWidth',2);
     end
 
-    %     errorbar(Ns,squeeze(mean(sdpt3_times(:,d,:)))',squeeze(std(sdpt3_times(:,d,:)))','-x','LineWidth',2);
+    %     errorbar(Ns,squeeze(nanmean(sdpt3_times(:,d,:)))',squeeze(nanstd(sdpt3_times(:,d,:)))','-x','LineWidth',2);
 
                     
 %     xlabel 'N'
@@ -129,11 +129,11 @@ for d=drange
     
     ax2 = subplot(2,2,2); hold on; pbaspect([1 4 1]);
     
-    errorbar(Ns(end),squeeze(mean(DIA_times(:,d,end)))',squeeze(std(DIA_times(:,d,end)))','-d','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(gdapB_times(:,d,end)))',squeeze(std(gdapB_times(:,d,end)))','-*','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(mosek_times(:,d,end)))',squeeze(std(mosek_times(:,d,end)))','-x','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(DIA_times(:,d,end)))',squeeze(nanstd(DIA_times(:,d,end)))','-d','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(gdapB_times(:,d,end)))',squeeze(nanstd(gdapB_times(:,d,end)))','-*','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(mosek_times(:,d,end)))',squeeze(nanstd(mosek_times(:,d,end)))','-x','LineWidth',2);
     if LIswitch
-        errorbar(Ns(end),squeeze(mean(LI_times(:,d,end)))',squeeze(std(LI_times(:,d,end)))','-x','LineWidth',2);
+        errorbar(Ns(end),squeeze(nanmean(LI_times(:,d,end)))',squeeze(nanstd(LI_times(:,d,end)))','-x','LineWidth',2);
     end
     
     set(gca,'XScale','log');
@@ -152,13 +152,13 @@ for d=drange
 %     figure; 
     ax3 = subplot(2,2,3); hold on;  
     
-    errorbar(Ns(1:end-1),squeeze(mean(DIA_errors(:,d,1:end-1)))',squeeze(std(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(gdapB_errors(:,d,1:end-1)))',squeeze(std(gdapB_errors(:,d,1:end-1)))','-*','LineWidth',2);
-    errorbar(Ns(1:end-1),squeeze(mean(mosek_errors(:,d,1:end-1)))',squeeze(std(mosek_errors(:,d,1:end-1)))','-x','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(DIA_errors(:,d,1:end-1)))',squeeze(nanstd(DIA_errors(:,d,1:end-1)))','-d','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(gdapB_errors(:,d,1:end-1)))',squeeze(nanstd(gdapB_errors(:,d,1:end-1)))','-*','LineWidth',2);
+    errorbar(Ns(1:end-1),squeeze(nanmean(mosek_errors(:,d,1:end-1)))',squeeze(nanstd(mosek_errors(:,d,1:end-1)))','-x','LineWidth',2);
     if LIswitch
-        errorbar(Ns(1:end-1),squeeze(mean(LI_errors(:,d,1:end-1)))',squeeze(std(LI_errors(:,d,1:end-1)))','-x','LineWidth',2);
+        errorbar(Ns(1:end-1),squeeze(nanmean(LI_errors(:,d,1:end-1)))',squeeze(nanstd(LI_errors(:,d,1:end-1)))','-x','LineWidth',2);
     end
-    %     errorbar(Ns,squeeze(mean(sdpt3_errors(:,d,:)))',squeeze(std(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
+    %     errorbar(Ns,squeeze(nanmean(sdpt3_errors(:,d,:)))',squeeze(nanstd(sdpt3_errors(:,d,:)))','-x','LineWidth',2);
 
 
     xlabel 'N'
@@ -175,11 +175,11 @@ for d=drange
     end
     
     ax4 = subplot(2,2,4); hold on;pbaspect([1 4 1]);
-    errorbar(Ns(end),squeeze(mean(DIA_errors(:,d,end)))',squeeze(std(DIA_errors(:,d,end)))','-d','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(gdapB_errors(:,d,end)))',squeeze(std(gdapB_errors(:,d,end)))','-*','LineWidth',2);
-    errorbar(Ns(end),squeeze(mean(mosek_errors(:,d,end)))',squeeze(std(mosek_errors(:,d,end)))','-x','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(DIA_errors(:,d,end)))',squeeze(nanstd(DIA_errors(:,d,end)))','-d','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(gdapB_errors(:,d,end)))',squeeze(nanstd(gdapB_errors(:,d,end)))','-*','LineWidth',2);
+    errorbar(Ns(end),squeeze(nanmean(mosek_errors(:,d,end)))',squeeze(nanstd(mosek_errors(:,d,end)))','-x','LineWidth',2);
     if LIswitch    
-        errorbar(Ns(end),squeeze(mean(LI_errors(:,d,end)))',squeeze(std(LI_errors(:,d,end)))','-x','LineWidth',2);
+        errorbar(Ns(end),squeeze(nanmean(LI_errors(:,d,end)))',squeeze(nanstd(LI_errors(:,d,end)))','-x','LineWidth',2);
     end
     
     xlabel('$\infty$','Interpreter','latex')

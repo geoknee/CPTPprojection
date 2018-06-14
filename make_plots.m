@@ -109,13 +109,13 @@ end
 
 figure; hold on;
 
-errorbar(2:dmax,mean(DIA_times(:,2:end)),std(DIA_times(:,2:end)),'-d','LineWidth',2);
-errorbar(2:dmax,mean(gdapB_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
-% errorbar(2:dmax,mean(gdapM_times(:,2:end)),std(gdapB_times(:,2:end)),'-*','LineWidth',2);
-errorbar(2:dmax,mean(mosek_times(:,2:end)),std(mosek_times(:,2:end)),'-x','LineWidth',2);
-% errorbar(2:dmax,mean(sdpt3_times(:,2:end)),std(sdpt3_times(:,2:end)),'-x','LineWidth',2);
-% errorbar(2:dmax,mean(sedumi_times(:,2:end)),std(sedumi_times(:,2:end)),'-s','LineWidth',2);
-% errorbar(2:dmax,mean(li_times(:,2:end)),std(li_times(:,2:end)),'-x','LineWidth',2);
+errorbar(2:dmax,nanmean(DIA_times(:,2:end)),nanstd(DIA_times(:,2:end)),'-d','LineWidth',2);
+errorbar(2:dmax,nanmean(gdapB_times(:,2:end)),nanstd(gdapB_times(:,2:end)),'-*','LineWidth',2);
+% errorbar(2:dmax,nanmean(gdapM_times(:,2:end)),nanstd(gdapB_times(:,2:end)),'-*','LineWidth',2);
+errorbar(2:dmax,nanmean(mosek_times(:,2:end)),nanstd(mosek_times(:,2:end)),'-x','LineWidth',2);
+% errorbar(2:dmax,nanmean(sdpt3_times(:,2:end)),nanstd(sdpt3_times(:,2:end)),'-x','LineWidth',2);
+% errorbar(2:dmax,nanmean(sedumi_times(:,2:end)),nanstd(sedumi_times(:,2:end)),'-s','LineWidth',2);
+% errorbar(2:dmax,nanmean(li_times(:,2:end)),nanstd(li_times(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
@@ -131,13 +131,13 @@ saveas(gcf,'./plots/time.eps','epsc')
 
 figure; hold on;
 
-errorbar(2:dmax,mean(DIA_errors(:,2:end)),std(DIA_errors(:,2:end)),'-d','LineWidth',2);
-errorbar(2:dmax,mean(gdapB_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
-% errorbar(2:dmax,mean(gdapM_errors(:,2:end)),std(gdapB_errors(:,2:end)),'-*','LineWidth',2);
-errorbar(2:dmax,mean(mosek_errors(:,2:end)),std(mosek_errors(:,2:end)),'-x','LineWidth',2);
-% errorbar(2:dmax,mean(sdpt3_errors(:,2:end)),std(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
-% errorbar(2:dmax,mean(sedumi_errors(:,2:end)),std(sedumi_errors(:,2:end)),'-s','LineWidth',2);
-% errorbar(2:dmax,mean(li_errors(:,2:end)),std(li_errors(:,2:end)),'-x','LineWidth',2);
+errorbar(2:dmax,nanmean(DIA_errors(:,2:end)),nanstd(DIA_errors(:,2:end)),'-d','LineWidth',2);
+errorbar(2:dmax,nanmean(gdapB_errors(:,2:end)),nanstd(gdapB_errors(:,2:end)),'-*','LineWidth',2);
+% errorbar(2:dmax,nanmean(gdapM_errors(:,2:end)),nanstd(gdapB_errors(:,2:end)),'-*','LineWidth',2);
+errorbar(2:dmax,nanmean(mosek_errors(:,2:end)),nanstd(mosek_errors(:,2:end)),'-x','LineWidth',2);
+% errorbar(2:dmax,nanmean(sdpt3_errors(:,2:end)),nanstd(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
+% errorbar(2:dmax,nanmean(sedumi_errors(:,2:end)),nanstd(sedumi_errors(:,2:end)),'-s','LineWidth',2);
+% errorbar(2:dmax,nanmean(li_errors(:,2:end)),nanstd(li_errors(:,2:end)),'-x','LineWidth',2);
 xlim([1.8,dmax+0.2])
 ylim([0,1])
 xlabel 'Hilbert space dimension'
@@ -163,31 +163,31 @@ for d = 2:dmax
     ax.ColorOrderIndex = 1;
     ax.YAxisLocation = 'right';
     
-    DIAx(d)    = mean(DIA_errors(:,d));
-    DIAxbar(d) = std(DIA_errors(:,d));
-    DIAy(d)    = mean(DIA_times(:,d));
-    DIAybar(d) = std(DIA_times(:,d));
+    DIAx(d)    = nanmean(DIA_errors(:,d));
+    DIAxbar(d) = nanstd(DIA_errors(:,d));
+    DIAy(d)    = nanmean(DIA_times(:,d));
+    DIAybar(d) = nanstd(DIA_times(:,d));
     
     errorbar(DIAx(d),DIAy(d),DIAybar(d),DIAybar(d),DIAxbar(d),DIAxbar(d),'LineWidth',2)
        
-    gdapBx(d)    = mean(gdapB_errors(:,d));
-    gdapBxbar(d) = std(gdapB_errors(:,d));
-    gdapBy(d)    = mean(gdapB_times(:,d));
-    gdapBybar(d) = std(gdapB_times(:,d));
+    gdapBx(d)    = nanmean(gdapB_errors(:,d));
+    gdapBxbar(d) = nanstd(gdapB_errors(:,d));
+    gdapBy(d)    = nanmean(gdapB_times(:,d));
+    gdapBybar(d) = nanstd(gdapB_times(:,d));
     
     errorbar(gdapBx(d),gdapBy(d),gdapBybar(d),gdapBybar(d),gdapBxbar(d),gdapBxbar(d),'LineWidth',2)
     
-    mosekx(d)    = mean(mosek_errors(:,d));
-    mosekxbar(d) = std(mosek_errors(:,d));
-    moseky(d)    = mean(mosek_times(:,d));
-    mosekybar(d) = std(mosek_times(:,d));
+    mosekx(d)    = nanmean(mosek_errors(:,d));
+    mosekxbar(d) = nanstd(mosek_errors(:,d));
+    moseky(d)    = nanmean(mosek_times(:,d));
+    mosekybar(d) = nanstd(mosek_times(:,d));
     
     errorbar(mosekx(d),moseky(d),mosekybar(d),mosekybar(d),mosekxbar(d),mosekxbar(d),'LineWidth',2)
     
-%     lix(d)    = mean(li_errors(:,d));
-%     lixbar(d) = std(li_errors(:,d));
-%     liy(d)    = mean(li_times(:,d));
-%     liybar(d) = std(li_times(:,d));
+%     lix(d)    = nanmean(li_errors(:,d));
+%     lixbar(d) = nanstd(li_errors(:,d));
+%     liy(d)    = nanmean(li_times(:,d));
+%     liybar(d) = nanstd(li_times(:,d));
 %     
 %     errorbar(lix(d),liy(d),liybar(d),liybar(d),lixbar(d),lixbar(d),'LineWidth',2)
     

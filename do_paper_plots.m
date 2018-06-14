@@ -13,7 +13,7 @@ ensemble_size = 10; % must be >1
 
 generate_clicks;
 launch_solvers;
-%make_plots; won't work on r2015a
+make_plots; %won't work on r2015a
 save('./benchmarking_results/qpPRLresubmission')
 
 clear all;
@@ -41,7 +41,7 @@ ensemble_size = 10;
 
 generate_clicks;
 launch_solvers;
-% make_plots; won't work on r2015a
+make_plots; %won't work on r2015a
 save('./benchmarking_results/frPRLresubmission')
 clear all;
 
