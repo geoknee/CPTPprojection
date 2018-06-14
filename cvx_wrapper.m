@@ -25,12 +25,12 @@ function [ choi_ml_vec] = cvx_wrapper( A,n )
     % eye(d)-reshape(M*choi_vec_cvx,d,d) ==  P; % this is for TNI
     M*choi_vec_cvx == b; % this is for TP
     cvx_end
-    cvx_time = toc;
+%     cvx_time = toc;
     
 %     if isnan(choi_vec_cvx)
 %         choi_ml_vec = reshape(eye(d*d),[],1);
 %     else
-%         choi_ml_vec = choi_vec_cvx;
+    choi_ml_vec = choi_vec_cvx;
 %     end
 end
 
