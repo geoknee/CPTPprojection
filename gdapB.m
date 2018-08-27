@@ -31,7 +31,13 @@ function [ choi_ml_vec,solution, costs ] = gdapB( A,n )
     b = reshape(speye(d),[],1);
     Mdagb = sparse(M'*b);
     
+    % unbiased initialisation
     choi_init = sparse(eye(d*d)/d);
+    % LIFP initialisation
+%     choi_init = LinInversion(A,n);
+    
+    
+    
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     stepsize      = 1.0/(1e3*d);

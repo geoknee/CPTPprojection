@@ -45,7 +45,7 @@ for d=drange
         M = M + kron(B,B);
     end
     MdagM = sparse(M'*M);
-    b = sparse(reshape(eye(d),[],1));
+    b = sparse(reshape(speye(d),[],1));
     Mdagb = sparse(M'*b);
     
     

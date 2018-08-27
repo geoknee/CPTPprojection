@@ -35,12 +35,14 @@ mosek_times  = zeros(ensemble_size,dmax);
 sdpt3_times  = zeros(ensemble_size,dmax);
 DIA_times    = zeros(ensemble_size,dmax);
 % sedumi_times = zeros(ensemble_size,dmax); % this fails
+li_times     = zeros(ensemble_size,dmax);
 
 gdapB_errors    = zeros(ensemble_size,dmax);
 gdapM_errors    = zeros(ensemble_size,dmax);
 mosek_errors    = zeros(ensemble_size,dmax);
 sdpt3_errors    = zeros(ensemble_size,dmax);
 DIA_errors      = zeros(ensemble_size,dmax);
+li_errors       = zeros(ensemble_size,dmax);
 % sedumi_errors   = zeros(ensemble_size,dmax);
 
 
@@ -96,13 +98,13 @@ for d=drange
 %         choi_sedumi        = reshape(choi_ml_vec,[],d*d);
 %         sedumi_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_sedumi/trace(choi_sedumi));
 
-
-%         clear choi_ml_vec
-%         load([dir,'/LinInversion_results',num2str(i)]);
-%         li_times(i,d)  = elapsedTime;    
-%         choi_li        = reshape(choi_ml_vec,[],d*d);
-%         li_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_li/trace(choi_li));
-%         
+        if LIswitch
+            clear choi_ml_vec
+            load([dir,'/LinInversion_results',num2str(i)]);
+            li_times(i,d)  = elapsedTime;    
+            choi_li        = reshape(choi_ml_vec,[],d*d);
+            li_errors(i,d) = trace_dist(choi_ground/trace(choi_ground),choi_li/trace(choi_li));
+        end
         
     end
 end
@@ -115,7 +117,9 @@ errorbar(2:dmax,nanmean(gdapB_times(:,2:end)),nanstd(gdapB_times(:,2:end)),'-*',
 errorbar(2:dmax,nanmean(mosek_times(:,2:end)),nanstd(mosek_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,nanmean(sdpt3_times(:,2:end)),nanstd(sdpt3_times(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,nanmean(sedumi_times(:,2:end)),nanstd(sedumi_times(:,2:end)),'-s','LineWidth',2);
-% errorbar(2:dmax,nanmean(li_times(:,2:end)),nanstd(li_times(:,2:end)),'-x','LineWidth',2);
+if LIswitch
+    errorbar(2:dmax,nanmean(li_times(:,2:end)),nanstd(li_times(:,2:end)),'-x','LineWidth',2);
+end
 xlim([1.8,dmax+0.2])
 xlabel 'Hilbert space dimension'
 ylabel 'times taken (s)';
@@ -137,7 +141,9 @@ errorbar(2:dmax,nanmean(gdapB_errors(:,2:end)),nanstd(gdapB_errors(:,2:end)),'-*
 errorbar(2:dmax,nanmean(mosek_errors(:,2:end)),nanstd(mosek_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,nanmean(sdpt3_errors(:,2:end)),nanstd(sdpt3_errors(:,2:end)),'-x','LineWidth',2);
 % errorbar(2:dmax,nanmean(sedumi_errors(:,2:end)),nanstd(sedumi_errors(:,2:end)),'-s','LineWidth',2);
-% errorbar(2:dmax,nanmean(li_errors(:,2:end)),nanstd(li_errors(:,2:end)),'-x','LineWidth',2);
+if LIswitch
+    errorbar(2:dmax,nanmean(li_errors(:,2:end)),nanstd(li_errors(:,2:end)),'-x','LineWidth',2);
+end
 xlim([1.8,dmax+0.2])
 ylim([0,1])
 xlabel 'Hilbert space dimension'
@@ -184,12 +190,15 @@ for d = 2:dmax
     
     errorbar(mosekx(d),moseky(d),mosekybar(d),mosekybar(d),mosekxbar(d),mosekxbar(d),'LineWidth',2)
     
-%     lix(d)    = nanmean(li_errors(:,d));
-%     lixbar(d) = nanstd(li_errors(:,d));
-%     liy(d)    = nanmean(li_times(:,d));
-%     liybar(d) = nanstd(li_times(:,d));
-%     
-%     errorbar(lix(d),liy(d),liybar(d),liybar(d),lixbar(d),lixbar(d),'LineWidth',2)
+    if LIswitch
+        lix(d)    = nanmean(li_errors(:,d));
+        lixbar(d) = nanstd(li_errors(:,d));
+        liy(d)    = nanmean(li_times(:,d));
+        liybar(d) = nanstd(li_times(:,d));
+        errorbar(lix(d),liy(d),liybar(d),liybar(d),lixbar(d),lixbar(d),'LineWidth',2)
+    end
+
+    
     
     %triangles
 %     plot([DIAx(d),gdapBx(d)],[DIAy(d),gdapBy(d)],'k')
@@ -203,7 +212,9 @@ ax.ColorOrderIndex = 1;
 plot(DIAx,DIAy,'LineWidth',2)
 plot(gdapBx,gdapBy,'LineWidth',2)
 plot(mosekx,moseky,'LineWidth',2)
-% plot(lix,liy,'LineWidth',2)
+if LIswitch
+    plot(lix,liy,'LineWidth',2)
+end
 
 
 set(gca,'xscale','log')

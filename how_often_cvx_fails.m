@@ -2,9 +2,9 @@ clear all;
 dmax = 4;
 Npowmin = 2;
 Npowmax = 5;
-ensemble_size = 10;
+ensemble_size = 1000;
 drange = 2:7;
-parpool(4)
+parpool
 for d = drange
     fprintf(char(10));
     fprintf('%d ', d); 

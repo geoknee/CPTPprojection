@@ -13,7 +13,11 @@ function [ choi_ml_vec, solution, costs  ] = DIA( A,n )
 %         n = n/N;
 %     end
     
-    choi_init = eye(d*d)/d;
+    % unbiased initialisation
+    choi_init = sparse(eye(d*d)/d);
+    % LIFP initialisation
+%     choi_init = LinInversion(A,n);
+    
     choi_init = reshape(choi_init,[],1);
     solution  = {choi_init};
 %     costs = zeros(1e4);

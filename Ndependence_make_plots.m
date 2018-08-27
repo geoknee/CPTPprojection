@@ -39,12 +39,14 @@ mosek_times  = zeros(ensemble_size,dmax,length(Ns));
 sdpt3_times  = zeros(ensemble_size,dmax,length(Ns));
 DIA_times    = zeros(ensemble_size,dmax,length(Ns));
 sedumi_times = zeros(ensemble_size,dmax,length(Ns));
+LI_times     = zeros(ensemble_size,dmax,length(Ns));
 
 gdapB_errors    = zeros(ensemble_size,dmax,length(Ns));
 mosek_errors    = zeros(ensemble_size,dmax,length(Ns));
 sdpt3_errors    = zeros(ensemble_size,dmax,length(Ns));
 DIA_errors      = zeros(ensemble_size,dmax,length(Ns));
 sedumi_errors   = zeros(ensemble_size,dmax,length(Ns));
+LI_errors       = zeros(ensemble_size,dmax,length(Ns));
 
 
 for d=drange
@@ -116,7 +118,9 @@ for d=drange
 %     xlabel 'N'
     ylabel 'times taken (s)';
     set(gca,'XScale','log')
-%     set(gca,'YScale','log');
+    if LIswitch
+        set(gca,'YScale','log');
+    end
     set(gca,'XTick',Ns(1:end-1))
 %     set(gca,'YTick',[1e-3,1e-2,1e-1,1e0,1e1,1e2])
     box on; grid on;
@@ -137,7 +141,9 @@ for d=drange
     end
     
     set(gca,'XScale','log');
-%     set(gca,'YScale','log');
+    if LIswitch
+        set(gca,'YScale','log');
+    end
     box on; grid off;
     ax = gca;
     set(gca,'XTick',[])
@@ -200,7 +206,8 @@ for d=drange
 %     title(['d = ',num2str(d)])
    
     linkaxes([ax1,ax2],'y')
-%     linkaxes([ax3,ax4],'y')
+    linkaxes([ax3,ax4],'y')
+    ylim([1e-4,1e0])
 %     linkaxes([ax1,ax3],'x')
 %     linkaxes([ax2,ax4],'x')
 

@@ -1,4 +1,4 @@
-function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergence profile
+function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so no convergence profile
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     d = sqrt(sqrt(size(A)));
@@ -24,20 +24,20 @@ function [ choi_LI_vec ] = LinInversion( A,n ) % non-interative so now convergen
 %     choi_LI_vec = CPTP_project(pinv(A)*n, MdagM, Mdagb);
 %     choi_LI_vec = lsqminnorm(A,n);
 %     choi_LI_vec = PSD_project(A\n);
-    choi_LI_vec = A\n;
-    choi_LI     = reshape(choi_LI_vec,[],d*d);
-    choi_LI     = 0.5*(choi_LI+choi_LI');
-%     choi_LI     = d*choi_LI/trace(choi_LI); % correct normalisation
-    choi_LI_vec     = reshape(choi_LI,[],1);
-%     choi_LI_vec = CPTP_project(A\n, MdagM, Mdagb);
+%     choi_LI_vec = A\n;
+%     choi_LI     = reshape(choi_LI_vec,[],d*d);
+%     choi_LI     = 0.5*(choi_LI+choi_LI');
+% %     choi_LI     = d*choi_LI/trace(choi_LI); % correct normalisation
+%     choi_LI_vec     = reshape(choi_LI,[],1);
+    choi_LI_vec = CPTP_project(A\n, MdagM, Mdagb);
     
 %     choi_LI     = reshape(choi_LI_vec,[],d*d);
 
 % partial_trace(choi_LI)
 
-    if isnan(choi_LI)
-        choi_LI
-    end
+%     if isnan(choi_LI)
+%         choi_LI
+%     end
 %     if min(eig(choi_LI))>-1e-3
 %         fprintf('CP')
 %     else

@@ -20,7 +20,7 @@ end
 if exist('LIswitch')
     fprintf(['LIswitch = ',LIswitch])
 else
-    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+    error('you must set the LIsiwtch variable (if 1 Linear Inversion is run, if 0 it is not)')
 end
 
 if exist('ensemble_size')

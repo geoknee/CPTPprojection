@@ -21,11 +21,12 @@ clear all;
 %% Figure 2b of the main paper
 
 ensemble = 'qp';
-drange = [4];
-LIswitch = 0;
+drange = [4:4];
+LIswitch = 1;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf];
-
+% Npows = [1,2,3,4,5,Inf];
+    
 Ndependence_clicks;
 Ndependence_launch_solvers;
 Ndependence_make_plots;

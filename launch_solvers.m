@@ -20,7 +20,7 @@ end
 if exist('LIswitch')
     fprintf(['LIswitch = ',LIswitch])
 else
-    error('you must set the LIsiwtch variable (if 0 Linear Inversion is run, if 1 it is not)')
+    error('you must set the LIsiwtch variable (if 1 Linear Inversion is run, if 0 it is not)')
 end
 
 if exist('ensemble_size')
@@ -54,7 +54,7 @@ for d=drange
         for i = 1:ensemble_size % total number of simulated datasets
             fprintf('%d ', i); 
             load([dir,'/dataset',num2str(i)]);
-            n = n./sum(n);
+%             n = n./sum(n);
 
                 switch char(method)
                     case'gdapM'
@@ -93,7 +93,7 @@ for d=drange
                         solution=[]; costs = []; % cannot currently extract these
                     case 'LinInversion'
                         tic;
-                        choi_ml_vec = LinInversion(A,n);
+                        [choi_ml_vec] = LinInversion(A,n);
                         elapsedTime = toc;
                         solution = []; costs = [];
                 end
