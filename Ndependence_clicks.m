@@ -1,7 +1,5 @@
 % script to investigate algorithm performance as a function of N
 % script to generate a number of simulated datasets
-% addpath('./QETLAB-0.9')
-% addpath('./QETLAB-0.9/helpers')
 
 %% check global variable set
 if exist('ensemble')

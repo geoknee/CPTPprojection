@@ -10,13 +10,10 @@ function [ choi_ml_vec] = cvx_wrapper( A,n )
         M = M + kron(B,B);
     end
     b = reshape(eye(d),[],1);
-    
-    
-%     cvx_solver sedumi
+
     cvx_begin quiet
     variable cvx_choi(d*d,d*d) hermitian semidefinite
     variable P(d,d) hermitian semidefinite
-    % todo TP constraint
     choi_vec_cvx = reshape(cvx_choi,d*d*d*d,[]);
     n = real(n);
     p_cvx        = real(A*choi_vec_cvx);
@@ -25,12 +22,6 @@ function [ choi_ml_vec] = cvx_wrapper( A,n )
     % eye(d)-reshape(M*choi_vec_cvx,d,d) ==  P; % this is for TNI
     M*choi_vec_cvx == b; % this is for TP
     cvx_end
-%     cvx_time = toc;
-    
-%     if isnan(choi_vec_cvx)
-%         choi_ml_vec = reshape(eye(d*d),[],1);
-%     else
     choi_ml_vec = choi_vec_cvx;
-%     end
 end
 

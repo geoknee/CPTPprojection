@@ -1,7 +1,10 @@
 # Quantum tomography
 This repository contains the matlab functions and scripts used to generate the figures in *Quantum process tomography via completely positive and trace-preserving projection*, [Physical Review A 98, 062336 (2018)](https://doi.org/10.1103/PhysRevA.98.062336).
 
+### Dependencies
+Many of the solvers are called via the excellent [`cvx` package](https://www.cvxr.com). In order to run them, install `cvx` in the parent directory. A cvx license file is necessary to run certain solvers, such as `mosek`.
 
+## Reproducing plots
 `do_paper_plots.m` is a script that sets certain global parameters:
 
 - `ensemble`- either 'qp' (for quasi-pure) or 'fr' (for full rank);

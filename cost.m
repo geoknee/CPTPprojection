@@ -8,10 +8,7 @@ function [ c ] = cost( A, n , choi_vec )
     p  = real(A*choi_vec); % the forward model
     d   = size(A);
     d   = sqrt(sqrt(d(2)));
-%     n  = n./sum(n);
-%     p  = p./sum(p);
-
-
+    
     % GK conditioning
     eps = 1e-16;
     
@@ -20,15 +17,9 @@ function [ c ] = cost( A, n , choi_vec )
     end
     
     p(find(p<eps)) = eps;
-
-%     % EB conditioning / identity trick
-%     q = 1e-3;
-%     p = (1-q)*p + q/d;
-%     n = (1-q)*n + q/d;
     
     
     c = real(-(n.'*reallog(abs(p))));
     
-%     c = c./length(n); % normalisation for number of observations
 end
 
