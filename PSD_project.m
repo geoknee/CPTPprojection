@@ -16,10 +16,6 @@ function [ projected_choi_vec ] = PSD_project( choi_vec )
     [V,D] = eig(choi);
     D = max(real(D),0); % real is important, dtype complex spoils functioning of max. choi is Hermitian so D should be real. 
     choi = V*D*V';
-
-%     t = trace(choi);
-%     choi = t*positiveProjection(choi/t); % Smolin method from EB. wants a
-    %trace one matrix as input
     
     projected_choi_vec = reshape(choi,[],1);
 end

@@ -1,5 +1,5 @@
 function [ rho_reduced ] = partial_trace( rho )
-%UNTITLED11 Summary of this function goes here
+%rho_reduced computes the partical trace of a density matrix
 %   Detailed explanation goes here
   d = sqrt(size(rho));
   d = d(1);

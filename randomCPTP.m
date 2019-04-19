@@ -2,7 +2,7 @@ function [ choi ] = randomCPTP(d, M)
 %generate random completely positive, trace preserving maps in the Choi
 %representation. 
 %   following the first algorithm given in W. Bruzda and V. Cappellini and H.-J. Sommers and K. ?yczkowski
- %   Physics Letters A  373  320 - 324  (2009)
+ %   Physics Letters Aï¿½ 373ï¿½ 320 - 324ï¿½ (2009)
  % 
 
 

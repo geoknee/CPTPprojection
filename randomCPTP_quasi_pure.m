@@ -6,7 +6,7 @@ function [ choi ] = randomCPTP_quasi_pure(d, purity)
 
 lambda=0;
 purityTemp=0;
-%Generate exponialy decreasing eigenvalues with the specified purity
+%Generate exponentialy decreasing eigenvalues with the specified purity
 while purityTemp<purity
     lambda = lambda + 0.001; %increase std until reach correct purity
     lam = real(exp(-lambda*(1:d*d))); %exponential distribution of eigenvalues
@@ -21,5 +21,4 @@ end
 
 choi = d*choi/trace(choi);
 
-% trace(choi*choi)/(d*d);
 

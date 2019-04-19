@@ -7,9 +7,6 @@ function [ g ] = gradient( A, n ,choi_vec)
   
     p   = real(A*choi_vec);
 
-%     n   = n./sum(n);
-%     p   = p./sum(p);
-    
     % GK conditioning
     eps = 1e-16;
     
@@ -18,15 +15,6 @@ function [ g ] = gradient( A, n ,choi_vec)
     end
     
     p(find(p<eps)) = eps;   
-
-%     % EB conditioning / identity trick
-%     q = 1e-3;
-%     p = (1-q)*p + q/d;
-%     n = (1-q)*n + q/d;
-%     
     
     g = -A'*(n./p);
-    
-%     g = g/length(n); % normalisation for number of observations
-
 end

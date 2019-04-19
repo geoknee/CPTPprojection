@@ -1,10 +1,10 @@
 cd ../cvx
 cvx_setup cvx_license;
-cd ../gdap
+cd ../CPTPprojection
 
 global ensemble drange LIswitch ensemble_size Npows
 
-%% Figure 2a of the main paper
+%% Figure 2a,d of the main paper
 
 ensemble = 'qp';
 drange = [2:8];
@@ -25,7 +25,6 @@ drange = [4:4];
 LIswitch = 1;
 ensemble_size = 10;
 Npows = [1,2,3,4,5,6,7,8,Inf];
-% Npows = [1,2,3,4,5,Inf];
     
 Ndependence_clicks;
 Ndependence_launch_solvers;
@@ -33,7 +32,7 @@ Ndependence_make_plots;
 
 clear all;
 
-%% Figure 2a of the SM
+%% Figure 8a,d
 
 ensemble = 'fr';
 drange = [2:8];
@@ -46,7 +45,7 @@ make_plots; %won't work on r2015a
 save('./benchmarking_results/frPRLresubmission')
 clear all;
 
-%% Figure 2b of the SM
+%% Figure 8b 
 ensemble = 'fr';
 drange = [4];
 LIswitch = 0;
@@ -59,7 +58,7 @@ Ndependence_make_plots;
 
 clear all;
 
-%% Figure 3 of the SM
+%% Figure 5
 
 ensemble = 'qp';
 drange = [7];

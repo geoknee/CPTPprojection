@@ -1,3 +1,4 @@
+% This plot is mostly for illustrative purposes
 d = 4;
 A = PM_minimal(d);
 
@@ -18,9 +19,6 @@ choi_ground     = randomCPTP_quasi_pure(d,0.9);
 choi_ground_vec = reshape(choi_ground,[],1);
 
 p               = real(A*choi_ground_vec);
-%         p               = p/sum(p);
-% n             = mnrnd(1e4,p)';
-% n             = n/sum(n); % activate for multinomial noise
 
 n               = p; % noiseless scenario
 n               = n./sum(n); % noiseless scenario
@@ -36,7 +34,7 @@ choi_init = sparse(eye(d*d)/d);
 choi_init = reshape(choi_init,[],1);
 solution  = {choi_init};
 inside_cost(1) = cost(A,n,solution{1});
-mu = 1000;%1.5/(d*d)
+mu = 1000;
     for i=1:5
 
         G = gradient(A,n,solution{i});
@@ -47,27 +45,8 @@ mu = 1000;%1.5/(d*d)
         inside_cost(i+1) = cost(A,n,inside_point);
         solution{i+1} = inside_point;
         
-%         D         = CPTP_project(solution{i}-(1/mu)*G, MdagM, Mdagb)-solution{i};
-% 
-%         alpha = 1;
-%         new_cost = cost(A,n,solution{i});
-%         B = new_cost + gamma*alpha*(D'*G);
-%         while cost(A,n,solution{i}+alpha*D) > B  
-%             alpha = 0.5 * alpha;  % less crude
-%             B = new_cost + gamma*alpha*(D'*G);
-%             if alpha < 1e-15
-%                 break
-%             end
-
         end
 
-%         solution{i+1} = solution{i} + alpha*D;
-% 
-%         if (old_cost - new_cost)  < 1e-10
-% 
-%             break
-%         end
-%         old_cost = new_cost;
 
 fig = figure;
 set(fig,'position', [10 10 600 200])

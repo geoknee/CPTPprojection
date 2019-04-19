@@ -1,5 +1,5 @@
 function [ projected_choi_vec ] = TNI_project( choi_vec)
-%TP_projectt: project a matrix into the set of trace nonincreasing maps
+%TNI_project: project a matrix into the set of trace nonincreasing maps
 % choi_vec          : is a vector with dimensions (d^4 x 1).
 %projected_choi_vec : (d^4 x 1) which represents a vectorised TNI Choi
 %                   : matrix
@@ -12,8 +12,6 @@ function [ projected_choi_vec ] = TNI_project( choi_vec)
     
     Y = partial_trace(choi);
     
-%     Y = (Y+Y')/2;
-%     [V,D] = eig(Y,'nobalance');
     [V,D] = eig(Y);
     D = min(real(D),1);
     Y_proj = V*D*V';
