@@ -1,8 +1,8 @@
 QETLAB-0.9/
-*.mat
-*.eps
-*.png
-*.m~
-*.DS_Store
-*.avi
-*.mov
+**.mat
+**.eps
+**.png
+**.m~
+**.DS_Store
+**.avi
+**.mov
