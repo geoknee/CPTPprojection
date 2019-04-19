@@ -9,10 +9,6 @@ function [ projected_choi_vec ] = TP_project( choi_vec, MdagM, Mdagb)
     d = sqrt(sqrt(size(choi_vec)));
     d = d(1);
     
-%     
-%     S = sparse(eye(d*d*d*d)- (1.0/d) * MdagM);
-%     projected_choi_vec = S*choi_vec + (1.0/d)*Mdagb;
-    
     projected_choi_vec = choi_vec -(1/d)*MdagM*choi_vec + (1.0/d)*Mdagb;
     
 end

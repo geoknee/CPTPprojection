@@ -7,9 +7,5 @@ function [ d ] = trace_dist( A,B )
         d = 0.5*sum(svd(A-B));
     end
     
-    
-    %debugging, use frobenius-norm instead
-%     d = norm(A-B,'fro');
-%     d = 0;
 end
 
