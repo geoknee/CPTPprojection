@@ -69,9 +69,10 @@ mu = 1000;%1.5/(d*d)
 %         end
 %         old_cost = new_cost;
 
-figure;
+fig = figure;
+set(fig,'position', [10 10 600 200])
 ax1 = subplot(2,1,1);
-scatter((1:6),inside_cost,'ks');
+scatter((1:6),inside_cost,'k');
 yticks(ax1,[])
 xticks(ax1,[])
 xlim(ax1,[0,6])
@@ -79,7 +80,7 @@ ax1.XAxisLocation = 'origin';
 ax1.YAxisLocation = 'origin';
 ax2 = subplot(2,1,2);
 
-scatter((1.5:5.5),outside_cost,'k'); 
+scatter((1.5:5.5),outside_cost,'ks'); 
 xticks(ax2,[1,2,3,4,5])
 yticks(ax2,[])
 xlim(ax2,[0,6])
